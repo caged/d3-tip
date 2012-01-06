@@ -7,36 +7,38 @@ d3.svg.tip = function() {
   function tip(d, i) {
     var el = d3.select(this),
         doc = d3.select(this.ownerSVGElement),
-        group = doc.select('#' + id).empty() ? doc.append('g').attr('id', id) : doc.select('#' + id);
+        group = doc.select('#' + id).empty() ? doc.append('g').attr('id', id) : doc.select('#' + id),
+        bounds = doc.node().getBoundingClientRect();
     
-    //el.on('mouseout', function() { group.remove() })
+    el.on('mouseout', function() { group.remove() })
 
-    group.classed(className, true);
-    group.text(' ')
-    group.attr('transform', 'translate(50, 50)')
+    group.classed(className, true).text(' ');
 
     var rect = group.append('rect').attr('transform', 'translate(0,0)').attr('rx', 2).attr('ry', 2),
         cnt = content(d, i, group),
-        ebbox = el.node().getBBox(),
-        bounds = el.node().getBoundingClientRect();
+        ebbox = el.node().getBBox();
     
-    // rect.attr('width', cbbox.width + pad * 2)
-    //   .attr('height', cbbox.height + pad * 2)
     if(typeof cnt === 'string' || typeof cnt === 'number') {
       var str = group.append('text')
           .text(cnt)
           .attr('text-anchor', 'middle')
           .attr('alignment-baseline', 'middle'),
-          bbox = str.node().getBoundingClientRect();
+          sbbox = str.node().getBBox();
 
-      rect.attr('width', bbox.width + pad * 2).attr('height', bbox.height + pad * 2)
+      rect.attr('width', sbbox.width + pad * 2).attr('height', sbbox.height + pad * 2)
       var rbbox = rect.node().getBBox();
 
       str.attr('dx', rbbox.width / 2).attr('dy', rbbox.height / 2)
-    }
 
-    group.attr('transform', "translate(" + (bounds.left + bounds.width) + "," + (bounds.top - bounds.height) + ")")
-    
+      var x = (ebbox.x - sbbox.width / 2),
+          y = (ebbox.y - rbbox.height);
+      
+      if(x <= 0) { x = 0 }
+      if(x + rbbox.width > bounds.width) { x = bounds.width - rbbox.width }
+      if(y <= 0) { y = 0 }
+
+      group.attr('transform', "translate(" + x + "," + y + ")")
+    }    
   }
 
   

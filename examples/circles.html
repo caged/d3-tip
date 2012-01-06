@@ -9,14 +9,12 @@
   <style type="text/css">
   .d3-tip {
     fill: #c00;
-    stroke-width: 2px;
-    stroke: #333;
     font-weight: bold;
   }
 
   .d3-tip text {
     fill: #fff;
-    font-size: 14px;
+    font-size: 12px;
     stroke: none;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
@@ -27,7 +25,7 @@
     var w = 500,
         h = 500,
         r = 10,
-        data = [10, 20, 30, 40],
+        data = [1220, 2230, 3002, 4012],
         x = d3.scale.linear().domain([0, data.length - 1]).range([r, w - r]),
         y = d3.scale.linear().domain([0, d3.max(data)]).range([h,  r]),
         tip = d3.svg.tip()
