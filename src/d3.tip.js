@@ -9,7 +9,7 @@ d3.svg.tip = function() {
         doc = d3.select(this.ownerSVGElement),
         group = doc.select('#' + id).empty() ? doc.append('g').attr('id', id) : doc.select('#' + id);
     
-    el.on('mouseout', function() { group.remove() })
+    //el.on('mouseout', function() { group.remove() })
 
     group.classed(className, true);
     group.text(' ')
@@ -18,12 +18,23 @@ d3.svg.tip = function() {
     var rect = group.append('rect').attr('transform', 'translate(0,0)').attr('rx', 2).attr('ry', 2),
         cnt = content(d, i, group),
         ebbox = el.node().getBBox(),
-        cbbox = cnt.node().getBBox(),
         bounds = el.node().getBoundingClientRect();
     
-    rect.attr('width', cbbox.width + pad * 2)
-      .attr('height', cbbox.height + pad * 2)
-    
+    // rect.attr('width', cbbox.width + pad * 2)
+    //   .attr('height', cbbox.height + pad * 2)
+    if(typeof cnt === 'string' || typeof cnt === 'number') {
+      var str = group.append('text')
+          .text(cnt)
+          .attr('text-anchor', 'middle')
+          .attr('alignment-baseline', 'middle'),
+          bbox = str.node().getBoundingClientRect();
+
+      rect.attr('width', bbox.width + pad * 2).attr('height', bbox.height + pad * 2)
+      var rbbox = rect.node().getBBox();
+
+      str.attr('dx', rbbox.width / 2).attr('dy', rbbox.height / 2)
+    }
+
     group.attr('transform', "translate(" + (bounds.left + bounds.width) + "," + (bounds.top - bounds.height) + ")")
     
   }

@@ -9,11 +9,15 @@
   <style type="text/css">
   .d3-tip {
     fill: #c00;
+    stroke-width: 2px;
+    stroke: #333;
+    font-weight: bold;
   }
 
   .d3-tip text {
     fill: #fff;
     font-size: 14px;
+    stroke: none;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
   </style>
@@ -29,11 +33,7 @@
         tip = d3.svg.tip()
           .orient('top')
           .content(function(d, i, t) { 
-            var txt = t.append('text').text(d).attr('text-anchor', 'middle'),
-                bbox = t.node().getBBox();
-
-            txt.attr('dx', bbox.width / 2).attr('dy', bbox.height / 2 + 5) 
-            return txt;
+            return d;
           })
 
 
