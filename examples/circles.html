@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>d3.tip.js - Tooltips for D3</title>
+  <meta charset="utf-8" />
+  <title>Bar Chart</title>
+  <script type="text/javascript" src="../vendor/d3.js"></script>
+  <script type="text/javascript" src="../src/d3.tip.js"></script>
+  <style type="text/css">
+  .d3-tip {
+    fill: #c00;
+  }
+
+  .d3-tip text {
+    fill: #fff;
+    font-size: 14px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+  </style>
+</head>
+<body>
+  <script type="text/javascript">
+    var w = 500,
+        h = 500,
+        r = 10,
+        data = [10, 20, 30, 40],
+        x = d3.scale.linear().domain([0, data.length - 1]).range([r, w - r]),
+        y = d3.scale.linear().domain([0, d3.max(data)]).range([h,  r]),
+        tip = d3.svg.tip()
+          .orient('top')
+          .content(function(d, i, t) { 
+            var txt = t.append('text').text(d).attr('text-anchor', 'middle'),
+                bbox = t.node().getBBox();
+
+            txt.attr('dx', bbox.width / 2).attr('dy', bbox.height / 2 + 5) 
+            return txt;
+          })
+
+
+    vis = d3.select(document.body)
+      .append('svg')
+      .attr('width', 500)
+      .attr('height', 500)
+
+    vis.selectAll('circle')
+      .data(data)
+    .enter().append('circle')
+      .attr('r', r)
+      .attr('cx', function(d, i) { return x(i) })
+      .attr('cy', y)
+      .on('mouseover', tip)
+
+  </script>
+</body>
+</html>
