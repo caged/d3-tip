@@ -18,7 +18,7 @@ d3.svg.tip = function() {
         bounds = doc.node().getBoundingClientRect(),
         symbol = d3.svg.symbol().type('triangle-down').size(stemSize);
     
-    //el.on('mouseout', function() { group.remove() })
+    el.on('mouseout', function() { group.remove() })
 
     group.classed(klass, true).text(' ');
 
@@ -44,14 +44,6 @@ d3.svg.tip = function() {
       if(x <= 0) { x = 0 }
       if(x + rbbox.width > bounds.width) { x = bounds.width - rbbox.width }
       if(y <= 0) { y = 0 }
-
-      console.log(ebbox);
-      doc.append('circle')
-        .attr('class', 'debug')
-        .attr('r', 2)
-        .attr('cy', ebbox.top)
-        .attr('cx', (ebbox.right - (ebbox.width / 2)))
-        .style('fill', 'hotpink')
 
       str.attr('dx', rbbox.width / 2).attr('dy', rbbox.height / 2)
       group.attr('transform', "translate(" + x + "," + y + ")")
