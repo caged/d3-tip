@@ -1,5 +1,4 @@
-## Simple Tooltips for d3.js
-**ALPHA STATE**
+## Simple Tooltips for d3.js - **ALPHA STATE**
 
 Pure SVG tooltips for [d3.js](http://mbostock.github.com/d3/)
 
