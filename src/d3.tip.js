@@ -18,13 +18,13 @@ d3.svg.tip = function() {
         bounds = doc.node().getBoundingClientRect(),
         symbol = d3.svg.symbol().type('triangle-down').size(stemSize);
     
-    el.on('mouseout', function() { group.remove() })
+    //el.on('mouseout', function() { group.remove() })
 
     group.classed(klass, true).text(' ');
 
     var rect = group.append('rect').attr('transform', 'translate(0,0)').attr('rx', 3).attr('ry', 3),
         stem = group.append('path').attr('d', symbol),
-        ebbox = el.node().getBBox(),
+        ebbox = el.node().getBoundingClientRect(),
         stemBounds = stem.node().getBBox();
 
     if(typeof cnt === 'string' || typeof cnt === 'number') {
@@ -32,19 +32,26 @@ d3.svg.tip = function() {
           .text(cnt)
           .attr('text-anchor', 'middle')
           .attr('alignment-baseline', 'middle'),
-          sbbox = str.node().getBBox(),
+          sbbox = str.node().getBoundingClientRect(),
           rectw = sbbox.width + padding(d, i) * 2,
           recth = sbbox.height + padding(d, i) * 2;
 
       rect.attr('width', rectw).attr('height', recth)
-
       var rbbox = rect.node().getBBox(),
-          x = (ebbox.x - sbbox.width / 2) + oset[0],
-          y = (ebbox.y - rbbox.height) - stemBounds.height + oset[1];
+          x = (ebbox.right - (ebbox.width / 2) - (rbbox.width / 2) - (stemBounds.width / 2)) + oset[0],
+          y = (ebbox.top - rbbox.height) - stemBounds.height + oset[1];
       
       if(x <= 0) { x = 0 }
       if(x + rbbox.width > bounds.width) { x = bounds.width - rbbox.width }
       if(y <= 0) { y = 0 }
+
+      console.log(ebbox);
+      doc.append('circle')
+        .attr('class', 'debug')
+        .attr('r', 2)
+        .attr('cy', ebbox.top)
+        .attr('cx', (ebbox.right - (ebbox.width / 2)))
+        .style('fill', 'hotpink')
 
       str.attr('dx', rbbox.width / 2).attr('dy', rbbox.height / 2)
       group.attr('transform', "translate(" + x + "," + y + ")")

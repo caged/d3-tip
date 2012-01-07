@@ -30,6 +30,7 @@
         tip = d3.svg.tip()
           .orient('top')
           .padding(10)
+          .offset(function() { return [0, -10]})
           .text(function(d, i, t) { 
             return "value: " + d;
           })
