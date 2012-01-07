@@ -3,8 +3,52 @@
 <head>
   <title>d3.tip.js - Tooltips for D3</title>
   <meta charset="utf-8" />
+  <title>Bar Chart</title>
+  <script type="text/javascript" src="../vendor/d3.js"></script>
+  <script type="text/javascript" src="../src/d3.tip.js"></script>
+  <style type="text/css">
+  .d3-tip {
+    fill: #c00;
+    font-weight: bold;
+  }
+
+  .d3-tip text {
+    fill: #fff;
+    font-size: 12px;
+    stroke: none;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+  </style>
 </head>
 <body>
+  <script type="text/javascript">
+    var w = 500,
+        h = 500,
+        data = [220, 230, 300, 402],
+        x  = d3.scale.ordinal().domain(d3.range(data.length)).rangeRoundBands([0, w], 0.1),
+        y  = d3.scale.linear().domain([0, d3.max(data)]).range([h, 0]),
+        tip = d3.svg.tip()
+          .orient('top')
+          .padding(10)
+          .text(function(d, i, t) { 
+            return "value: " + d;
+          })
 
+
+    vis = d3.select(document.body)
+      .append('svg')
+      .attr('width', 500)
+      .attr('height', 500)
+
+    vis.selectAll('rect')
+      .data(data)
+    .enter().append('rect')
+      .attr('width', function() { return x.rangeBand() })
+      .attr('height', function(d) { return h - y(d) })
+      .attr('y', function(d) { return y(d) })
+      .attr('x', function(d, i) { return x(i) })
+      .on('mouseover', tip)
+
+  </script>
 </body>
 </html>

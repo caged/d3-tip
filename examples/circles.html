@@ -30,7 +30,8 @@
         y = d3.scale.linear().domain([0, d3.max(data)]).range([h,  r]),
         tip = d3.svg.tip()
           .orient('top')
-          .content(function(d, i, t) { 
+          .padding(10)
+          .text(function(d, i, t) { 
             return "value: " + d;
           })
 
