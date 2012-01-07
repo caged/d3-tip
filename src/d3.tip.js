@@ -14,7 +14,7 @@ d3.svg.tip = function() {
 
     group.classed(className, true).text(' ');
 
-    var rect = group.append('rect').attr('transform', 'translate(0,0)').attr('rx', 2).attr('ry', 2),
+    var rect = group.append('rect').attr('transform', 'translate(0,0)').attr('rx', 3).attr('ry', 3),
         cnt = content(d, i, group),
         ebbox = el.node().getBBox();
     
