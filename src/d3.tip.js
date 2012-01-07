@@ -28,7 +28,6 @@ d3.svg.tip = function() {
           .attr('text-anchor', 'middle')
           .attr('alignment-baseline', 'middle'),
           sbbox = str.node().getBBox();
-      
 
       rect.attr('width', sbbox.width + pad * 2)
         .attr('height', sbbox.height + pad * 2)
@@ -43,7 +42,7 @@ d3.svg.tip = function() {
 
       str.attr('dx', rbbox.width / 2).attr('dy', rbbox.height / 2)
       group.attr('transform', "translate(" + x + "," + y + ")")
-      stem.attr('transform','translate(' + rbbox.width / 2 + ',' + (rbbox.height + stemBounds.height) + ')')
+      stem.attr('transform','translate(' + rbbox.width / 2 + ',' + (rbbox.height + stemBounds.height / 2) + ')')
     }    
   }
 
