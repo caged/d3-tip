@@ -1,7 +1,7 @@
 d3.svg.tip = function() {
   var orient = 'top',
       padding = 5,
-      cornerRadius = 3,
+      cornerRadius = 2,
       stemSize = 60,
       offset = d3_svg_offset,
       text = d3_svg_text,
@@ -37,17 +37,17 @@ d3.svg.tip = function() {
     backing.attr('width', valRect.width).attr('height', valRect.height).attr('rx', cornerRadius).attr('ry', cornerRadius)
     val.attr('dx', valRect.width / 2).attr('dy', valRect.height / 2)
 
-    var backingRect = backing.node().getBBox(),
-        containerRect = container.node().getBBox();
+    var backingRect = backing.node().getBBox();
 
     switch(orient) {
       case 'top':
         x = targetRect.x + (targetRect.width / 2) - (backingRect.width / 2) + tipOffset[0];
         y = targetRect.y - backingRect.height + tipOffset[1];
+        break;
       case 'bottom':
         x = targetRect.x + (targetRect.width / 2) - (backingRect.width / 2) + tipOffset[0];
         y = targetRect.y + targetRect.height - tipOffset[1];
-      break;
+        break;
     }
 
     container.attr('transform', 'translate(' + x + ',' + y + ')')
