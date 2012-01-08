@@ -30,6 +30,9 @@ d3.svg.tip = function() {
     var val     = container.append('text').text(tipText).attr('text-anchor', 'middle').attr('alignment-baseline', 'middle'),
         valRect = val.node().getBBox();
     
+    valRect.width = valRect.width + (padding * 2)
+    valRect.height = valRect.height + (padding * 2)
+    
     backing.attr('width', valRect.width).attr('height', valRect.height)
     val.attr('dx', valRect.width / 2).attr('dy', valRect.height / 2)
 

@@ -36,7 +36,7 @@
         y  = d3.scale.linear().domain([0, d3.max(data)]).range([h, 0]),
         tip = d3.svg.tip()
           .orient('top')
-          .padding(10)
+          .padding(5)
           .text(function(d) { return d; })
           .attr('class', 'd3-tip')
 
