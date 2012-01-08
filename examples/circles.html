@@ -18,6 +18,12 @@
     stroke: none;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
+
+  .rule {
+    stroke-width: 1px;
+    stroke: #c00;
+    shape-rendering: crispedges;
+  }
   </style>
 </head>
 <body>
@@ -25,6 +31,7 @@
     var w = 500,
         h = 500,
         r = 10,
+        linex, liney,
         data = [1220, 2230, 3002, 4012],
         x = d3.scale.linear().domain([0, data.length - 1]).range([r, w - r]),
         y = d3.scale.linear().domain([0, d3.max(data)]).range([h,  r]),
@@ -47,8 +54,34 @@
       .attr('r', r)
       .attr('cx', function(d, i) { return x(i) })
       .attr('cy', y)
-      .on('mouseover', tip)
+      // .on('mouseover', tip)
+      .on('click', function() { 
+        var bbox = this.getBBox(),
+            x = bbox.x + (bbox.width / 2),
+            y = bbox.y;
+        
+        linex.transition()
+          .attr('x1', x)
+          .attr('x2', x)
 
+        liney.transition()
+          .attr('y1', y)
+          .attr('y2',y)      
+      })
+
+    linex = vis.append('line')
+      .attr("x1", 0)
+      .attr("y1", 0)
+      .attr("x2", 0)
+      .attr("y2", h)
+      .attr('class', 'rule')
+
+    liney = vis.append('line')
+      .attr("x1", 0)
+      .attr("y1", 0)
+      .attr("x2", w)
+      .attr("y2", 0)
+      .attr('class', 'rule')
   </script>
 </body>
 </html>
