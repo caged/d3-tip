@@ -1,6 +1,7 @@
 d3.svg.tip = function() {
   var orient = 'top',
       padding = 5,
+      cornerRadius = 3,
       stemSize = 60,
       offset = d3_svg_offset,
       text = d3_svg_text,
@@ -32,8 +33,8 @@ d3.svg.tip = function() {
     
     valRect.width = valRect.width + (padding * 2)
     valRect.height = valRect.height + (padding * 2)
-    
-    backing.attr('width', valRect.width).attr('height', valRect.height)
+
+    backing.attr('width', valRect.width).attr('height', valRect.height).attr('rx', cornerRadius).attr('ry', cornerRadius)
     val.attr('dx', valRect.width / 2).attr('dy', valRect.height / 2)
 
     var backingRect = backing.node().getBBox();
@@ -113,6 +114,12 @@ d3.svg.tip = function() {
   tip.padding = function(v) {
     if (!arguments.length) return padding;
     padding = v;
+    return tip;
+  };
+
+  tip.cornerRadius = function(v) {
+    if (!arguments.length) return cornerRadius;
+    cornerRadius = v;
     return tip;
   };
 
