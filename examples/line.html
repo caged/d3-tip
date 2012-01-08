@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Crimean War</title>
+    <script type="text/javascript" src="../vendor/d3.js"></script>
+    <script type="text/javascript" src="../vendor/d3.layout.js"></script>
+    <script type="text/javascript" src="../src/d3.tip.js"></script>
+    <style type="text/css">
+      .d3-tip {
+        fill: #c00;
+        font-weight: bold;
+      }
+
+      .d3-tip text {
+        fill: #fff;
+        font-size: 12px;
+        stroke: none;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      }
+
+      .rule {
+        stroke-width: 1px;
+        stroke: #c00;
+        shape-rendering: crispedges;
+      }
+
+      path {
+        fill: none;
+        stroke-width: 2px;
+      }
+
+      circle {
+        fill: #fff;
+        stroke: #c00;
+        stroke-width: 2px;
+      }
+    </style>
+  </head>
+  <body>
+  <script type="text/javascript">
+  var data  = [[3,7,9,1,4,4,8,2,5], [5,2,3,4,9,6,4,6,8]],
+      pl = 20, pt = 20, pr = 20, pb = 20,
+      w     = 800 - pl - pr,
+      h     = 300 - pt - pb,
+      max   = d3.max(data, function(d) { return d3.max(d) }),
+      linex, liney,
+      tip = d3.svg.tip()
+        .orient('top')
+        .padding(10)
+        .offset([20, 20])
+        .text(function(d) { return d; })
+        .attr('class', 'd3-tip');
+
+  // Scales
+  var x  = d3.scale.linear().domain([0, data[0].length - 1]).range([0, w])
+      y  = d3.scale.linear().domain([0, max]).range([h, 0]);
+  
+  // Base vis layer
+  var vis = d3.select(document.body)
+    .append('svg')
+      .attr('width', w + (pl + pr))
+      .attr('height', h + pt + pb)
+      .attr('class', 'viz')
+    .append('g')
+      .attr('transform', "translate(" + pl + "," + pt + ")")
+ 
+  // add path layers to their repesctive group
+  var paths = vis.selectAll('path.line')
+    .data(data)
+  .enter().append("g")
+
+  paths.append('path')
+    .attr("d", d3.svg.line().x(function(d,i) { return x(i) }).y(y).interpolate('cardinal'))
+    .style('stroke', function(d, i) { return ['#2fa5c7', '#d95ba6'][i] })
+  
+  //Add point circles
+  paths.selectAll('.point')
+    .data(function(d) { return d })
+  .enter().append("circle")
+    .attr("class", 'point')
+    .attr("r", 4)
+    .attr("cx", function(d, i) { return x(i) })
+    .attr("cy", function(d) { return y(d) })
+    .on('click', function() { 
+      var rect = this.getBoundingClientRect(),
+          bbox = this.getBBox(),
+          x = bbox.x + (bbox.width / 2),
+          y = bbox.y;
+      
+      linex.transition()
+        .attr('x1', x)
+        .attr('x2', x)
+
+      liney.transition()
+        .attr('y1', y)
+        .attr('y2',y)      
+    })
+    .on('mouseover', function() {
+      var rect = this.getBoundingClientRect(),
+          bbox = this.getBBox(),
+          x = bbox.x + (bbox.width / 2),
+          y = bbox.y;
+      
+      linex.transition()
+        .attr('x1', x)
+        .attr('x2', x)
+
+      liney.transition()
+        .attr('y1', y)
+        .attr('y2',y)
+
+      tip.apply(this, arguments)
+    })
+
+  linex = vis.append('line')
+    .attr("x1", 0)
+    .attr("y1", 0)
+    .attr("x2", 0)
+    .attr("y2", h)
+    .attr('class', 'rule')
+
+  liney = vis.append('line')
+    .attr("x1", 0)
+    .attr("y1", 0)
+    .attr("x2", w)
+    .attr("y2", 0)
+      .attr('class', 'rule')
+  </script>
+  </body>
+</html>

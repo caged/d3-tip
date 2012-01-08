@@ -28,17 +28,17 @@ d3.svg.tip = function() {
 
     // The value to show in the tooltip
     var val     = container.append('text').text(tipText).attr('text-anchor', 'middle').attr('alignment-baseline', 'middle'),
-        valRect = val.node().getBoundingClientRect();
+        valRect = val.node().getBBox();
     
     backing.attr('width', valRect.width).attr('height', valRect.height)
     val.attr('dx', valRect.width / 2).attr('dy', valRect.height / 2)
 
-    var containerRect = container.node().getBBox();
+    var backingRect = backing.node().getBBox();
 
     switch(orient) {
       case 'top':
-        x = targetRect.x + (targetRect.width / 2) - (containerRect.width / 2);
-        y = targetRect.y;
+        x = targetRect.x + (targetRect.width / 2) - (backingRect.width / 2) + tipOffset[0];
+        y = targetRect.y - backingRect.height + tipOffset[1];
       break;
     }
 

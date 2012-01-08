@@ -38,10 +38,8 @@
         tip = d3.svg.tip()
           .orient('top')
           .padding(10)
-          .text(function(d, i, t) { 
-            return "value: " + d;
-          })
-
+          .text(function(d) { return d; })
+          .attr('class', 'd3-tip')
 
     vis = d3.select(document.body)
       .append('svg')
@@ -54,7 +52,7 @@
       .attr('r', r)
       .attr('cx', function(d, i) { return x(i) })
       .attr('cy', y)
-      // .on('mouseover', tip)
+      .on('mouseover', tip)
       .on('click', function() { 
         var bbox = this.getBBox(),
             x = bbox.x + (bbox.width / 2),
