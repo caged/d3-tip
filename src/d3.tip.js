@@ -37,12 +37,16 @@ d3.svg.tip = function() {
     backing.attr('width', valRect.width).attr('height', valRect.height).attr('rx', cornerRadius).attr('ry', cornerRadius)
     val.attr('dx', valRect.width / 2).attr('dy', valRect.height / 2)
 
-    var backingRect = backing.node().getBBox();
+    var backingRect = backing.node().getBBox(),
+        containerRect = container.node().getBBox();
 
     switch(orient) {
       case 'top':
         x = targetRect.x + (targetRect.width / 2) - (backingRect.width / 2) + tipOffset[0];
         y = targetRect.y - backingRect.height + tipOffset[1];
+      case 'bottom':
+        x = targetRect.x + (targetRect.width / 2) - (backingRect.width / 2) + tipOffset[0];
+        y = targetRect.y + targetRect.height - tipOffset[1];
       break;
     }
 

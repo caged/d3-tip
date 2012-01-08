@@ -36,7 +36,7 @@
         x = d3.scale.linear().domain([0, data.length - 1]).range([r, w - r]),
         y = d3.scale.linear().domain([0, d3.max(data)]).range([h,  r]),
         tip = d3.svg.tip()
-          .orient('top')
+          .orient('bottom')
           .padding(10)
           .text(function(d) { return d; })
           .attr('class', 'd3-tip')
@@ -56,7 +56,7 @@
       .on('click', function() { 
         var bbox = this.getBBox(),
             x = bbox.x + (bbox.width / 2),
-            y = bbox.y;
+            y = bbox.y + bbox.height;
         
         linex.transition()
           .attr('x1', x)

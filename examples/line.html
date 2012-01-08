@@ -45,9 +45,9 @@
       max   = d3.max(data, function(d) { return d3.max(d) }),
       linex, liney,
       tip = d3.svg.tip()
-        .orient('top')
+        .orient('bottom')
         .padding(5)
-        .offset([20, 20])
+        .offset([20, -20])
         .text(function(d) { return d; })
         .attr('class', 'd3-tip');
 
@@ -99,7 +99,7 @@
       var rect = this.getBoundingClientRect(),
           bbox = this.getBBox(),
           x = bbox.x + (bbox.width / 2),
-          y = bbox.y;
+          y = bbox.y + bbox.height;
       
       linex.transition()
         .attr('x1', x)
