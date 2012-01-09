@@ -20,8 +20,8 @@ vis.selectAll('rect')
 
 ## TODO
 * ~~Left orientation~~
-* Right orientation
+* ~~Right orientation~~
 * Auto orientation
-* Reorient when tip exceeds document bounds
+* ~~Reorient when tip exceeds document bounds~~
 * svg content in tip
 * docs

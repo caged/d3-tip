@@ -14,7 +14,7 @@ d3.svg.tip = function() {
         tipText   = text.apply(this, arguments),
         container = d3.select(node),
         tag = this.tagName.toLowerCase(),
-        loc, stem, backingRect, containerRect, stemRect, d3_orient_types;
+        loc, stem, stem_gen, backingRect, containerRect, stemRect, d3_orient_types;
     
     // Elements and Bounds
     var doc        = d3.select(this.ownerSVGElement),
@@ -46,7 +46,8 @@ d3.svg.tip = function() {
 
     // TODO: stem seems to report the wrong height, so it's never completely flush
     // against the backing rect.
-    stem = container.append('path').attr('d', d3_svg_stem())
+    stem_gen = d3.svg.symbol().type('triangle-down').size(stemSize)
+    stem = container.append('path').attr('d', stem_gen())
     stemRect = stem.node().getBBox()
 
     d3_orient_types = {
@@ -60,6 +61,11 @@ d3.svg.tip = function() {
       },
 
       bottom: function() {
+        stem.remove()
+        stem_gen = d3.svg.symbol().type('triangle-up').size(stemSize)
+        stem = container.append('path').attr('d', stem_gen())
+        
+        stemRect = stem.node().getBBox()
         stem.attr('transform', 'translate(' + (backingRect.width / 2) + ',' + -(stemRect.height / 2) + ')');
         
         containerRect = container.node().getBBox()
@@ -107,6 +113,31 @@ d3.svg.tip = function() {
     }
 
     loc = d3_orient_types[orient]()
+
+    // Tip clipped at right boundry
+    if(loc.x + containerRect.width > docRect.width) {
+      loc = d3_orient_types['left']()
+    }
+
+    // Tip clipped at left boundry
+    if(loc.x < 0 && orient == 'left') {
+      loc = d3_orient_types['right']()
+    }
+
+    // Tip positioned left or right and clipped at the top or bottom
+    if(orient == 'left' || orient == 'right') {
+      if(loc.y < 0) loc.y = 0
+      if(loc.y > docRect.height) loc.y = docRect.height
+    }
+
+    // Tip positioned at the top and overlaps the top boundry.
+    // We need to "flip" the offset here so the offset runs in the 
+    // opposite direction.
+    if(loc.y - containerRect.height < 0 && orient == 'top') {
+      loc = d3_orient_types['bottom']()
+      loc.y += (tipOffset[1] * 2);
+    }
+
     container.attr('transform', 'translate(' + loc.x + ',' + loc.y + ')')
   }
 

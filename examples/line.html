@@ -38,16 +38,16 @@
   </head>
   <body>
   <script type="text/javascript">
-  var data  = [[3,7,9,1,4,4,8,2,5], [5,2,3,4,9,6,4,6,8]],
+  var data  = [[300,700,900,100,400,400,800,200,500], [500,200,300,400,900,600,400,600,800]],
       pl = 20, pt = 20, pr = 20, pb = 20,
       w     = 800 - pl - pr,
       h     = 300 - pt - pb,
       max   = d3.max(data, function(d) { return d3.max(d) }),
       linex, liney,
       tip = d3.svg.tip()
-        .orient('bottom')
+        .orient('top')
         .padding(4)
-        .offset([20, -20])
+        .offset([20, 20])
         .text(function(d) { return d; })
         .attr('class', 'd3-tip');
 
