@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Crimean War</title>
+    <title>Lines</title>
     <script type="text/javascript" src="../vendor/d3.js"></script>
     <script type="text/javascript" src="../vendor/d3.layout.js"></script>
     <script type="text/javascript" src="../src/d3.tip.js"></script>
     <style type="text/css">
-      .d3-tip {
+      .d3-tip path, .d3-tip rect {
         fill: #c00;
         font-weight: bold;
       }
@@ -24,7 +24,7 @@
         shape-rendering: crispedges;
       }
 
-      path {
+      g.line path {
         fill: none;
         stroke-width: 2px;
       }
@@ -45,9 +45,9 @@
       max   = d3.max(data, function(d) { return d3.max(d) }),
       linex, liney,
       tip = d3.svg.tip()
-        .orient('bottom')
-        .padding(5)
-        .offset([20, -20])
+        .orient('top')
+        .padding(4)
+        .offset([20, 20])
         .text(function(d) { return d; })
         .attr('class', 'd3-tip');
 
@@ -65,9 +65,10 @@
       .attr('transform', "translate(" + pl + "," + pt + ")")
  
   // add path layers to their repesctive group
-  var paths = vis.selectAll('path.line')
+  var paths = vis.selectAll('g.line')
     .data(data)
   .enter().append("g")
+    .attr('class', 'line')
 
   paths.append('path')
     .attr("d", d3.svg.line().x(function(d,i) { return x(i) }).y(y).interpolate('cardinal'))

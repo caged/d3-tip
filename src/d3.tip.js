@@ -13,7 +13,7 @@ d3.svg.tip = function() {
     var tipOffset = offset.apply(this, arguments),
         tipText   = text.apply(this, arguments),
         container = d3.select(node),
-        x, y;
+        x, y, stem, backingRect, containerRect;
     
     // Elements and Bounds
     var doc        = d3.select(this.ownerSVGElement),
@@ -37,15 +37,26 @@ d3.svg.tip = function() {
     backing.attr('width', valRect.width).attr('height', valRect.height).attr('rx', cornerRadius).attr('ry', cornerRadius)
     val.attr('dx', valRect.width / 2).attr('dy', valRect.height / 2)
 
-    var backingRect = backing.node().getBBox();
+    backingRect = backing.node().getBBox();
 
     switch(orient) {
       case 'top':
-        x = targetRect.x + (targetRect.width / 2) - (backingRect.width / 2) + tipOffset[0];
-        y = targetRect.y - backingRect.height + tipOffset[1];
+        stem = container.append('path')
+          .attr('d', d3_svg_stem())
+          .attr('transform', 'translate(' + (backingRect.width / 2) + ',' + backingRect.height + ')');
+                  
+        containerRect = container.node().getBBox()
+
+        x = targetRect.x + (targetRect.width / 2) - (containerRect.width / 2) + tipOffset[0];
+        y = targetRect.y - containerRect.height + tipOffset[1];
         break;
       case 'bottom':
-        x = targetRect.x + (targetRect.width / 2) - (backingRect.width / 2) + tipOffset[0];
+        // stem = d3.svg.symbol().type('triangle-down').size(stemSize);
+        // stem = d3.select(make('path')).attr('d', stem);
+        // container.node().appendChild(stem.node())
+        var containerRect = container.node().getBBox()
+
+        x = targetRect.x + (targetRect.width / 2) - (containerRect.width / 2) + tipOffset[0];
         y = targetRect.y + targetRect.height - tipOffset[1];
         break;
     }
@@ -102,6 +113,10 @@ d3.svg.tip = function() {
 
   function d3_svg_text() {
     return ' ';
+  }
+
+  function d3_svg_stem() {
+    return d3.svg.symbol().type(orient == 'top' ? 'triangle-down' : 'triangle-up').size(stemSize);
   }
 
   tip.attr = function(n, v) {
