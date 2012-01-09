@@ -149,10 +149,6 @@ d3.svg.tip = function() {
     return ' ';
   }
 
-  function d3_svg_stem() {
-    return d3.svg.symbol().type(orient == 'bottom' ? 'triangle-up' : 'triangle-down').size(stemSize);
-  }
-
   tip.attr = function(n, v) {
     d3.select(node).attr(n, v)
     return tip;
