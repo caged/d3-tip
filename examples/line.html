@@ -7,7 +7,7 @@
     <script type="text/javascript" src="../src/d3.tip.js"></script>
     <style type="text/css">
       .d3-tip path, .d3-tip rect {
-        fill: #c00;
+        fill: #005dae;
         font-weight: bold;
       }
 
@@ -45,9 +45,9 @@
       max   = d3.max(data, function(d) { return d3.max(d) }),
       linex, liney,
       tip = d3.svg.tip()
-        .orient('top')
+        .orient('bottom')
         .padding(4)
-        .offset([20, 20])
+        .offset([20, -20])
         .text(function(d) { return d; })
         .attr('class', 'd3-tip');
 
