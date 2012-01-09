@@ -2,7 +2,7 @@ d3.svg.tip = function() {
   var orient = 'top',
       padding = 5,
       cornerRadius = 2,
-      stemSize = 60,
+      stemSize = 50,
       offset = d3_svg_offset,
       text = d3_svg_text,
       node = make('g');
@@ -81,11 +81,19 @@ d3.svg.tip = function() {
 
       break;
       case 'right':
-        stem.attr('transform', 'translate(' + backingRect.width + ',' + (backingRect.height / 2) + ') rotate(-90)');
+        stem.attr('transform', 'translate(' + -(stemRect.height / 2) + ',' + (backingRect.height / 2) + ') rotate(90)');
         
         containerRect = container.node().getBBox()
-        x = targetRect.x - targetRect.width - (containerRect.width / 2) - (stemRect.height / 2) + tipOffset[0];
-        y = targetRect.y - (targetRect.height / 2) + tipOffset[1];
+        x = targetRect.x + (targetRect.width / 2) + stemRect.height + containerRect.width + tipOffset[0];
+        y = targetRect.y + tipOffset[1];
+
+        if(tag == 'circle') {
+          x -= targetRect.width + (containerRect.width / 2);
+          y -= targetRect.height / 2
+        } else if(tag == 'rect') {
+          x -= containerRect.width - (stemRect.height / 2)
+          y -= containerRect.height / 2
+        }
       break;    
     }
 
