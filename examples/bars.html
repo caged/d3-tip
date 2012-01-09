@@ -35,7 +35,7 @@
         x  = d3.scale.ordinal().domain(d3.range(data.length)).rangeRoundBands([0, w], 0.1),
         y  = d3.scale.linear().domain([0, d3.max(data)]).range([h, 0]),
         tip = d3.svg.tip()
-          .orient('top')
+          .orient('left')
           .padding(5)
           .text(function(d) { return d; })
           .attr('class', 'd3-tip')

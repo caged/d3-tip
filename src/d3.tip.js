@@ -2,7 +2,7 @@ d3.svg.tip = function() {
   var orient = 'top',
       padding = 5,
       cornerRadius = 2,
-      stemSize = 90,
+      stemSize = 60,
       offset = d3_svg_offset,
       text = d3_svg_text,
       node = make('g');
@@ -13,6 +13,7 @@ d3.svg.tip = function() {
     var tipOffset = offset.apply(this, arguments),
         tipText   = text.apply(this, arguments),
         container = d3.select(node),
+        tag = this.tagName.toLowerCase(),
         x, y, stem, backingRect, containerRect, stemRect;
     
     // Elements and Bounds
@@ -55,23 +56,37 @@ d3.svg.tip = function() {
         containerRect = container.node().getBBox()
         x = targetRect.x + (targetRect.width / 2) - (containerRect.width / 2) + tipOffset[0];
         y = targetRect.y - containerRect.height + tipOffset[1];
-        break;
-      
+      break;
       case 'bottom':
         stem.attr('transform', 'translate(' + (backingRect.width / 2) + ',' + -(stemRect.height / 2) + ')');
         
         containerRect = container.node().getBBox()
         x = targetRect.x + (targetRect.width / 2) - (containerRect.width / 2) + tipOffset[0];
         y = targetRect.y + targetRect.height + stemRect.height - tipOffset[1];
-        break;
-      
+      break;
       case 'left':
+        stem.attr('transform', 'translate(' + backingRect.width + ',' + (backingRect.height / 2) + ') rotate(-90)');
+        
+        containerRect = container.node().getBBox()
+        x = targetRect.x - (stemRect.height / 2) + tipOffset[0];
+        y = targetRect.y + tipOffset[1];
+
+        if(tag == 'circle') {
+          x -= targetRect.width + (containerRect.width / 2);
+          y -= targetRect.height / 2
+        } else if(tag == 'rect') {
+          x -= containerRect.width - (stemRect.height / 2)
+          y -= containerRect.height / 2
+        }
+
+      break;
+      case 'right':
         stem.attr('transform', 'translate(' + backingRect.width + ',' + (backingRect.height / 2) + ') rotate(-90)');
         
         containerRect = container.node().getBBox()
         x = targetRect.x - targetRect.width - (containerRect.width / 2) - (stemRect.height / 2) + tipOffset[0];
         y = targetRect.y - (targetRect.height / 2) + tipOffset[1];
-        break;
+      break;    
     }
 
     container.attr('transform', 'translate(' + x + ',' + y + ')')
