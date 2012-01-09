@@ -17,3 +17,11 @@ vis.selectAll('rect')
   .attr('x', function(d, i) { return x(i) })
   .on('mouseover', tip)
 ```
+
+## TODO
+* Left orientation
+* Right orientation
+* Auto orientation
+* Reorient when tip exceeds document bounds
+* svg content in tip
+* docs
