@@ -26,6 +26,9 @@ d3.svg.tip = function() {
         docRect    = this.ownerSVGElement.getBoundingClientRect(),
         targetRect = this.getBBox();
 
+    // TODO: Allow ability to specify this in someway
+    target.on('mouseout', function() { container.remove() })
+
     // FIXME: d3 has problems using `append` with nodes that were created
     // but not immediately added to the SVG dom.
     // Clear the container and add the rect backing

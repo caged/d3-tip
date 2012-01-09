@@ -1,6 +1,13 @@
-## Simple Tooltips for d3.js - **ALPHA STATE**
+## Simple SVG Tooltips for d3.js
 
 Pure SVG tooltips for [d3.js](http://mbostock.github.com/d3/)
+
+![](http://dl.dropbox.com/u/602885/d3-tip-1.png)
+
+* Familiar API - Modeled after the d3 API.
+* SVG - It's all svg, no hacks
+* Text only - Currently supports simple text values in tooltips 
+* Styleable - Use any svg styling support (dashed borders, etc).
 
 ### Usage
 ``` javascript
@@ -21,7 +28,8 @@ vis.selectAll('rect')
 ## TODO
 * ~~Left orientation~~
 * ~~Right orientation~~
-* Auto orientation
 * ~~Reorient when tip exceeds document bounds~~
+* ~~docs~~
+* Auto orientation
 * svg content in tip
-* docs
+* type - specify if tooltip is sticky.
