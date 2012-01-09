@@ -84,14 +84,14 @@ d3.svg.tip = function() {
         stem.attr('transform', 'translate(' + -(stemRect.height / 2) + ',' + (backingRect.height / 2) + ') rotate(90)');
         
         containerRect = container.node().getBBox()
-        x = targetRect.x + (targetRect.width / 2) + stemRect.height + containerRect.width + tipOffset[0];
+        x = targetRect.x + stemRect.height + tipOffset[0];
         y = targetRect.y + tipOffset[1];
 
         if(tag == 'circle') {
-          x -= targetRect.width + (containerRect.width / 2);
+          x += targetRect.width
           y -= targetRect.height / 2
         } else if(tag == 'rect') {
-          x -= containerRect.width - (stemRect.height / 2)
+          x += targetRect.width
           y -= containerRect.height / 2
         }
       break;    
