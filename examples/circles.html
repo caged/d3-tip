@@ -32,6 +32,7 @@
         h = 500,
         r = 10,
         linex, liney,
+        orientations = ['top', 'bottom', 'left', 'right'],
         data = [1220, 2230, 3002, 4012],
         x = d3.scale.linear().domain([0, data.length - 1]).range([r, w - r]),
         y = d3.scale.linear().domain([0, d3.max(data)]).range([h,  r]),
@@ -52,8 +53,9 @@
       .attr('r', r)
       .attr('cx', function(d, i) { return x(i) })
       .attr('cy', y)
-      .on('mouseover', tip)
-      .on('click', function() { 
+      .on('mouseover', function(d, i) { 
+        tip.orient(orientations[i]).apply(this, arguments)
+
         var bbox = this.getBBox(),
             x = bbox.x + (bbox.width / 2),
             y = bbox.y + bbox.height;
@@ -64,7 +66,8 @@
 
         liney.transition()
           .attr('y1', y)
-          .attr('y2',y)      
+          .attr('y2',y)          
+
       })
 
     linex = vis.append('line')

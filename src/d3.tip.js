@@ -120,7 +120,7 @@ d3.svg.tip = function() {
     }
 
     // Tip clipped at left boundry
-    if(loc.x < 0 && orient == 'left') {
+    if(loc.x < 0) {
       loc = d3_orient_types['right']()
     }
 
