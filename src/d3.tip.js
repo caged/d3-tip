@@ -149,8 +149,19 @@ d3.svg.tip = function() {
     return ' ';
   }
 
+  // Public: Proxy attr calls to the d3 tip container.  Sets or gets attribute value.
+  //
+  // n - name of the attribute
+  // v - value of the attribute
+  //
+  // Returns tip or attribute value
   tip.attr = function(n, v) {
-    d3.select(node).attr(n, v)
+    if (arguments.length < 2) {
+      return d3.select(node).attr(n)
+    } else {
+      d3.select(node).attr(n, v)
+    }
+
     return tip;
   }
 
