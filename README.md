@@ -19,7 +19,7 @@ vis.selectAll('rect')
 ```
 
 ## TODO
-* Left orientation
+* ~~Left orientation~~
 * Right orientation
 * Auto orientation
 * Reorient when tip exceeds document bounds

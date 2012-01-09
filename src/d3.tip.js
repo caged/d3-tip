@@ -38,7 +38,7 @@ d3.svg.tip = function() {
       .attr('height', valRect.height)
       .attr('rx', cornerRadius)
       .attr('ry', cornerRadius)
-      
+
     val.attr('dx', valRect.width / 2).attr('dy', valRect.height / 2)
 
     backingRect = backing.node().getBBox()
@@ -56,12 +56,21 @@ d3.svg.tip = function() {
         x = targetRect.x + (targetRect.width / 2) - (containerRect.width / 2) + tipOffset[0];
         y = targetRect.y - containerRect.height + tipOffset[1];
         break;
+      
       case 'bottom':
         stem.attr('transform', 'translate(' + (backingRect.width / 2) + ',' + -(stemRect.height / 2) + ')');
         
         containerRect = container.node().getBBox()
         x = targetRect.x + (targetRect.width / 2) - (containerRect.width / 2) + tipOffset[0];
         y = targetRect.y + targetRect.height + stemRect.height - tipOffset[1];
+        break;
+      
+      case 'left':
+        stem.attr('transform', 'translate(' + backingRect.width + ',' + (backingRect.height / 2) + ') rotate(-90)');
+        
+        containerRect = container.node().getBBox()
+        x = targetRect.x - targetRect.width - (containerRect.width / 2) - (stemRect.height / 2) + tipOffset[0];
+        y = targetRect.y - (targetRect.height / 2) + tipOffset[1];
         break;
     }
 
@@ -77,7 +86,7 @@ d3.svg.tip = function() {
   }
 
   function d3_svg_stem() {
-    return d3.svg.symbol().type(orient == 'top' ? 'triangle-down' : 'triangle-up').size(stemSize);
+    return d3.svg.symbol().type(orient == 'bottom' ? 'triangle-up' : 'triangle-down').size(stemSize);
   }
 
   tip.attr = function(n, v) {
