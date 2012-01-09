@@ -1,6 +1,6 @@
 ## Simple SVG Tooltips for d3.js
 
-Pure SVG tooltips for [d3.js](http://mbostock.github.com/d3/)
+Pure SVG tooltips for [d3.js](http://mbostock.github.com/d3/). ~3kb compressed, ~7k original.
 
 ![](http://dl.dropbox.com/u/602885/d3-tip-1.png)
 
