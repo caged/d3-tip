@@ -14,7 +14,7 @@ d3.svg.tip = function() {
         tipText   = text.apply(this, arguments),
         container = d3.select(node),
         tag = this.tagName.toLowerCase(),
-        x, y, stem, backingRect, containerRect, stemRect;
+        loc, stem, backingRect, containerRect, stemRect, d3_orient_types;
     
     // Elements and Bounds
     var doc        = d3.select(this.ownerSVGElement),
@@ -49,22 +49,27 @@ d3.svg.tip = function() {
     stem = container.append('path').attr('d', d3_svg_stem())
     stemRect = stem.node().getBBox()
 
-    switch(orient) {
-      case 'top':
+    d3_orient_types = {
+      top: function() {
         stem.attr('transform', 'translate(' + (backingRect.width / 2) + ',' + backingRect.height + ')');
-
         containerRect = container.node().getBBox()
         x = targetRect.x + (targetRect.width / 2) - (containerRect.width / 2) + tipOffset[0];
         y = targetRect.y - containerRect.height + tipOffset[1];
-      break;
-      case 'bottom':
+        
+        return {x: x, y: y}   
+      },
+
+      bottom: function() {
         stem.attr('transform', 'translate(' + (backingRect.width / 2) + ',' + -(stemRect.height / 2) + ')');
         
         containerRect = container.node().getBBox()
         x = targetRect.x + (targetRect.width / 2) - (containerRect.width / 2) + tipOffset[0];
-        y = targetRect.y + targetRect.height + stemRect.height - tipOffset[1];
-      break;
-      case 'left':
+        y = targetRect.y + targetRect.height + stemRect.height - tipOffset[1]
+        
+        return {x: x, y: y}        
+      },
+
+      left: function() {
         stem.attr('transform', 'translate(' + backingRect.width + ',' + (backingRect.height / 2) + ') rotate(-90)');
         
         containerRect = container.node().getBBox()
@@ -78,9 +83,11 @@ d3.svg.tip = function() {
           x -= containerRect.width - (stemRect.height / 2)
           y -= containerRect.height / 2
         }
+        
+        return {x: x, y: y}        
+      },
 
-      break;
-      case 'right':
+      right: function() {
         stem.attr('transform', 'translate(' + -(stemRect.height / 2) + ',' + (backingRect.height / 2) + ') rotate(90)');
         
         containerRect = container.node().getBBox()
@@ -94,10 +101,13 @@ d3.svg.tip = function() {
           x += targetRect.width
           y -= containerRect.height / 2
         }
-      break;    
+        
+        return {x: x, y: y}        
+      }
     }
 
-    container.attr('transform', 'translate(' + x + ',' + y + ')')
+    loc = d3_orient_types[orient]()
+    container.attr('transform', 'translate(' + loc.x + ',' + loc.y + ')')
   }
 
   function d3_svg_offset() {
