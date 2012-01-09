@@ -1,3 +1,6 @@
+// Public - contructs a new tooltip
+//
+// Returns a tip
 d3.svg.tip = function() {
   var orient = 'top',
       padding = 5,
@@ -60,6 +63,8 @@ d3.svg.tip = function() {
         return {x: x, y: y}   
       },
 
+      // Bottom is the only tooltip that uses a stem with triangle-up, so we need to do 
+      // a little more work here.
       bottom: function() {
         stem.remove()
         stem_gen = d3.svg.symbol().type('triangle-up').size(stemSize)
@@ -165,36 +170,66 @@ d3.svg.tip = function() {
     return tip;
   }
 
+  // Public: Set or get the orientation of the tooltip
+  //
+  // v - One of top, bottom, left, or right
+  //
+  // Returns tip or oreint
   tip.orient = function(v) {
     if (!arguments.length) return orient;
     orient = v;
     return tip;
   };
 
+  // Public: Sets or gets the padding on all sides for the tooltip
+  //
+  // v - Padding value as a number
+  //
+  // Returns padding or tip
   tip.padding = function(v) {
     if (!arguments.length) return padding;
     padding = v;
     return tip;
   };
 
+  // Public: Sets or gets the corner radius of the tooltip on all sides
+  //
+  // v - Radius as a Number
+  //
+  // Returns cornerRadius or tip
   tip.cornerRadius = function(v) {
     if (!arguments.length) return cornerRadius;
     cornerRadius = v;
     return tip;
   };
 
+  // Public: Sets or gets the size of the stem
+  //
+  // v - size of the stem
+  // 
+  // Returns stemSize or tip
   tip.stemSize = function(v) {
     if (!arguments.length) return stemSize;
     stemSize = v;
     return tip;
   };
 
+  // Public: Sets or gets the offset of the tip
+  //
+  // v - Array of [x, y] offset
+  //
+  // Returns offset or 
   tip.offset = function(v) {
     if (!arguments.length) return offset;
     offset = v == null ? v: d3.functor(v);
     return tip;
   };  
 
+  // Public: sets or gets the text value of the tooltip
+  //
+  // v - String value of the tip
+  //
+  // Returns text value or tip
   tip.text = function(v) {
     if (!arguments.length) return text;
     text = v == null ? v: d3.functor(v);
