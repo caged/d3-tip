@@ -76,83 +76,84 @@
         .attr('class', 'd3-tip');
 
 
+  (function() {
+    // Base vis layer
+    var vis = d3.select('#bars')
+      .append('svg')
+        .attr('width', w + (pl + pr))
+        .attr('height', h + pt + pb)
+        .attr('class', 'viz')
+      .append('g')
+        .attr('transform', "translate(" + pl + "," + pt + ")")
 
-  // Base vis layer
-  var vis = d3.select('#bars')
-    .append('svg')
-      .attr('width', w + (pl + pr))
-      .attr('height', h + pt + pb)
-      .attr('class', 'viz')
-    .append('g')
-      .attr('transform', "translate(" + pl + "," + pt + ")")
+    d3.json('data.json', function(data) {
+      var totals  = data.map(function(d) { return d.total }),
+          max     = d3.max(totals),
+          // Scales
+          x       = d3.scale.ordinal().domain(d3.range(totals.length)).rangeRoundBands([0, w - pl - pr], 0.1)
+          y       = d3.scale.linear().domain([0, max]).range([h, 0]),
+          yAxis   = d3.svg.axis().scale(y).orient("left").ticks(3).tickSize(-w + pl + pr),
+          xAxis   = d3.svg.axis().scale(x).tickSize(8);
 
-  d3.json('data.json', function(data) {
-    var totals  = data.map(function(d) { return d.total }),
-        max     = d3.max(totals),
-        // Scales
-        x       = d3.scale.ordinal().domain(d3.range(totals.length)).rangeRoundBands([0, w - pl - pr], 0.1)
-        y       = d3.scale.linear().domain([0, max]).range([h, 0]),
-        yAxis   = d3.svg.axis().scale(y).orient("left").ticks(3).tickSize(-w + pl + pr),
-        xAxis   = d3.svg.axis().scale(x).tickSize(8);
+      vis.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
 
-    vis.append("g")
-      .attr("class", "y axis")
-      .call(yAxis)
+      var bgroups = vis.selectAll('g.bar')
+          .data(totals)
+        .enter().append('g')
+          .attr('transform', function(d, i) { return "translate(" + x(i) + ",0)" })
 
-    var bgroups = vis.selectAll('g.bar')
-        .data(totals)
-      .enter().append('g')
-        .attr('transform', function(d, i) { return "translate(" + x(i) + ",0)" })
+      bgroups.append('rect')
+        .attr('width', x.rangeBand())
+        .attr('height', function(d) { return h - y(d) })
+        .attr('y', function(d) { return y(d) })
+        .on('mouseover', function(d) {
+          d3.select(this).style('fill', 'red')
+          var rect = this.getBoundingClientRect(),
+              bbox = this.getBBox(),
+              // trans = this.getTransformToElement(),
+              scree = this.getScreenCTM(),
+              ctm   = this.getCTM(),
+              x = ctm.e - ctm.f + (bbox.width / 2),
+              y = bbox.y;
 
-    bgroups.append('rect')
-      .attr('width', x.rangeBand())
-      .attr('height', function(d) { return h - y(d) })
-      .attr('y', function(d) { return y(d) })
-      .on('mouseover', function(d) {
-        d3.select(this).style('fill', 'red')
-        var rect = this.getBoundingClientRect(),
-            bbox = this.getBBox(),
-            // trans = this.getTransformToElement(),
-            scree = this.getScreenCTM(),
-            ctm   = this.getCTM(),
-            x = ctm.e - ctm.f + (bbox.width / 2),
-            y = bbox.y;
+          linex.transition()
+            .attr('x1', x)
+            .attr('x2', x)
 
-        linex.transition()
-          .attr('x1', x)
-          .attr('x2', x)
+          liney.transition()
+            .attr('y1', y)
+            .attr('y2',y)
+        })
+        .on('mouseout', function(d) {
+          d3.select(this).style('fill', '#2892eb')
+        })
 
-        liney.transition()
-          .attr('y1', y)
-          .attr('y2',y)
-      })
-      .on('mouseout', function(d) {
-        d3.select(this).style('fill', '#2892eb')
-      })
-
-    vis.append('g')
-      .attr('class', 'x axis')
-      .attr("transform", "translate(0," + h + ")")
-      .call(xAxis)
-    .selectAll('.x.axis g')
-      .style('display', function(d, i) { return i % 3 != 0 ? 'none' : 'block' })
+      vis.append('g')
+        .attr('class', 'x axis')
+        .attr("transform", "translate(0," + h + ")")
+        .call(xAxis)
+      .selectAll('.x.axis g')
+        .style('display', function(d, i) { return i % 3 != 0 ? 'none' : 'block' })
 
 
-    // debugging stuff
-    var linex = vis.append('line')
-      .attr("x1", 0)
-      .attr("y1", 0)
-      .attr("x2", 0)
-      .attr("y2", h)
-      .attr('class', 'rule')
+      // debugging stuff
+      var linex = vis.append('line')
+        .attr("x1", 0)
+        .attr("y1", 0)
+        .attr("x2", 0)
+        .attr("y2", h)
+        .attr('class', 'rule')
 
-    var liney = vis.append('line')
-      .attr("x1", 0)
-      .attr("y1", 0)
-      .attr("x2", w)
-      .attr("y2", 0)
-      .attr('class', 'rule')
-  })
+      var liney = vis.append('line')
+        .attr("x1", 0)
+        .attr("y1", 0)
+        .attr("x2", w)
+        .attr("y2", 0)
+        .attr('class', 'rule')
+    })
+  })()
   </script>
   </body>
 </html>
