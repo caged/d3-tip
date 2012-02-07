@@ -60,6 +60,7 @@ d3.svg.tip = function() {
       top: function() {
         stem.attr('transform', 'translate(' + (backingRect.width / 2) + ',' + backingRect.height + ')');
         containerRect = container.node().getBBox()
+
         x = targetRect.x + (targetRect.width / 2) - (containerRect.width / 2) + tipOffset[0];
         y = targetRect.y - containerRect.height + tipOffset[1];
 

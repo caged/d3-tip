@@ -6,6 +6,10 @@
     <script type="text/javascript" src="../vendor/d3.layout.js"></script>
     <script type="text/javascript" src="../src/d3.tip.js"></script>
     <style type="text/css">
+      body {
+        padding: 100px;
+      }
+
       path.domain {
         display: none;
       }
@@ -67,7 +71,6 @@
       tip = d3.svg.tip()
         .orient('top')
         .padding(4)
-        .offset([20, 20])
         .text(function(d) { return d; })
         .attr('class', 'd3-tip');
 
@@ -104,7 +107,27 @@
       .attr('width', x.rangeBand())
       .attr('height', function(d) { return h - y(d) })
       .attr('y', function(d) { return y(d) })
-      .on('mouseover', tip)
+      .on('mouseover', function(d) {
+        d3.select(this).style('fill', 'red')
+        var rect = this.getBoundingClientRect(),
+            bbox = this.getBBox(),
+            // trans = this.getTransformToElement(),
+            scree = this.getScreenCTM(),
+            ctm   = this.getCTM(),
+            x = ctm.e - ctm.f + (bbox.width / 2),
+            y = bbox.y;
+
+        linex.transition()
+          .attr('x1', x)
+          .attr('x2', x)
+
+        liney.transition()
+          .attr('y1', y)
+          .attr('y2',y)
+      })
+      .on('mouseout', function(d) {
+        d3.select(this).style('fill', '#2892eb')
+      })
 
     vis.append('g')
       .attr('class', 'x axis')
@@ -112,6 +135,22 @@
       .call(xAxis)
     .selectAll('.x.axis g')
       .style('display', function(d, i) { return i % 3 != 0 ? 'none' : 'block' })
+
+
+    // debugging stuff
+    var linex = vis.append('line')
+      .attr("x1", 0)
+      .attr("y1", 0)
+      .attr("x2", 0)
+      .attr("y2", h)
+      .attr('class', 'rule')
+
+    var liney = vis.append('line')
+      .attr("x1", 0)
+      .attr("y1", 0)
+      .attr("x2", w)
+      .attr("y2", 0)
+      .attr('class', 'rule')
   })
   </script>
   </body>
