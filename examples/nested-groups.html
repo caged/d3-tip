@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Lines</title>
+    <script type="text/javascript" src="../vendor/d3.js"></script>
+    <script type="text/javascript" src="../vendor/d3.layout.js"></script>
+    <script type="text/javascript" src="../src/d3.tip.js"></script>
+    <style type="text/css">
+      path.domain {
+        display: none;
+      }
+
+      .d3-tip path, .d3-tip rect {
+        fill: #005dae;
+        font-weight: bold;
+      }
+
+      .d3-tip text {
+        fill: #fff;
+        font-size: 12px;
+        stroke: none;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      }
+
+      .rule {
+        stroke-width: 1px;
+        stroke: #c00;
+        shape-rendering: crispedges;
+      }
+
+      g.line path {
+        fill: none;
+        stroke-width: 2px;
+      }
+
+      circle {
+        fill: #fff;
+        stroke: #c00;
+        stroke-width: 2px;
+      }
+
+      text {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 10px;
+        fill: #777;
+      }
+
+      rect {
+        fill: #2892eb;
+      }
+
+      line.tick {
+        stroke-width: 1px;
+        stroke: #ddd;
+        shape-rendering: crispedges;
+      }
+    </style>
+  </head>
+  <body>
+  <script type="text/javascript">
+  var data  = [[300,700,900,100,400,400,800,200,500], [500,200,300,400,900,600,400,600,800]],
+      pl = 20, pt = 20, pr = 20, pb = 20,
+      w     = 800 - pl - pr,
+      h     = 300 - pt - pb,
+      max   = d3.max(data, function(d) { return d3.max(d) }),
+      linex, liney,
+      tip = d3.svg.tip()
+        .orient('top')
+        .padding(4)
+        .offset([20, 20])
+        .text(function(d) { return d; })
+        .attr('class', 'd3-tip');
+
+
+
+  // Base vis layer
+  var vis = d3.select(document.body)
+    .append('svg')
+      .attr('width', w + (pl + pr))
+      .attr('height', h + pt + pb)
+      .attr('class', 'viz')
+    .append('g')
+      .attr('transform', "translate(" + pl + "," + pt + ")")
+
+  d3.json('data.json', function(data) {
+    var totals  = data.map(function(d) { return d.total }),
+        max     = d3.max(totals),
+        // Scales
+        x       = d3.scale.ordinal().domain(d3.range(totals.length)).rangeRoundBands([0, w - pl - pr], 0.1)
+        y       = d3.scale.linear().domain([0, max]).range([h, 0]),
+        yAxis   = d3.svg.axis().scale(y).orient("left").ticks(3).tickSize(-w + pl + pr),
+        xAxis   = d3.svg.axis().scale(x).tickSize(8);
+
+    vis.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+
+    var bgroups = vis.selectAll('g.bar')
+        .data(totals)
+      .enter().append('g')
+        .attr('transform', function(d, i) { return "translate(" + x(i) + ",0)" })
+
+    bgroups.append('rect')
+      .attr('width', x.rangeBand())
+      .attr('height', function(d) { return h - y(d) })
+      .attr('y', function(d) { return y(d) })
+      .on('mouseover', tip)
+
+    vis.append('g')
+      .attr('class', 'x axis')
+      .attr("transform", "translate(0," + h + ")")
+      .call(xAxis)
+    .selectAll('.x.axis g')
+      .style('display', function(d, i) { return i % 3 != 0 ? 'none' : 'block' })
+  })
+  </script>
+  </body>
+</html>
