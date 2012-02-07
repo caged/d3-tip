@@ -58,6 +58,12 @@
         stroke: #ddd;
         shape-rendering: crispedges;
       }
+
+      path.path {
+        fill: none;
+        stroke-width: 3px;
+        stroke: red;
+      }
     </style>
   </head>
   <body>
@@ -76,6 +82,84 @@
         .attr('class', 'd3-tip');
 
 
+  // CIRCLES HERE
+  (function() {
+    // Base vis layer
+    var vis = d3.select('#circles')
+      .append('svg')
+        .attr('width', w + (pl + pr))
+        .attr('height', h + pt + pb)
+        .attr('class', 'viz')
+      .append('g')
+        .attr('transform', "translate(" + pl + "," + pt + ")")
+
+    d3.json('data.json', function(data) {
+      var days = data[0].days,
+          max  = d3.max(data, function(d) { return d3.max(d.days) }),
+          h = 260,
+          x = d3.scale.linear().domain([0, days.length - 1]).range([0, w - pl -  pr]),
+          y = d3.scale.linear().domain([0, max]).range([h, 0]),
+          yAxis = d3.svg.axis().scale(y).orient("left").ticks(5).tickSize(-w + pr + pl);
+
+      vis.data([days])
+      vis.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+
+      var path = d3.svg.line()
+        .interpolate('cardinal')
+        .x(function(d,i) { return x(i) })
+        .y(y)
+
+      vis.append("path")
+        .attr('class', 'path')
+        .attr('d', path)
+
+      var dots = vis.selectAll('g.dot')
+        .data(days)
+      .enter().append('g')
+        .attr('class', 'dot')
+        .attr('transform', function(d, i) { return "translate(" + x(i) + "," + y(d) + ")" })
+
+      dots.append('circle')
+        .attr('r', 4)
+        .on('mouseover', function(d) {
+          var rect = this.getBoundingClientRect(),
+              bbox = this.getBBox(),
+              // trans = this.getTransformToElement(),
+              scree = this.getScreenCTM(),
+              ctm   = this.getCTM(),
+              x = ctm.e,
+              y = ctm.f;
+
+          console.log(rect, bbox, scree, ctm)
+          linex.transition()
+            .attr('x1', x)
+            .attr('x2', x)
+
+          liney.transition()
+            .attr('y1', y)
+            .attr('y2',y)
+        })
+
+          // debugging stuff
+      var linex = vis.append('line')
+        .attr("x1", 0)
+        .attr("y1", 0)
+        .attr("x2", 0)
+        .attr("y2", h)
+        .attr('class', 'rule')
+
+      var liney = vis.append('line')
+        .attr("x1", 0)
+        .attr("y1", 0)
+        .attr("x2", w)
+        .attr("y2", 0)
+        .attr('class', 'rule')
+    })
+  })();
+
+  // BARS HERE
   (function() {
     // Base vis layer
     var vis = d3.select('#bars')
