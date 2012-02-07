@@ -1,4 +1,4 @@
-## Simple SVG Tooltips for d3.js
+## Simple SVG Tooltips for d3.js - ALPHA QUALITY
 
 Pure SVG tooltips for [d3.js](http://mbostock.github.com/d3/). ~3kb compressed, ~7k original.
 
@@ -6,7 +6,7 @@ Pure SVG tooltips for [d3.js](http://mbostock.github.com/d3/). ~3kb compressed, 
 
 * Familiar API - Modeled after the d3 API.
 * SVG - It's all svg, no hacks
-* Text only - Currently supports simple text values in tooltips 
+* Text only - Currently supports simple text values in tooltips
 * Styleable - Use any svg styling support (dashed borders, etc).
 
 ### Usage
