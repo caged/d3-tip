@@ -61,12 +61,13 @@
     </style>
   </head>
   <body>
+  <div id="bars"></div>
+  <div id="circles"></div>
+
   <script type="text/javascript">
-  var data  = [[300,700,900,100,400,400,800,200,500], [500,200,300,400,900,600,400,600,800]],
-      pl = 20, pt = 20, pr = 20, pb = 20,
+  var pl = 20, pt = 20, pr = 20, pb = 20,
       w     = 800 - pl - pr,
       h     = 300 - pt - pb,
-      max   = d3.max(data, function(d) { return d3.max(d) }),
       linex, liney,
       tip = d3.svg.tip()
         .orient('top')
@@ -77,7 +78,7 @@
 
 
   // Base vis layer
-  var vis = d3.select(document.body)
+  var vis = d3.select('#bars')
     .append('svg')
       .attr('width', w + (pl + pr))
       .attr('height', h + pt + pb)
