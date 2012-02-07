@@ -123,7 +123,8 @@
 
       dots.append('circle')
         .attr('r', 4)
-        .on('mouseover', function(d) {
+        .on('mouseover', function(d, i) {
+          tip.apply(this, arguments)
           var rect = this.getBoundingClientRect(),
               bbox = this.getBBox(),
               // trans = this.getTransformToElement(),
@@ -132,7 +133,6 @@
               x = ctm.e,
               y = ctm.f;
 
-          console.log(rect, bbox, scree, ctm)
           linex.transition()
             .attr('x1', x)
             .attr('x2', x)
@@ -194,6 +194,7 @@
         .attr('y', function(d) { return y(d) })
         .on('mouseover', function(d) {
           d3.select(this).style('fill', 'red')
+          tip.apply(this, arguments)
           var rect = this.getBoundingClientRect(),
               bbox = this.getBBox(),
               // trans = this.getTransformToElement(),
@@ -209,9 +210,6 @@
           liney.transition()
             .attr('y1', y)
             .attr('y2',y)
-        })
-        .on('mouseout', function(d) {
-          d3.select(this).style('fill', '#2892eb')
         })
 
       vis.append('g')
