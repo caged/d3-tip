@@ -18,7 +18,7 @@ d3.svg.tip = function() {
         container = d3.select(node),
         tag = this.tagName.toLowerCase(),
         loc, stem, stem_gen, backingRect, containerRect, stemRect, d3_orient_types;
-    
+
     // Elements and Bounds
     var doc        = d3.select(this.ownerSVGElement),
         target     = d3.select(this),
@@ -37,7 +37,7 @@ d3.svg.tip = function() {
     // The value to show in the tooltip
     var val = container.append('text').text(tipText).attr('text-anchor', 'middle').attr('alignment-baseline', 'middle'),
         valRect = val.node().getBBox();
-    
+
     valRect.width = valRect.width + (padding * 2)
     valRect.height = valRect.height + (padding * 2)
 
@@ -62,30 +62,30 @@ d3.svg.tip = function() {
         containerRect = container.node().getBBox()
         x = targetRect.x + (targetRect.width / 2) - (containerRect.width / 2) + tipOffset[0];
         y = targetRect.y - containerRect.height + tipOffset[1];
-        
-        return {x: x, y: y}   
+
+        return {x: x, y: y}
       },
 
-      // Bottom is the only tooltip that uses a stem with triangle-up, so we need to do 
+      // Bottom is the only tooltip that uses a stem with triangle-up, so we need to do
       // a little more work here.
       bottom: function() {
         stem.remove()
         stem_gen = d3.svg.symbol().type('triangle-up').size(stemSize)
         stem = container.append('path').attr('d', stem_gen())
-        
+
         stemRect = stem.node().getBBox()
         stem.attr('transform', 'translate(' + (backingRect.width / 2) + ',' + -(stemRect.height / 2) + ')');
-        
+
         containerRect = container.node().getBBox()
         x = targetRect.x + (targetRect.width / 2) - (containerRect.width / 2) + tipOffset[0];
         y = targetRect.y + targetRect.height + stemRect.height - tipOffset[1]
-        
-        return {x: x, y: y}        
+
+        return {x: x, y: y}
       },
 
       left: function() {
         stem.attr('transform', 'translate(' + backingRect.width + ',' + (backingRect.height / 2) + ') rotate(-90)');
-        
+
         containerRect = container.node().getBBox()
         x = targetRect.x - (stemRect.height / 2) + tipOffset[0];
         y = targetRect.y + tipOffset[1];
@@ -97,13 +97,13 @@ d3.svg.tip = function() {
           x -= containerRect.width - (stemRect.height / 2)
           y -= containerRect.height / 2
         }
-        
-        return {x: x, y: y}        
+
+        return {x: x, y: y}
       },
 
       right: function() {
         stem.attr('transform', 'translate(' + -(stemRect.height / 2) + ',' + (backingRect.height / 2) + ') rotate(90)');
-        
+
         containerRect = container.node().getBBox()
         x = targetRect.x + stemRect.height + tipOffset[0];
         y = targetRect.y + tipOffset[1];
@@ -115,8 +115,8 @@ d3.svg.tip = function() {
           x += targetRect.width
           y -= containerRect.height / 2
         }
-        
-        return {x: x, y: y}        
+
+        return {x: x, y: y}
       }
     }
 
@@ -139,7 +139,7 @@ d3.svg.tip = function() {
     }
 
     // Tip positioned at the top and overlaps the top boundry.
-    // We need to "flip" the offset here so the offset runs in the 
+    // We need to "flip" the offset here so the offset runs in the
     // opposite direction.
     if(loc.y - containerRect.height < 0 && orient == 'top') {
       loc = d3_orient_types['bottom']()
@@ -209,7 +209,7 @@ d3.svg.tip = function() {
   // Public: Sets or gets the size of the stem
   //
   // v - size of the stem
-  // 
+  //
   // Returns stemSize or tip
   tip.stemSize = function(v) {
     if (!arguments.length) return stemSize;
@@ -221,12 +221,12 @@ d3.svg.tip = function() {
   //
   // v - Array of [x, y] offset
   //
-  // Returns offset or 
+  // Returns offset or
   tip.offset = function(v) {
     if (!arguments.length) return offset;
     offset = v == null ? v: d3.functor(v);
     return tip;
-  };  
+  };
 
   // Public: sets or gets the text value of the tooltip
   //
