@@ -197,7 +197,7 @@
           tip.apply(this, arguments)
           var rect = this.getBoundingClientRect(),
               bbox = this.getBBox(),
-              // trans = this.getTransformToElement(),
+              trans = this.getTransformToElement(this.ownerSVGElement),
               scree = this.getScreenCTM(),
               ctm   = this.getCTM(),
               x = ctm.e - ctm.f + (bbox.width / 2),

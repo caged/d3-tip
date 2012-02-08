@@ -17,14 +17,15 @@ d3.svg.tip = function() {
         tipText   = text.apply(this, arguments),
         container = d3.select(node),
         tag = this.tagName.toLowerCase(),
-        loc, stem, stem_gen, backingRect, containerRect, stemRect, d3_orient_types;
+        loc, stem, stem_gen, backingRect, containerRect, containerCTM, stemRect, d3_orient_types;
 
     // Elements and Bounds
     var doc        = d3.select(this.ownerSVGElement),
         target     = d3.select(this),
         backing    = d3.select(make('rect')),
         docRect    = this.ownerSVGElement.getBoundingClientRect(),
-        targetRect = this.getBBox();
+        targetRect = this.getBBox(),
+        targetCTM  = this.getCTM();
 
     // TODO: Allow ability to specify this in someway
     target.on('mouseout', function() { container.remove() })
@@ -60,9 +61,10 @@ d3.svg.tip = function() {
       top: function() {
         stem.attr('transform', 'translate(' + (backingRect.width / 2) + ',' + backingRect.height + ')');
         containerRect = container.node().getBBox()
+        stemRect = stem.node().getBBox()
 
-        x = targetRect.x + (targetRect.width / 2) - (containerRect.width / 2) + tipOffset[0];
-        y = targetRect.y - containerRect.height + tipOffset[1];
+        x = targetCTM.e + (targetRect.width / 2) - (containerRect.width / 2) + tipOffset[0];
+        y = targetRect.y - stemRect.height + tipOffset[1];
 
         return {x: x, y: y}
       },
