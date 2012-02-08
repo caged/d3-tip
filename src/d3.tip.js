@@ -28,7 +28,7 @@ d3.svg.tip = function() {
         targetCTM  = this.getCTM();
 
     // TODO: Allow ability to specify this in someway
-    target.on('mouseout', function() { container.remove() })
+    // target.on('mouseout', function() { container.remove() })
 
     // FIXME: d3 has problems using `append` with nodes that were created
     // but not immediately added to the SVG dom.
@@ -63,8 +63,13 @@ d3.svg.tip = function() {
         containerRect = container.node().getBBox()
         stemRect = stem.node().getBBox()
 
-        x = targetCTM.e + (targetRect.width / 2) - (containerRect.width / 2) + tipOffset[0];
-        y = targetRect.y - stemRect.height + tipOffset[1];
+        if(tag == 'circle') {
+          x = targetCTM.e + tipOffset[0];
+          y = targetCTM.f  + tipOffset[1];
+        } else {
+          x = targetCTM.e + (targetRect.width / 2) - (containerRect.width / 2) + tipOffset[0];
+          y = targetRect.y - stemRect.height + tipOffset[1];
+        }
 
         return {x: x, y: y}
       },
@@ -80,8 +85,13 @@ d3.svg.tip = function() {
         stem.attr('transform', 'translate(' + (backingRect.width / 2) + ',' + -(stemRect.height / 2) + ')');
 
         containerRect = container.node().getBBox()
-        x = targetRect.x + (targetRect.width / 2) - (containerRect.width / 2) + tipOffset[0];
-        y = targetRect.y + targetRect.height + stemRect.height - tipOffset[1]
+        if(tag == 'circle') {
+          x = targetCTM.e;
+          y = targetCTM.f;
+        } else {
+          x = targetRect.x + (targetRect.width / 2) - (containerRect.width / 2) + tipOffset[0];
+          y = targetRect.y + targetRect.height + stemRect.height - tipOffset[1];
+        }
 
         return {x: x, y: y}
       },

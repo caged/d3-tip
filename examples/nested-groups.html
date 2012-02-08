@@ -80,7 +80,12 @@
         .padding(4)
         .text(function(d) { return d; })
         .attr('class', 'd3-tip');
-
+      tip2 = d3.svg.tip()
+        .orient('top')
+        .offset([-11, -32])
+        .padding(4)
+        .text(function(d) { return d; })
+        .attr('class', 'd3-tip');
 
   // CIRCLES HERE
   (function() {
@@ -124,7 +129,7 @@
       dots.append('circle')
         .attr('r', 4)
         .on('mouseover', function(d, i) {
-          tip.apply(this, arguments)
+          tip2.apply(this, arguments)
           var rect = this.getBoundingClientRect(),
               bbox = this.getBBox(),
               // trans = this.getTransformToElement(),
@@ -193,7 +198,6 @@
         .attr('height', function(d) { return h - y(d) })
         .attr('y', function(d) { return y(d) })
         .on('mouseover', function(d) {
-          d3.select(this).style('fill', 'red')
           tip.apply(this, arguments)
           var rect = this.getBoundingClientRect(),
               bbox = this.getBBox(),
