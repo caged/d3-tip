@@ -104,11 +104,11 @@ d3.svg.tip = function() {
         y = targetRect.y + tipOffset[1];
 
         if(tag == 'circle') {
-          x -= targetRect.width + (containerRect.width / 2);
+          x -= containerRect.width - (stemRect.height / 2)
           y -= targetRect.height / 2
         } else if(tag == 'rect') {
           x -= containerRect.width - (stemRect.height / 2)
-          y -= containerRect.height / 2
+          y -= targetRect.height / 2
         }
 
         return {x: x, y: y}
@@ -126,7 +126,7 @@ d3.svg.tip = function() {
           y -= targetRect.height / 2
         } else if(tag == 'rect') {
           x += targetRect.width
-          y -= containerRect.height / 2
+          y -= targetRect.height / 2
         }
 
         return {x: x, y: y}
