@@ -36,7 +36,7 @@ d3.svg.tip = function() {
     container.text(' ').node().appendChild(backing.node())
 
     // The value to show in the tooltip
-    var val = container.append('text').text(tipText).attr('text-anchor', 'middle').attr('alignment-baseline', 'middle'),
+    var val = container.append('text').text(tipText).attr('text-anchor', 'middle').attr('dominant-baseline', 'middle'),
         valRect = val.node().getBBox();
 
     valRect.width = valRect.width + (padding * 2)
