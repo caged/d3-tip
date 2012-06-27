@@ -47,7 +47,7 @@ d3.svg.tip = function() {
       .attr('rx', cornerRadius)
       .attr('ry', cornerRadius)
 
-    val.attr('dx', valRect.width / 2).attr('dy', valRect.height / 2)
+    val.attr('x', valRect.width / 2).attr('y', valRect.height / 2)
 
     backingRect = backing.node().getBBox()
 
