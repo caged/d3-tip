@@ -2,8 +2,7 @@
 <html>
   <head>
     <title>Lines</title>
-    <script type="text/javascript" src="../vendor/d3.js"></script>
-    <script type="text/javascript" src="../vendor/d3.layout.js"></script>
+    <script type="text/javascript" src="../components/d3/d3.js"></script>
     <script type="text/javascript" src="../src/d3.tip.js"></script>
     <style type="text/css">
       .d3-tip path, .d3-tip rect {
@@ -54,7 +53,7 @@
   // Scales
   var x  = d3.scale.linear().domain([0, data[0].length - 1]).range([0, w])
       y  = d3.scale.linear().domain([0, max]).range([h, 0]);
-  
+
   // Base vis layer
   var vis = d3.select(document.body)
     .append('svg')
@@ -63,7 +62,7 @@
       .attr('class', 'viz')
     .append('g')
       .attr('transform', "translate(" + pl + "," + pt + ")")
- 
+
   // add path layers to their repesctive group
   var paths = vis.selectAll('g.line')
     .data(data)
@@ -73,7 +72,7 @@
   paths.append('path')
     .attr("d", d3.svg.line().x(function(d,i) { return x(i) }).y(y).interpolate('cardinal'))
     .style('stroke', function(d, i) { return ['#2fa5c7', '#d95ba6'][i] })
-  
+
   //Add point circles
   paths.selectAll('.point')
     .data(function(d) { return d })
@@ -82,26 +81,26 @@
     .attr("r", 4)
     .attr("cx", function(d, i) { return x(i) })
     .attr("cy", function(d) { return y(d) })
-    .on('click', function() { 
+    .on('click', function() {
       var rect = this.getBoundingClientRect(),
           bbox = this.getBBox(),
           x = bbox.x + (bbox.width / 2),
           y = bbox.y;
-      
+
       linex.transition()
         .attr('x1', x)
         .attr('x2', x)
 
       liney.transition()
         .attr('y1', y)
-        .attr('y2',y)      
+        .attr('y2',y)
     })
     .on('mouseover', function() {
       var rect = this.getBoundingClientRect(),
           bbox = this.getBBox(),
           x = bbox.x + (bbox.width / 2),
           y = bbox.y + bbox.height;
-      
+
       linex.transition()
         .attr('x1', x)
         .attr('x2', x)

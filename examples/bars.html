@@ -4,7 +4,7 @@
   <title>d3.tip.js - Tooltips for D3</title>
   <meta charset="utf-8" />
   <title>Bar Chart</title>
-  <script type="text/javascript" src="../vendor/d3.js"></script>
+  <script type="text/javascript" src="../components/d3/d3.js"></script>
   <script type="text/javascript" src="../src/d3.tip.js"></script>
   <style type="text/css">
   .d3-tip {
@@ -54,21 +54,21 @@
       .attr('y', function(d) { return y(d) })
       .attr('x', function(d, i) { return x(i) })
       .on('mouseover', tip)
-      .on('click', function() { 
+      .on('click', function() {
         var rect = this.getBoundingClientRect(),
             bbox = this.getBBox(),
             x = bbox.x + (bbox.width / 2),
             y = bbox.y;
-        
+
         linex.transition()
           .attr('x1', x)
           .attr('x2', x)
 
         liney.transition()
           .attr('y1', y)
-          .attr('y2',y)      
+          .attr('y2',y)
       })
-  
+
     linex = vis.append('line')
       .attr("x1", 0)
       .attr("y1", 0)
