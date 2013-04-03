@@ -36,7 +36,7 @@ d3.svg.tip = function() {
     container.text(' ').node().appendChild(backing.node())
 
     // The value to show in the tooltip
-    var val = container.append('text').text(tipText).attr('text-anchor', 'middle').attr('alignment-baseline', 'middle'),
+    var val = container.append('text').text(tipText).attr('text-anchor', 'middle').attr('dominant-baseline', 'middle'),
         valRect = val.node().getBBox();
 
     valRect.width = valRect.width + (padding * 2)
@@ -47,7 +47,7 @@ d3.svg.tip = function() {
       .attr('rx', cornerRadius)
       .attr('ry', cornerRadius)
 
-    val.attr('dx', valRect.width / 2).attr('dy', valRect.height / 2)
+    val.attr('x', valRect.width / 2).attr('y', valRect.height / 2)
 
     backingRect = backing.node().getBBox()
 
@@ -97,19 +97,11 @@ d3.svg.tip = function() {
       },
 
       left: function() {
-        stem.attr('transform', 'translate(' + backingRect.width + ',' + (backingRect.height / 2) + ') rotate(-90)');
+        stem.attr('transform', 'translate(' + (backingRect.width + (stemRect.height/2)) + ',' + (backingRect.height / 2) + ') rotate(-90)');
 
         containerRect = container.node().getBBox()
-        x = targetRect.x - (stemRect.height / 2) + tipOffset[0];
-        y = targetRect.y + tipOffset[1];
-
-        if(tag == 'circle') {
-          x -= targetRect.width + (containerRect.width / 2);
-          y -= targetRect.height / 2
-        } else if(tag == 'rect') {
-          x -= containerRect.width - (stemRect.height / 2)
-          y -= containerRect.height / 2
-        }
+        x = targetRect.x - (containerRect.x + containerRect.width) + tipOffset[0];
+        y = targetRect.y + targetRect.height/2 - (containerRect.y + containerRect.height/2) + tipOffset[1];
 
         return {x: x, y: y}
       },
@@ -118,16 +110,9 @@ d3.svg.tip = function() {
         stem.attr('transform', 'translate(' + -(stemRect.height / 2) + ',' + (backingRect.height / 2) + ') rotate(90)');
 
         containerRect = container.node().getBBox()
-        x = targetRect.x + stemRect.height + tipOffset[0];
-        y = targetRect.y + tipOffset[1];
 
-        if(tag == 'circle') {
-          x += targetRect.width
-          y -= targetRect.height / 2
-        } else if(tag == 'rect') {
-          x += targetRect.width
-          y -= containerRect.height / 2
-        }
+        x = targetRect.x + targetRect.width - containerRect.x + tipOffset[0];
+        y = targetRect.y + targetRect.height/2 - (containerRect.y + containerRect.height/2) + tipOffset[1];
 
         return {x: x, y: y}
       }
