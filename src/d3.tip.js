@@ -25,12 +25,13 @@ d3.svg.tip = function() {
 
   tip.show = function(v) {
     var bbox = get_screen_bbox(),
-        content = text.apply(this, arguments)
+        content = text.apply(this, arguments),
+        center = (bbox.ne.x - bbox.nw.x) / 2
 
     node.innerText = content
     node.style.display = 'block'
-    node.style.left = bbox.ne.x + 'px'
-    node.style.top  = bbox.ne.y + 'px'
+    node.style.left = (bbox.ne.x - center - (node.offsetWidth / 2)) + 'px'
+    node.style.top  = (bbox.ne.y - node.offsetHeight) + 'px'
   }
 
   tip.hide = function(v) {
