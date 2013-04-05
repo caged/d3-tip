@@ -21,12 +21,13 @@ d3.svg.tip = function() {
 
   tip.show = function(v) {
     node.style.display = 'block'
-    text.apply(this, arguments)
+    var content = text.apply(this, arguments)
+    node.innerText = content
   }
 
   tip.hide = function(v) {
     node.style.display = 'none'
-    text.apply(this, arguments)
+    node.innerText = ''
   }
 
   // Public: Proxy attr calls to the d3 tip container.  Sets or gets attribute value.
