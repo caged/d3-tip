@@ -2,14 +2,16 @@
 //
 // Returns a tip
 d3.svg.tip = function() {
-  var orient = 'top',
-      offset = d3_svg_offset,
-      text   = d3_svg_text,
-      node   = init_node(),
-      svg    = null,
-      point  = null;
+  var orient    = 'top',
+      offset    = d3_svg_offset,
+      text      = d3_svg_text,
+      node      = init_node(),
+      svg       = null,
+      container = null,
+      point     = null;
 
   function tip(svg) {
+    container = svg
     svg = get_svg_node(svg)
     point = svg.createSVGPoint()
     document.body.appendChild(node)
@@ -28,6 +30,7 @@ d3.svg.tip = function() {
         content = text.apply(this, arguments),
         center = (bbox.ne.x - bbox.nw.x) / 2
 
+    debug(bbox)
     node.innerText = content
     node.style.display = 'block'
     node.style.left = (bbox.ne.x - center - (node.offsetWidth / 2)) + 'px'
@@ -117,22 +120,47 @@ d3.svg.tip = function() {
         bbox   = {}, x, y,
         matrix = target.getScreenCTM()
 
-    x = target.x ? target.x : target.cx
-    y = target.y ? target.y : target.cy
-    width = target.width ? target.width : target.r
-    height = target.height ? target.height : target.r
+    width = target.width ? target.width.animVal.value : target.r.animVal.value * 2
+    height = target.height ? target.height.animVal.value : target.r.animVal.value * 2
+    x = target.x ? target.x.animVal.value : target.cx.animVal.value - (width / 2)
+    y = target.y ? target.y.animVal.value : target.cy.animVal.value - (height / 2)
 
-    point.x = x.animVal.value + document.body.scrollLeft
-    point.y = y.animVal.value + document.body.scrollTop
+    point.x = x + document.body.scrollLeft
+    point.y = y + document.body.scrollTop
     bbox.nw = point.matrixTransform(matrix)
-    point.x += width.animVal.value
+    point.x += width
     bbox.ne = point.matrixTransform(matrix)
-    point.y += height.animVal.value
+    point.y += height
     bbox.se = point.matrixTransform(matrix)
-    point.x -= width.animVal.value
+    point.x -= width
     bbox.sw = point.matrixTransform(matrix)
+    point.y -= height / 2
+    bbox.w  = point.matrixTransform(matrix)
+    point.x += width
+    bbox.e = point.matrixTransform(matrix)
+    point.x -= width / 2
+    point.y -= height / 2
+    bbox.n = point.matrixTransform(matrix)
+    point.y += height
+    bbox.s = point.matrixTransform(matrix)
 
     return bbox
+  }
+
+  function debug(bbox) {
+    var points = [bbox.s, bbox.n, bbox.e, bbox.w, bbox.ne, bbox.nw, bbox.se, bbox.sw]
+    d3.select(document.body).selectAll('div.debug').data([]).exit().remove()
+    d3.select(document.body).selectAll('div.debug')
+      .data(points)
+    .enter().append('div')
+      .attr('class', 'debug')
+      .style('background-color', 'red')
+      .style('width', '4px')
+      .style('height', '4px')
+      .style('position', 'absolute')
+      .style('z-index', 99999)
+      .style('left', function(d) { return (d.x - (4 / 2)) + 'px' })
+      .style('top', function(d) { return (d.y - (4 / 2)) + 'px' })
   }
 
   return tip;
