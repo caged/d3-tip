@@ -24,11 +24,13 @@ d3.svg.tip = function() {
   }
 
   tip.show = function(v) {
-    var bbox = get_screen_bbox()
-    console.log(bbox)
-    node.style.display = 'block'
-    var content = text.apply(this, arguments)
+    var bbox = get_screen_bbox(),
+        content = text.apply(this, arguments)
+
     node.innerText = content
+    node.style.display = 'block'
+    node.style.left = bbox.ne.x + 'px'
+    node.style.top  = bbox.ne.y + 'px'
   }
 
   tip.hide = function(v) {
@@ -90,6 +92,7 @@ d3.svg.tip = function() {
     var node = document.createElement('div')
     node.style.position = 'absolute'
     node.style.display = 'none'
+    node.style.boxSizing = 'border-box'
     return node
   }
 
