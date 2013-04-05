@@ -54,39 +54,6 @@ d3.svg.tip = function() {
     return tip;
   };
 
-  // Public: Sets or gets the padding on all sides for the tooltip
-  //
-  // v - Padding value as a number
-  //
-  // Returns padding or tip
-  tip.padding = function(v) {
-    if (!arguments.length) return padding;
-    padding = v;
-    return tip;
-  };
-
-  // Public: Sets or gets the corner radius of the tooltip on all sides
-  //
-  // v - Radius as a Number
-  //
-  // Returns cornerRadius or tip
-  tip.cornerRadius = function(v) {
-    if (!arguments.length) return cornerRadius;
-    cornerRadius = v;
-    return tip;
-  };
-
-  // Public: Sets or gets the size of the stem
-  //
-  // v - size of the stem
-  //
-  // Returns stemSize or tip
-  tip.stemSize = function(v) {
-    if (!arguments.length) return stemSize;
-    stemSize = v;
-    return tip;
-  };
-
   // Public: Sets or gets the offset of the tip
   //
   // v - Array of [x, y] offset
