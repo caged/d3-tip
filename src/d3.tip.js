@@ -20,11 +20,13 @@ d3.svg.tip = function() {
   }
 
   tip.show = function(v) {
-
+    node.style.display = 'block'
+    text.apply(this, arguments)
   }
 
   tip.hide = function(v) {
-
+    node.style.display = 'none'
+    text.apply(this, arguments)
   }
 
   // Public: Proxy attr calls to the d3 tip container.  Sets or gets attribute value.
@@ -80,9 +82,9 @@ d3.svg.tip = function() {
   function init_node() {
     var node = document.createElement('div')
     node.style.position = 'absolute'
+    node.style.display = 'none'
     return node
   }
-
 
   return tip;
 }
