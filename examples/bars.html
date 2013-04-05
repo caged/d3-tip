@@ -54,6 +54,10 @@
 
   </div>
   <script type="text/javascript">
+    var tip = d3.svg.tip()
+      .attr('class', 'd3-tip')
+      .text(function(d) { return d.total })
+
     var w = 800,
         h = 300,
         padt = 20, padr = 20, padb = 60, padl = 30,
@@ -72,6 +76,7 @@
       x.domain(d3.range(data.length))
       y.domain([0, max])
 
+      vis.call(tip)
       vis.append("g")
         .attr("class", "y axis")
         .call(yAxis)
@@ -93,6 +98,8 @@
         .attr('width', function() { return x.rangeBand() })
         .attr('height', function(d) { return h - y(d.total) })
         .attr('y', function(d) { return y(d.total) })
+        .on('mouseover', tip.show)
+        .on('mouseout', tip.hide)
     })
   </script>
 </body>
