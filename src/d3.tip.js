@@ -4,10 +4,14 @@
 d3.svg.tip = function() {
   var orient = 'top',
       offset = d3_svg_offset,
-      text = d3_svg_text,
-      node = init_node()
+      text   = d3_svg_text,
+      node   = init_node(),
+      svg    = null,
+      point  = null;
 
-  function tip() {
+  function tip(svg) {
+    svg = get_svg_node(svg)
+    point = svg.createSVGPoint()
     document.body.appendChild(node)
   }
 
@@ -20,6 +24,8 @@ d3.svg.tip = function() {
   }
 
   tip.show = function(v) {
+    var bbox = get_screen_bbox()
+    console.log(bbox)
     node.style.display = 'block'
     var content = text.apply(this, arguments)
     node.innerText = content
@@ -85,6 +91,39 @@ d3.svg.tip = function() {
     node.style.position = 'absolute'
     node.style.display = 'none'
     return node
+  }
+
+  function get_svg_node(el) {
+    el = el.node()
+    if(el.tagName.toLowerCase() == 'svg') {
+      return el
+    } else {
+      while(el.parentNode) {
+        el = el.parentNode
+        if(el.tagName.toLowerCase() == 'svg')
+          return el
+      }
+    }
+
+    return null
+  }
+
+  function get_screen_bbox() {
+    var target = d3.event.target,
+        bbox   = {},
+        matrix = target.getScreenCTM()
+
+    point.x = target.x.animVal.value + document.body.scrollLeft
+    point.y = target.y.animVal.value + document.body.scrollTop
+    bbox.nw = point.matrixTransform(matrix)
+    point.x += target.width.animVal.value
+    bbox.ne = point.matrixTransform(matrix)
+    point.y += target.height.animVal.value
+    bbox.se = point.matrixTransform(matrix)
+    point.x -= target.width.animVal.value
+    bbox.sw = point.matrixTransform(matrix)
+
+    return bbox
   }
 
   return tip;
