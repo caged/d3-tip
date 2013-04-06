@@ -5,6 +5,7 @@ d3.svg.tip = function() {
   var orient    = 'top',
       offset    = d3_svg_offset,
       text      = d3_svg_text,
+      orient    = 'top',
       node      = init_node(),
       svg       = null,
       container = null,
@@ -18,21 +19,39 @@ d3.svg.tip = function() {
   }
 
   function d3_svg_offset() {
-    return [0, 0];
+    return [0, 0]
   }
 
   function d3_svg_text() {
-    return ' ';
+    return ' '
   }
 
   tip.show = function(v) {
     var bbox = get_screen_bbox(),
-        content = text.apply(this, arguments)
+        content = text.apply(this, arguments),
+        side = orient.apply(this, arguments),
+        top, left;
 
+    console.log(side)
     node.innerHTML = content
     node.style.display = 'block'
-    node.style.left = (bbox.n.x - node.offsetWidth / 2) + 'px'
-    node.style.top  = (bbox.n.y - node.offsetHeight) + 'px'
+
+    switch(side) {
+      case 'bottom':
+        top  = (bbox.s.y - (node.offsetHeight / 2)) + 'px'
+        left = (bbox.s.x - node.offsetWidth / 2) + 'px'
+        break
+      case 'left':
+        top  = (bbox.w.y - node.offsetHeight / 2) + 'px'
+        left = bbox.w.x + 'px'
+      default:
+        top  = (bbox.n.y - node.offsetHeight) + 'px'
+        left = (bbox.n.x - node.offsetWidth / 2) + 'px'
+        break
+    }
+
+    node.style.top = top
+    node.style.left = left
   }
 
   tip.hide = function(v) {
@@ -63,7 +82,7 @@ d3.svg.tip = function() {
   // Returns tip or oreint
   tip.orient = function(v) {
     if (!arguments.length) return orient;
-    orient = v;
+    orient = v == null ? v : d3.functor(v);
     return tip;
   };
 

@@ -9,6 +9,8 @@
   <style type="text/css">
   body {
     padding: 40px;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 12px;
   }
 
   .d3-tip {
@@ -31,9 +33,14 @@
 
   circle {
     fill: #ccc;
-    fill-opacity: 0.8;
+    fill-opacity: 0.6;
     stroke: #bbb;
     stroke-width: 1px;
+  }
+
+  circle:hover {
+    fill: #bbb;
+    stroke: #999;
   }
 
   .rule {
@@ -52,7 +59,7 @@
 
     var tip = d3.svg.tip()
       .attr('class', 'd3-tip')
-      .text(function(d) { return d })
+      .text(function(d) { return d.toFixed(2) })
 
     var w = 1000,
         h = 1000,
