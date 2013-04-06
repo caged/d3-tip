@@ -74,6 +74,8 @@
 
     vis = d3.select('#graph')
       .append('svg')
+      .attr('width', w)
+      .attr('height', h)
     .append('g')
       .attr('transform', 'translate(' + padl + ',' + padt + ')')
 

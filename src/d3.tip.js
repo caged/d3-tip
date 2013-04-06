@@ -27,14 +27,12 @@ d3.svg.tip = function() {
 
   tip.show = function(v) {
     var bbox = get_screen_bbox(),
-        content = text.apply(this, arguments),
-        center = (bbox.ne.x - bbox.nw.x) / 2
+        content = text.apply(this, arguments)
 
-    debug(bbox)
-    node.innerText = content
+    node.innerHTML = content
     node.style.display = 'block'
-    node.style.left = (bbox.ne.x - center - (node.offsetWidth / 2)) + 'px'
-    node.style.top  = (bbox.ne.y - node.offsetHeight) + 'px'
+    node.style.left = (bbox.n.x - node.offsetWidth / 2) + 'px'
+    node.style.top  = (bbox.n.y - node.offsetHeight) + 'px'
   }
 
   tip.hide = function(v) {
@@ -117,13 +115,13 @@ d3.svg.tip = function() {
 
   function get_screen_bbox() {
     var target = d3.event.target,
-        bbox   = {}, x, y,
+        bbox   = {}, x, y, width, height,
         matrix = target.getScreenCTM()
 
-    width = target.width ? target.width.animVal.value : target.r.animVal.value * 2
+    width  = target.width  ? target.width.animVal.value  : target.r.animVal.value * 2
     height = target.height ? target.height.animVal.value : target.r.animVal.value * 2
-    x = target.x ? target.x.animVal.value : target.cx.animVal.value - (width / 2)
-    y = target.y ? target.y.animVal.value : target.cy.animVal.value - (height / 2)
+    x      = target.x ? target.x.animVal.value : target.cx.animVal.value - (width / 2)
+    y      = target.y ? target.y.animVal.value : target.cy.animVal.value - (height / 2)
 
     point.x = x + document.body.scrollLeft
     point.y = y + document.body.scrollTop
