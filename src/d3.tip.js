@@ -23,14 +23,14 @@ d3.tip = function() {
   tip.show = function(v) {
     var content = text.apply(this, arguments),
         dir     = direction.apply(this, arguments),
+        dirs    = direction_callbacks.keys(),
+        nodel   = d3.select(node), i = 0,
         coords
 
-    node.innerHTML = content
-    node.style.display = 'block'
-
+    nodel.html(content).style('display', 'block')
+    for(i; i < dirs.length; i++) nodel.classed(dirs[i], false)
     coords = direction_callbacks.get(dir).apply(this)
-    node.style.top = coords.top + 'px'
-    node.style.left = coords.left + 'px'
+    nodel.classed(dir, true).style({top: coords.top + 'px', left: coords.left + 'px'})
 
     return tip
   }
