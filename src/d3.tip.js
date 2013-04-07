@@ -161,12 +161,12 @@ d3.svg.tip = function() {
   function get_screen_bbox() {
     var target = d3.event.target,
         bbox   = {}, x, y, width, height,
-        matrix = target.getScreenCTM()
-
-    width  = target.width  ? target.width.animVal.value  : target.r.animVal.value * 2
-    height = target.height ? target.height.animVal.value : target.r.animVal.value * 2
-    x      = target.x ? target.x.animVal.value : target.cx.animVal.value - (width / 2)
-    y      = target.y ? target.y.animVal.value : target.cy.animVal.value - (height / 2)
+        matrix = target.getScreenCTM(),
+        tbbox  = target.getBBox(),
+        width = tbbox.width,
+        height = tbbox.height,
+        x = tbbox.x,
+        y = tbbox.y
 
     point.x = x + document.body.scrollLeft
     point.y = y + document.body.scrollTop
