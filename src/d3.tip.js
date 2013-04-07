@@ -17,22 +17,10 @@ d3.svg.tip = function() {
     document.body.appendChild(node)
   }
 
-  function d3_svg_direction() {
-    return 'n'
-  }
-
-  function d3_svg_offset() {
-    return [0, 0]
-  }
-
-  function d3_svg_text() {
-    return ' '
-  }
-
   tip.show = function(v) {
-      var content = text.apply(this, arguments),
-        dir = direction.apply(this, arguments),
-        coords
+    var content = text.apply(this, arguments),
+      dir = direction.apply(this, arguments),
+      coords
 
     node.innerHTML = content
     node.style.display = 'block'
@@ -100,6 +88,10 @@ d3.svg.tip = function() {
 
     return tip
   };
+
+  function d3_svg_direction() { return 'n' }
+  function d3_svg_offset() { return [0, 0] }
+  function d3_svg_text() { return ' ' }
 
   var direction_callbacks = d3.map({
     n: direction_n,
