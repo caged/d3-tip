@@ -1,7 +1,7 @@
 // Public - contructs a new tooltip
 //
 // Returns a tip
-d3.svg.tip = function() {
+d3.tip = function() {
   var direction = d3_svg_direction,
       offset    = d3_svg_offset,
       text      = d3_svg_text,
@@ -22,8 +22,8 @@ d3.svg.tip = function() {
   // Returns a tip
   tip.show = function(v) {
     var content = text.apply(this, arguments),
-      dir = direction.apply(this, arguments),
-      coords
+        dir     = direction.apply(this, arguments),
+        coords
 
     node.innerHTML = content
     node.style.display = 'block'

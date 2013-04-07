@@ -57,7 +57,7 @@
       random2 = d3.random.irwinHall(1)
     for(var i = 0; i < 100; i++) data.push(random(i))
 
-    var tip = d3.svg.tip()
+    var tip = d3.tip()
       .attr('class', 'd3-tip')
       .text(function(d) { return d.toFixed(2) })
       .direction(function(d) {
