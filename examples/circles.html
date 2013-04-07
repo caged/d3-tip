@@ -60,6 +60,9 @@
     var tip = d3.svg.tip()
       .attr('class', 'd3-tip')
       .text(function(d) { return d.toFixed(2) })
+      .direction(function(d) {
+        return d3.shuffle(['s'])[0]
+      })
 
     var w = 1000,
         h = 1000,

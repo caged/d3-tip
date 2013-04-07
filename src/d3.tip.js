@@ -30,30 +30,15 @@ d3.svg.tip = function() {
   }
 
   tip.show = function(v) {
-    var bbox = get_screen_bbox(),
-        content = text.apply(this, arguments),
-        dir = direction.apply(this, arguments),
-        top, left;
+      var content = text.apply(this, arguments),
+        dir = direction.apply(this, arguments), coords
 
     node.innerHTML = content
     node.style.display = 'block'
 
-    switch(dir) {
-      case 'bottom':
-        top  = (bbox.s.y - (node.offsetHeight / 2)) + 'px'
-        left = (bbox.s.x - node.offsetWidth / 2) + 'px'
-        break
-      case 'left':
-        top  = (bbox.w.y - node.offsetHeight / 2) + 'px'
-        left = bbox.w.x + 'px'
-      default:
-        top  = (bbox.n.y - node.offsetHeight) + 'px'
-        left = (bbox.n.x - node.offsetWidth / 2) + 'px'
-        break
-    }
-
-    node.style.top = top
-    node.style.left = left
+    coords = direction_callbacks.get(dir).apply(this)
+    node.style.top = coords.top + 'px'
+    node.style.left = coords.left + 'px'
   }
 
   tip.hide = function(v) {
@@ -77,14 +62,14 @@ d3.svg.tip = function() {
     return tip;
   }
 
-  // Public: Set or get the orientation of the tooltip
+  // Public: Set or get the direction of the tooltip
   //
-  // v - One of top, bottom, left, or right
+  // v - One of n(orth), s(outh), e(ast), or w(est)
   //
   // Returns tip or direction
   tip.direction = function(v) {
-    if (!arguments.length) return orient;
-    orient = v == null ? v : d3.functor(v);
+    if (!arguments.length) return direction;
+    direction = v == null ? v : d3.functor(v);
     return tip;
   };
 
@@ -106,10 +91,49 @@ d3.svg.tip = function() {
   // Returns text value or tip
   tip.text = function(v) {
     if (!arguments.length) return text;
-    text = v == null ? v : d3.functor(v);
+    text = v == null ? v : d3.functor(v)
 
-    return tip;
+    return tip
   };
+
+  var direction_callbacks = d3.map({
+    n: direction_n,
+    s: direction_s,
+    e: direction_e,
+    w: direction_w
+  })
+
+  function direction_n() {
+    var bbox = get_screen_bbox()
+    return {
+      top: (bbox.n.y - node.offsetHeight),
+      left: (bbox.n.x - node.offsetWidth / 2)
+    }
+  }
+
+  function direction_s() {
+    var bbox = get_screen_bbox()
+    return {
+      top:  (bbox.s.y),
+      left: (bbox.s.x - node.offsetWidth / 2)
+    }
+  }
+
+  function direction_e() {
+    var bbox = get_screen_bbox()
+    return {
+      top: (bbox.e.y - node.offsetHeight / 2),
+      left: bbox.e.x
+    }
+  }
+
+  function direction_w() {
+    var bbox = get_screen_bbox()
+    return {
+      top: (bbox.w.y - node.offsetHeight / 2),
+      left: bbox.w.x - node.offsetWidth
+    }
+  }
 
   function init_node() {
     var node = document.createElement('div')
