@@ -64,7 +64,7 @@
       .attr('class', 'd3-tip')
       .text(function(d) { return d.total })
       .direction(function(d) {
-        return d3.shuffle(['s'])[0]
+        return d3.shuffle(['n', 's', 'e', 'w'])[0]
       })
 
     var w = 800,
@@ -78,7 +78,7 @@
     vis = d3.select('#graph')
       .append('svg')
       .attr('width', w)
-      .attr('height', h)
+      .attr('height', h + padt + padb)
     .append('g')
       .attr('transform', 'translate(' + padl + ',' + padt + ')')
 

@@ -61,7 +61,7 @@
       .attr('class', 'd3-tip')
       .text(function(d) { return d.toFixed(2) })
       .direction(function(d) {
-        return d3.shuffle(['s'])[0]
+        return d3.shuffle(['n', 's', 'e', 'w'])[0]
       })
 
     var w = 1000,
