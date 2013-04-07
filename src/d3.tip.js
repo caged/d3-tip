@@ -31,7 +31,8 @@ d3.svg.tip = function() {
 
   tip.show = function(v) {
       var content = text.apply(this, arguments),
-        dir = direction.apply(this, arguments), coords
+        dir = direction.apply(this, arguments),
+        coords
 
     node.innerHTML = content
     node.style.display = 'block'
@@ -160,13 +161,13 @@ d3.svg.tip = function() {
 
   function get_screen_bbox() {
     var target = d3.event.target,
-        bbox   = {}, x, y, width, height,
+        bbox   = {},
         matrix = target.getScreenCTM(),
         tbbox  = target.getBBox(),
-        width = tbbox.width,
+        width  = tbbox.width,
         height = tbbox.height,
-        x = tbbox.x,
-        y = tbbox.y
+        x      = tbbox.x,
+        y      = tbbox.y
 
     point.x = x + document.body.scrollLeft
     point.y = y + document.body.scrollTop
