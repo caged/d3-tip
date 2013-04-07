@@ -206,21 +206,5 @@ d3.tip = function() {
     return bbox
   }
 
-  function debug(bbox) {
-    var points = [bbox.s, bbox.n, bbox.e, bbox.w, bbox.ne, bbox.nw, bbox.se, bbox.sw]
-    d3.select(document.body).selectAll('div.debug').data([]).exit().remove()
-    d3.select(document.body).selectAll('div.debug')
-      .data(points)
-    .enter().append('div')
-      .attr('class', 'debug')
-      .style('background-color', 'red')
-      .style('width', '4px')
-      .style('height', '4px')
-      .style('position', 'absolute')
-      .style('z-index', 99999)
-      .style('left', function(d) { return (d.x - (4 / 2)) + 'px' })
-      .style('top', function(d) { return (d.y - (4 / 2)) + 'px' })
-  }
-
   return tip;
 }
