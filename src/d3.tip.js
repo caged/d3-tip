@@ -40,11 +40,15 @@ d3.svg.tip = function() {
     coords = direction_callbacks.get(dir).apply(this)
     node.style.top = coords.top + 'px'
     node.style.left = coords.left + 'px'
+
+    return tip
   }
 
   tip.hide = function(v) {
     node.style.display = 'none'
     node.innerText = ''
+
+    return tip
   }
 
   // Public: Proxy attr calls to the d3 tip container.  Sets or gets attribute value.
