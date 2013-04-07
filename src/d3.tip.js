@@ -17,6 +17,9 @@ d3.svg.tip = function() {
     document.body.appendChild(node)
   }
 
+  // Public - show the tooltip on the screen
+  //
+  // Returns a tip
   tip.show = function(v) {
     var content = text.apply(this, arguments),
       dir = direction.apply(this, arguments),
@@ -32,6 +35,9 @@ d3.svg.tip = function() {
     return tip
   }
 
+  // Public - hide the tooltip
+  //
+  // Returns a tip
   tip.hide = function(v) {
     node.style.display = 'none'
     node.innerText = ''
@@ -155,6 +161,19 @@ d3.svg.tip = function() {
     return null
   }
 
+  // Private - gets the screen coordinates of a shape
+  //
+  // Given a shape on the screen, will return an SVGPoint for the directions
+  // n(orth), s(outh), e(ast), w(est), ne(northeast), se(southeast), nw(northwest),
+  // sw(southwest).
+  //
+  //    +-+-+
+  //    |   |
+  //    +   +
+  //    |   |
+  //    +-+-+
+  //
+  // Returns an Object {n, s, e, w, nw, sw, ne, se}
   function get_screen_bbox() {
     var target = d3.event.target,
         bbox   = {},
