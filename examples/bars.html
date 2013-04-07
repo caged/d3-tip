@@ -63,8 +63,8 @@
     var tip = d3.svg.tip()
       .attr('class', 'd3-tip')
       .text(function(d) { return d.total })
-      .orient(function(d) {
-        return d3.shuffle(['top', 'bottom', 'left', 'right'])[0]
+      .direction(function(d) {
+        return d3.shuffle(['n', 's', 'e', 'w'])[0]
       })
 
     var w = 800,

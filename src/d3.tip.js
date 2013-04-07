@@ -2,10 +2,9 @@
 //
 // Returns a tip
 d3.svg.tip = function() {
-  var orient    = 'top',
+  var direction = d3_svg_direction,
       offset    = d3_svg_offset,
       text      = d3_svg_text,
-      orient    = 'top',
       node      = init_node(),
       svg       = null,
       container = null,
@@ -16,6 +15,10 @@ d3.svg.tip = function() {
     svg = get_svg_node(svg)
     point = svg.createSVGPoint()
     document.body.appendChild(node)
+  }
+
+  function d3_svg_direction() {
+    return 'n'
   }
 
   function d3_svg_offset() {
@@ -29,14 +32,13 @@ d3.svg.tip = function() {
   tip.show = function(v) {
     var bbox = get_screen_bbox(),
         content = text.apply(this, arguments),
-        side = orient.apply(this, arguments),
+        dir = direction.apply(this, arguments),
         top, left;
 
-    console.log(side)
     node.innerHTML = content
     node.style.display = 'block'
 
-    switch(side) {
+    switch(dir) {
       case 'bottom':
         top  = (bbox.s.y - (node.offsetHeight / 2)) + 'px'
         left = (bbox.s.x - node.offsetWidth / 2) + 'px'
@@ -79,8 +81,8 @@ d3.svg.tip = function() {
   //
   // v - One of top, bottom, left, or right
   //
-  // Returns tip or oreint
-  tip.orient = function(v) {
+  // Returns tip or direction
+  tip.direction = function(v) {
     if (!arguments.length) return orient;
     orient = v == null ? v : d3.functor(v);
     return tip;
@@ -93,7 +95,7 @@ d3.svg.tip = function() {
   // Returns offset or
   tip.offset = function(v) {
     if (!arguments.length) return offset;
-    offset = v == null ? v: d3.functor(v);
+    offset = v == null ? v : d3.functor(v);
     return tip;
   };
 
@@ -104,7 +106,7 @@ d3.svg.tip = function() {
   // Returns text value or tip
   tip.text = function(v) {
     if (!arguments.length) return text;
-    text = v == null ? v: d3.functor(v);
+    text = v == null ? v : d3.functor(v);
 
     return tip;
   };
