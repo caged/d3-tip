@@ -1,13 +1,13 @@
 {
   "name": "d3-tip",
   "version": "0.2.0",
-  "main": "src/index.js",
+  "main": "src/d3.tip.js",
   "ignore": [
     "**/.*",
     "node_modules",
     "components"
   ],
   "dependencies": {
-    "d3": "3.1.4"
+    "d3": "3.1.5"
   }
 }
