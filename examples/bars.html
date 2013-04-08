@@ -16,12 +16,26 @@
   .d3-tip {
     font-weight: bold;
     padding: 12px;
-    border: 1px solid rgba(0, 0, 0, 0.8);
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.8);
     color: #fff;
-    text-align: center;
     border-radius: 2px;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+  }
+
+  .d3-tip:after {
+    display: inline-block;
+    font-size: 12px;
+    width: 100%;
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.8);
+    content: "\25BC";
+    position: absolute;
+    text-align: center;
+    font-size: 12px;
+  }
+
+  .d3-tip.n:after {
+    top: 99%;
+    left: 0;
   }
 
   .d3-tip text {
@@ -64,7 +78,7 @@
       .attr('class', 'd3-tip')
       .text(function(d) { return d.total })
       .direction(function(d) {
-        return d3.shuffle(['n', 's', 'e', 'w'])[0]
+        return d3.shuffle(['n'])[0]
       })
 
     var w = 800,
