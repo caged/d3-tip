@@ -40,11 +40,8 @@
     left: 0;
   }
 
-  .d3-tip text {
-    fill: #fff;
-    font-size: 12px;
-    stroke: none;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  .d3-tip span {
+    color: #ff00c7;
   }
 
   .domain {
@@ -78,11 +75,8 @@
   <script type="text/javascript">
     var tip = d3.tip()
       .attr('class', 'd3-tip')
-      .text(function(d) { return d.total + " entries" })
+      .text(function(d) { return '<span>' + d.total + '</span>' + ' entries' })
       .offset([-12, 0])
-      .direction(function(d) {
-        return d3.shuffle(['n'])[0]
-      })
 
     var w = 800,
         h = 300,
