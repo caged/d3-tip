@@ -7,81 +7,122 @@
   <script type="text/javascript" src="../components/d3/d3.js"></script>
   <script type="text/javascript" src="../src/d3.tip.js"></script>
   <style type="text/css">
-  .d3-tip {
-    fill: #c00;
-    font-weight: bold;
-  }
-
-  .d3-tip text {
-    fill: #fff;
+  body {
+    padding: 40px;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
     font-size: 12px;
-    stroke: none;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
 
-  .rule {
+  .d3-tip {
+    line-height: 1;
+    font-weight: bold;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 2px;
+  }
+
+  .d3-tip:after {
+    box-sizing: border-box;
+    display: inline;
+    font-size: 10px;
+    width: 100%;
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.8);
+    content: "\25BC";
+    position: absolute;
+    text-align: center;
+  }
+
+  .d3-tip.n:after {
+    margin: -1px 0 0 0;
+    top: 100%;
+    left: 0;
+  }
+
+  .d3-tip span {
+    color: #ff00c7;
+  }
+
+  .domain {
+    display: none;
+  }
+
+  .axis line {
     stroke-width: 1px;
-    stroke: #c00;
+    stroke: #eee;
     shape-rendering: crispedges;
+  }
+
+  .axis text {
+    fill: #888;
+  }
+
+  rect {
+    fill: #339cff;
+    fill-opacity: 0.7;
+  }
+
+  rect:hover {
+    fill-opacity: 1;
   }
   </style>
 </head>
 <body>
+  <div id="graph">
+
+  </div>
   <script type="text/javascript">
-    var w = 500,
-        h = 500,
-        linex, liney,
-        data = [500, 100],
-        x  = d3.scale.ordinal().domain(d3.range(data.length)).rangeRoundBands([0, w], 0.1),
-        y  = d3.scale.linear().domain([0, d3.max(data)]).range([h, 0]),
-        tip = d3.svg.tip()
-          .orient('left')
-          .padding(5)
-          .text(function(d) { return d; })
-          .attr('class', 'd3-tip')
+    var tip = d3.tip()
+      .attr('class', 'd3-tip')
+      .text(function(d) { return '<span>' + d.total + '</span>' + ' entries' })
+      .offset([-12, 0])
 
+    var w = 800,
+        h = 300,
+        padt = 20, padr = 20, padb = 60, padl = 30,
+        x  = d3.scale.ordinal().rangeRoundBands([0, w - padl - padr], 0.1),
+        y  = d3.scale.linear().range([h, 0]),
+        yAxis = d3.svg.axis().scale(y).orient('left').tickSize(-w + padl + padr),
+        xAxis = d3.svg.axis().scale(x).orient('bottom')
 
-    vis = d3.select(document.body)
+    vis = d3.select('#graph')
       .append('svg')
-      .attr('width', 500)
-      .attr('height', 500)
+      .attr('width', w)
+      .attr('height', h + padt + padb)
+    .append('g')
+      .attr('transform', 'translate(' + padl + ',' + padt + ')')
 
-    vis.selectAll('rect')
-      .data(data)
-    .enter().append('rect')
-      .attr('width', function() { return x.rangeBand() })
-      .attr('height', function(d) { return h - y(d) })
-      .attr('y', function(d) { return y(d) })
-      .attr('x', function(d, i) { return x(i) })
-      .on('mouseover', tip)
-      .on('click', function() {
-        var rect = this.getBoundingClientRect(),
-            bbox = this.getBBox(),
-            x = bbox.x + (bbox.width / 2),
-            y = bbox.y;
+    d3.json('data.json', function (data) {
+      var max = d3.max(data, function(d) { return d.total })
+      x.domain(d3.range(data.length))
+      y.domain([0, max])
 
-        linex.transition()
-          .attr('x1', x)
-          .attr('x2', x)
+      vis.call(tip)
+      vis.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
 
-        liney.transition()
-          .attr('y1', y)
-          .attr('y2',y)
-      })
+      vis.append("g")
+        .attr("class", "x axis")
+        .attr('transform', 'translate(0,' + h + ')')
+        .call(xAxis)
+        .selectAll('.x.axis g')
+          .style('display', function (d, i) { return i % 3 != 0  ? 'none' : 'block' })
 
-    linex = vis.append('line')
-      .attr("x1", 0)
-      .attr("y1", 0)
-      .attr("x2", 0)
-      .attr("y2", h)
-      .attr('class', 'rule')
+      var bars = vis.selectAll('g.bar')
+        .data(data)
+      .enter().append('g')
+        .attr('class', 'bar')
+        .attr('transform', function (d, i) { return "translate(" + x(i) + ", 0)" })
 
-    liney = vis.append('line')
-      .attr("x1", 0)
-      .attr("y1", 0)
-      .attr("x2", w)
-      .attr("y2", 0)
-      .attr('class', 'rule')
+      bars.append('rect')
+        .attr('width', function() { return x.rangeBand() })
+        .attr('height', function(d) { return h - y(d.total) })
+        .attr('y', function(d) { return y(d.total) })
+        .on('mouseover', tip.show)
+        .on('mouseout', tip.hide)
+    })
   </script>
 </body>
 </html>

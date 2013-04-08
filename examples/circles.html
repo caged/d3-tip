@@ -7,9 +7,19 @@
   <script type="text/javascript" src="../components/d3/d3.js"></script>
   <script type="text/javascript" src="../src/d3.tip.js"></script>
   <style type="text/css">
+  body {
+    padding: 40px;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 12px;
+  }
+
   .d3-tip {
-    fill: #c00;
+    line-height: 1;
     font-weight: bold;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 2px;
   }
 
   .d3-tip text {
@@ -17,6 +27,18 @@
     font-size: 12px;
     stroke: none;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  circle {
+    fill: #ccc;
+    fill-opacity: 0.6;
+    stroke: #bbb;
+    stroke-width: 1px;
+  }
+
+  circle:hover {
+    fill: #bbb;
+    stroke: #999;
   }
 
   .rule {
@@ -28,61 +50,40 @@
 </head>
 <body>
   <script type="text/javascript">
-    var w = 500,
-        h = 500,
+    var data = [],
+      random = d3.random.normal(10),
+      random2 = d3.random.irwinHall(1)
+    for(var i = 0; i < 100; i++) data.push(random(i))
+
+    var tip = d3.tip()
+      .attr('class', 'd3-tip')
+      .text(function(d) { return d.toFixed(2) })
+      .direction('e')
+      .offset([0, 3])
+
+    var w = 1000,
+        h = 1000,
         r = 10,
         linex, liney,
-        orientations = ['top', 'bottom', 'left', 'right'],
-        data = [1220, 2230, 3002, 4012],
         x = d3.scale.linear().domain([0, data.length - 1]).range([r, w - r]),
         y = d3.scale.linear().domain([0, d3.max(data)]).range([h,  r]),
-        tip = d3.svg.tip()
-          .orient('left')
-          .padding(10)
-          .text(function(d) { return d; })
-          .attr('class', 'd3-tip')
 
     vis = d3.select(document.body)
       .append('svg')
-      .attr('width', 500)
-      .attr('height', 500)
+      .attr('width', w)
+      .attr('height', h)
+    .append('g')
+      .attr('transform', 'translate(20, 20)')
+    .call(tip)
 
     vis.selectAll('circle')
       .data(data)
     .enter().append('circle')
-      .attr('r', r)
+      .attr('r', function(d, i) { return random2(i) * 10 })
       .attr('cx', function(d, i) { return x(i) })
       .attr('cy', y)
-      .on('mouseover', function(d, i) {
-        tip.orient(orientations[i]).apply(this, arguments)
-
-        var bbox = this.getBBox(),
-            x = bbox.x + (bbox.width / 2),
-            y = bbox.y + bbox.height;
-
-        linex.transition()
-          .attr('x1', x)
-          .attr('x2', x)
-
-        liney.transition()
-          .attr('y1', y)
-          .attr('y2',y)
-
-      })
-
-    linex = vis.append('line')
-      .attr("x1", 0)
-      .attr("y1", 0)
-      .attr("x2", 0)
-      .attr("y2", h)
-      .attr('class', 'rule')
-
-    liney = vis.append('line')
-      .attr("x1", 0)
-      .attr("y1", 0)
-      .attr("x2", w)
-      .attr("y2", 0)
-      .attr('class', 'rule')
+      .on('mouseover', tip.show)
+      .on('mouseout', tip.hide)
   </script>
 </body>
 </html>
