@@ -7,7 +7,7 @@
 ``` javascript
 
 /* Initialize tooltip */
-tip = d3.svg.tip().text(function(d) { return d; });
+tip = d3.tip().text(function(d) { return d; });
 
 /* Invoke the tip in the context of your visualization */
 vis.call(tip)
