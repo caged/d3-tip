@@ -14,6 +14,7 @@
   }
 
   .d3-tip {
+    line-height: 1;
     font-weight: bold;
     padding: 12px;
     background: rgba(0, 0, 0, 0.8);
@@ -22,19 +23,20 @@
   }
 
   .d3-tip:after {
-    display: inline-block;
-    font-size: 12px;
+    box-sizing: border-box;
+    display: inline;
+    font-size: 10px;
     width: 100%;
     line-height: 1;
     color: rgba(0, 0, 0, 0.8);
     content: "\25BC";
     position: absolute;
     text-align: center;
-    font-size: 12px;
   }
 
   .d3-tip.n:after {
-    top: 99%;
+    margin: -1px 0 0 0;
+    top: 100%;
     left: 0;
   }
 
@@ -76,7 +78,8 @@
   <script type="text/javascript">
     var tip = d3.tip()
       .attr('class', 'd3-tip')
-      .text(function(d) { return d.total })
+      .text(function(d) { return d.total + " entries" })
+      .offset([-12, 0])
       .direction(function(d) {
         return d3.shuffle(['n'])[0]
       })
