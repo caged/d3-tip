@@ -9,8 +9,8 @@ d3.tip = function() {
       svg       = null,
       point     = null;
 
-  function tip(svg) {
-    svg = get_svg_node(svg)
+  function tip(vis) {
+    svg = get_svg_node(vis)
     point = svg.createSVGPoint()
     document.body.appendChild(node)
   }
@@ -18,7 +18,7 @@ d3.tip = function() {
   // Public - show the tooltip on the screen
   //
   // Returns a tip
-  tip.show = function(v) {
+  tip.show = function() {
     var content = text.apply(this, arguments),
         poffset = offset.apply(this, arguments),
         dir     = direction.apply(this, arguments),
@@ -40,7 +40,7 @@ d3.tip = function() {
   // Public - hide the tooltip
   //
   // Returns a tip
-  tip.hide = function(v) {
+  tip.hide = function() {
     node.style.display = 'none'
     node.innerText = ''
 
