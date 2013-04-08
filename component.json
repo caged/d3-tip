@@ -1,6 +1,6 @@
 {
   "name": "d3-tip",
-  "version": "0.5.0",
+  "version": "0.5.0-alpha",
   "main": "src/d3.tip.js",
   "ignore": [
     "**/.*",
