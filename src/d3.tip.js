@@ -22,6 +22,7 @@ d3.tip = function() {
   // Returns a tip
   tip.show = function(v) {
     var content = text.apply(this, arguments),
+        poffset = offset.apply(this, arguments),
         dir     = direction.apply(this, arguments),
         dirs    = direction_callbacks.keys(),
         nodel   = d3.select(node), i = 0,
@@ -30,7 +31,10 @@ d3.tip = function() {
     nodel.html(content).style('display', 'block')
     for(i; i < dirs.length; i++) nodel.classed(dirs[i], false)
     coords = direction_callbacks.get(dir).apply(this)
-    nodel.classed(dir, true).style({top: coords.top + 'px', left: coords.left + 'px'})
+    nodel.classed(dir, true).style({
+      top: (coords.top +  poffset[0]) + 'px',
+      left: (coords.left + poffset[1]) + 'px'
+    })
 
     return tip
   }
