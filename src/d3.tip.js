@@ -1,158 +1,50 @@
 // Public - contructs a new tooltip
 //
 // Returns a tip
-d3.svg.tip = function() {
-  var orient = 'top',
-      padding = 5,
-      cornerRadius = 2,
-      stemSize = 50,
-      offset = d3_svg_offset,
-      text = d3_svg_text,
-      node = make('g');
+d3.tip = function() {
+  var direction = d3_svg_direction,
+      offset    = d3_svg_offset,
+      text      = d3_svg_text,
+      node      = init_node(),
+      svg       = null,
+      point     = null;
 
-  function tip(d, i) {
-    this.ownerSVGElement.appendChild(node);
-
-    var tipOffset = offset.apply(this, arguments),
-        tipText   = text.apply(this, arguments),
-        container = d3.select(node),
-        tag = this.tagName.toLowerCase(),
-        loc, stem, stem_gen, backingRect, containerRect, containerCTM, stemRect, d3_orient_types;
-
-    // Elements and Bounds
-    var doc        = d3.select(this.ownerSVGElement),
-        target     = d3.select(this),
-        backing    = d3.select(make('rect')),
-        docRect    = this.ownerSVGElement.getBoundingClientRect(),
-        targetRect = this.getBBox(),
-        targetCTM  = this.getCTM();
-
-    // TODO: Allow ability to specify this in someway
-    // target.on('mouseout', function() { container.remove() })
-
-    // FIXME: d3 has problems using `append` with nodes that were created
-    // but not immediately added to the SVG dom.
-    // Clear the container and add the rect backing
-    container.text(' ').node().appendChild(backing.node())
-
-    // The value to show in the tooltip
-    var val = container.append('text').text(tipText).attr('text-anchor', 'middle').attr('dominant-baseline', 'middle'),
-        valRect = val.node().getBBox();
-
-    valRect.width = valRect.width + (padding * 2)
-    valRect.height = valRect.height + (padding * 2)
-
-    backing.attr('width', valRect.width)
-      .attr('height', valRect.height)
-      .attr('rx', cornerRadius)
-      .attr('ry', cornerRadius)
-
-    val.attr('x', valRect.width / 2).attr('y', valRect.height / 2)
-
-    backingRect = backing.node().getBBox()
-
-    // TODO: stem seems to report the wrong height, so it's never completely flush
-    // against the backing rect.
-    stem_gen = d3.svg.symbol().type('triangle-down').size(stemSize)
-    stem = container.append('path').attr('d', stem_gen())
-    stemRect = stem.node().getBBox()
-
-    d3_orient_types = {
-      top: function() {
-        stem.attr('transform', 'translate(' + (backingRect.width / 2) + ',' + backingRect.height + ')');
-        containerRect = container.node().getBBox()
-        stemRect = stem.node().getBBox()
-
-        if(tag == 'circle') {
-          x = targetCTM.e + tipOffset[0];
-          y = targetCTM.f  + tipOffset[1];
-        } else {
-          x = targetCTM.e + (targetRect.width / 2) - (containerRect.width / 2) + tipOffset[0];
-          y = targetRect.y - stemRect.height + tipOffset[1];
-        }
-
-        return {x: x, y: y}
-      },
-
-      // Bottom is the only tooltip that uses a stem with triangle-up, so we need to do
-      // a little more work here.
-      bottom: function() {
-        stem.remove()
-        stem_gen = d3.svg.symbol().type('triangle-up').size(stemSize)
-        stem = container.append('path').attr('d', stem_gen())
-
-        stemRect = stem.node().getBBox()
-        stem.attr('transform', 'translate(' + (backingRect.width / 2) + ',' + -(stemRect.height / 2) + ')');
-
-        containerRect = container.node().getBBox()
-        if(tag == 'circle') {
-          x = targetCTM.e;
-          y = targetCTM.f;
-        } else {
-          x = targetRect.x + (targetRect.width / 2) - (containerRect.width / 2) + tipOffset[0];
-          y = targetRect.y + targetRect.height + stemRect.height - tipOffset[1];
-        }
-
-        return {x: x, y: y}
-      },
-
-      left: function() {
-        stem.attr('transform', 'translate(' + (backingRect.width + (stemRect.height/2)) + ',' + (backingRect.height / 2) + ') rotate(-90)');
-
-        containerRect = container.node().getBBox()
-        x = targetRect.x - (containerRect.x + containerRect.width) + tipOffset[0];
-        y = targetRect.y + targetRect.height/2 - (containerRect.y + containerRect.height/2) + tipOffset[1];
-
-        return {x: x, y: y}
-      },
-
-      right: function() {
-        stem.attr('transform', 'translate(' + -(stemRect.height / 2) + ',' + (backingRect.height / 2) + ') rotate(90)');
-
-        containerRect = container.node().getBBox()
-
-        x = targetRect.x + targetRect.width - containerRect.x + tipOffset[0];
-        y = targetRect.y + targetRect.height/2 - (containerRect.y + containerRect.height/2) + tipOffset[1];
-
-        return {x: x, y: y}
-      }
-    }
-
-    loc = d3_orient_types[orient]()
-
-    // Tip clipped at right boundry
-    if(loc.x + containerRect.width > docRect.width) {
-      loc = d3_orient_types['left']()
-    }
-
-    // Tip clipped at left boundry
-    if(loc.x < 0) {
-      loc = d3_orient_types['right']()
-    }
-
-    // Tip positioned left or right and clipped at the top or bottom
-    if(orient == 'left' || orient == 'right') {
-      if(loc.y < 0) loc.y = 0
-      if(loc.y > docRect.height) loc.y = docRect.height
-    }
-
-    // Tip positioned at the top and overlaps the top boundry.
-    // We need to "flip" the offset here so the offset runs in the
-    // opposite direction.
-    if(loc.y - containerRect.height < 0 && orient == 'top') {
-      loc = d3_orient_types['bottom']()
-      loc.y += (tipOffset[1] * 2);
-    }
-
-    container.attr('transform', 'translate(' + loc.x + ',' + loc.y + ')')
+  function tip(svg) {
+    svg = get_svg_node(svg)
+    point = svg.createSVGPoint()
+    document.body.appendChild(node)
   }
 
-  function d3_svg_offset() {
-    return [0, 0];
+  // Public - show the tooltip on the screen
+  //
+  // Returns a tip
+  tip.show = function(v) {
+    var content = text.apply(this, arguments),
+        poffset = offset.apply(this, arguments),
+        dir     = direction.apply(this, arguments),
+        dirs    = direction_callbacks.keys(),
+        nodel   = d3.select(node), i = 0,
+        coords
+
+    nodel.html(content).style('display', 'block')
+    for(i; i < dirs.length; i++) nodel.classed(dirs[i], false)
+    coords = direction_callbacks.get(dir).apply(this)
+    nodel.classed(dir, true).style({
+      top: (coords.top +  poffset[0]) + 'px',
+      left: (coords.left + poffset[1]) + 'px'
+    })
+
+    return tip
   }
 
-  function d3_svg_text() {
-    return ' ';
+  // Public - hide the tooltip
+  //
+  // Returns a tip
+  tip.hide = function(v) {
+    node.style.display = 'none'
+    node.innerText = ''
+
+    return tip
   }
 
   // Public: Proxy attr calls to the d3 tip container.  Sets or gets attribute value.
@@ -171,47 +63,14 @@ d3.svg.tip = function() {
     return tip;
   }
 
-  // Public: Set or get the orientation of the tooltip
+  // Public: Set or get the direction of the tooltip
   //
-  // v - One of top, bottom, left, or right
+  // v - One of n(orth), s(outh), e(ast), or w(est)
   //
-  // Returns tip or oreint
-  tip.orient = function(v) {
-    if (!arguments.length) return orient;
-    orient = v;
-    return tip;
-  };
-
-  // Public: Sets or gets the padding on all sides for the tooltip
-  //
-  // v - Padding value as a number
-  //
-  // Returns padding or tip
-  tip.padding = function(v) {
-    if (!arguments.length) return padding;
-    padding = v;
-    return tip;
-  };
-
-  // Public: Sets or gets the corner radius of the tooltip on all sides
-  //
-  // v - Radius as a Number
-  //
-  // Returns cornerRadius or tip
-  tip.cornerRadius = function(v) {
-    if (!arguments.length) return cornerRadius;
-    cornerRadius = v;
-    return tip;
-  };
-
-  // Public: Sets or gets the size of the stem
-  //
-  // v - size of the stem
-  //
-  // Returns stemSize or tip
-  tip.stemSize = function(v) {
-    if (!arguments.length) return stemSize;
-    stemSize = v;
+  // Returns tip or direction
+  tip.direction = function(v) {
+    if (!arguments.length) return direction;
+    direction = v == null ? v : d3.functor(v);
     return tip;
   };
 
@@ -222,7 +81,7 @@ d3.svg.tip = function() {
   // Returns offset or
   tip.offset = function(v) {
     if (!arguments.length) return offset;
-    offset = v == null ? v: d3.functor(v);
+    offset = v == null ? v : d3.functor(v);
     return tip;
   };
 
@@ -233,13 +92,120 @@ d3.svg.tip = function() {
   // Returns text value or tip
   tip.text = function(v) {
     if (!arguments.length) return text;
-    text = v == null ? v: d3.functor(v);
+    text = v == null ? v : d3.functor(v)
 
-    return tip;
+    return tip
   };
 
-  function make(e) {
-    return document.createElementNS(d3.ns.prefix.svg, e);
+  function d3_svg_direction() { return 'n' }
+  function d3_svg_offset() { return [0, 0] }
+  function d3_svg_text() { return ' ' }
+
+  var direction_callbacks = d3.map({
+    n: direction_n,
+    s: direction_s,
+    e: direction_e,
+    w: direction_w
+  })
+
+  function direction_n() {
+    var bbox = get_screen_bbox()
+    return {
+      top: (bbox.n.y - node.offsetHeight),
+      left: (bbox.n.x - node.offsetWidth / 2)
+    }
+  }
+
+  function direction_s() {
+    var bbox = get_screen_bbox()
+    return {
+      top:  (bbox.s.y),
+      left: (bbox.s.x - node.offsetWidth / 2)
+    }
+  }
+
+  function direction_e() {
+    var bbox = get_screen_bbox()
+    return {
+      top: (bbox.e.y - node.offsetHeight / 2),
+      left: bbox.e.x
+    }
+  }
+
+  function direction_w() {
+    var bbox = get_screen_bbox()
+    return {
+      top: (bbox.w.y - node.offsetHeight / 2),
+      left: bbox.w.x - node.offsetWidth
+    }
+  }
+
+  function init_node() {
+    var node = document.createElement('div')
+    node.style.position = 'absolute'
+    node.style.display = 'none'
+    node.style.boxSizing = 'border-box'
+    return node
+  }
+
+  function get_svg_node(el) {
+    el = el.node()
+    if(el.tagName.toLowerCase() == 'svg') {
+      return el
+    } else {
+      while(el.parentNode) {
+        el = el.parentNode
+        if(el.tagName.toLowerCase() == 'svg')
+          return el
+      }
+    }
+
+    return null
+  }
+
+  // Private - gets the screen coordinates of a shape
+  //
+  // Given a shape on the screen, will return an SVGPoint for the directions
+  // n(orth), s(outh), e(ast), w(est), ne(northeast), se(southeast), nw(northwest),
+  // sw(southwest).
+  //
+  //    +-+-+
+  //    |   |
+  //    +   +
+  //    |   |
+  //    +-+-+
+  //
+  // Returns an Object {n, s, e, w, nw, sw, ne, se}
+  function get_screen_bbox() {
+    var target = d3.event.target,
+        bbox   = {},
+        matrix = target.getScreenCTM(),
+        tbbox  = target.getBBox(),
+        width  = tbbox.width,
+        height = tbbox.height,
+        x      = tbbox.x,
+        y      = tbbox.y
+
+    point.x = x + document.body.scrollLeft
+    point.y = y + document.body.scrollTop
+    bbox.nw = point.matrixTransform(matrix)
+    point.x += width
+    bbox.ne = point.matrixTransform(matrix)
+    point.y += height
+    bbox.se = point.matrixTransform(matrix)
+    point.x -= width
+    bbox.sw = point.matrixTransform(matrix)
+    point.y -= height / 2
+    bbox.w  = point.matrixTransform(matrix)
+    point.x += width
+    bbox.e = point.matrixTransform(matrix)
+    point.x -= width / 2
+    point.y -= height / 2
+    bbox.n = point.matrixTransform(matrix)
+    point.y += height
+    bbox.s = point.matrixTransform(matrix)
+
+    return bbox
   }
 
   return tip;
