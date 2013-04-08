@@ -177,17 +177,24 @@ d3.tip = function() {
   //
   // Returns an Object {n, s, e, w, nw, sw, ne, se}
   function get_screen_bbox() {
-    var target = d3.event.target,
-        bbox   = {},
-        matrix = target.getScreenCTM(),
-        tbbox  = target.getBBox(),
-        width  = tbbox.width,
-        height = tbbox.height,
-        x      = tbbox.x,
-        y      = tbbox.y
+    var target     = d3.event.target,
+        bbox       = {},
+        matrix     = target.getScreenCTM(),
+        tbbox      = target.getBBox(),
+        width      = tbbox.width,
+        height     = tbbox.height,
+        x          = tbbox.x,
+        y          = tbbox.y,
+        scrollTop = document.body.scrollTop
+        scrollLeft = document.body.scrollLeft
 
-    point.x = x + document.body.scrollLeft
-    point.y = y + document.body.scrollTop
+    if(document.documentElement && document.documentElement.scrollTop) {
+      scrollTop = document.documentElement.scrollTop
+      scrollLeft = document.documentElement.scrollLeft
+    }
+
+    point.x = x + scrollLeft
+    point.y = y + scrollTop
     bbox.nw = point.matrixTransform(matrix)
     point.x += width
     bbox.ne = point.matrixTransform(matrix)
