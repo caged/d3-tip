@@ -7,11 +7,9 @@ d3.tip = function() {
       text      = d3_svg_text,
       node      = init_node(),
       svg       = null,
-      container = null,
       point     = null;
 
   function tip(svg) {
-    container = svg
     svg = get_svg_node(svg)
     point = svg.createSVGPoint()
     document.body.appendChild(node)
