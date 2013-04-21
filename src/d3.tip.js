@@ -54,12 +54,7 @@ d3.tip = function() {
   //
   // Returns tip or attribute value
   tip.attr = function(n, v) {
-    if (arguments.length < 2) {
-      return d3.select(node).attr(n)
-    } else {
-      d3.select(node).attr(n, v)
-    }
-
+    d3.select(node).attr(n, v)
     return tip;
   }
 
@@ -70,12 +65,7 @@ d3.tip = function() {
   //
   // Returns tip or style property value
   tip.style = function(n, v) {
-    if (arguments.length < 2) {
-      return d3.select(node).style(n)
-    } else {
-      d3.select(node).style(n, v)
-    }
-
+    d3.select(node).style(n, v)
     return tip;
   }
 
