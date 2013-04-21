@@ -61,13 +61,13 @@
 
     var tip = d3.tip()
       .attr('class', 'd3-tip')
-      .text(function(d) { return d.toFixed(2) })
+      .html(function(d) { return d.toFixed(2) })
       .direction('e')
       .offset([0, 3])
 
     var tip2 = d3.tip()
       .attr('class', 'd3-tip')
-      .text(function(d) { return d.toFixed(2) })
+      .html(function(d) { return d.toFixed(2) })
       .direction('n')
       .offset([-3, 0])
 

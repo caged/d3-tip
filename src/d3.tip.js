@@ -106,7 +106,7 @@ d3.tip = function() {
   // v - String value of the tip
   //
   // Returns text value or tip
-  tip.text = function(v) {
+  tip.html = function(v) {
     if (!arguments.length) return text;
     text = v == null ? v : d3.functor(v)
 
