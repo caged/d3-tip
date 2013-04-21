@@ -4,7 +4,7 @@
 d3.tip = function() {
   var direction = d3_svg_direction,
       offset    = d3_svg_offset,
-      text      = d3_svg_text,
+      html      = d3_svg_html,
       node      = init_node(),
       svg       = null,
       point     = null;
@@ -19,7 +19,7 @@ d3.tip = function() {
   //
   // Returns a tip
   tip.show = function() {
-    var content = text.apply(this, arguments),
+    var content = html.apply(this, arguments),
         poffset = offset.apply(this, arguments),
         dir     = direction.apply(this, arguments),
         dirs    = direction_callbacks.keys(),
@@ -42,7 +42,7 @@ d3.tip = function() {
   // Returns a tip
   tip.hide = function() {
     node.style.display = 'none'
-    node.innerText = ''
+    node.innerHTML = ''
 
     return tip
   }
@@ -101,21 +101,21 @@ d3.tip = function() {
     return tip;
   };
 
-  // Public: sets or gets the text value of the tooltip
+  // Public: sets or gets the html value of the tooltip
   //
   // v - String value of the tip
   //
-  // Returns text value or tip
+  // Returns html value or tip
   tip.html = function(v) {
-    if (!arguments.length) return text;
-    text = v == null ? v : d3.functor(v)
+    if (!arguments.length) return html;
+    html = v == null ? v : d3.functor(v)
 
     return tip
   };
 
   function d3_svg_direction() { return 'n' }
   function d3_svg_offset() { return [0, 0] }
-  function d3_svg_text() { return ' ' }
+  function d3_svg_html() { return ' ' }
 
   var direction_callbacks = d3.map({
     n: direction_n,
