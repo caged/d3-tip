@@ -2,6 +2,9 @@
 
 ![](https://github-images.s3.amazonaws.com/skitch/Screen_Shot_2013-04-08_at_11.40.10_AM-20130408-114054.png)
 
+### API Docs
+[API Documentation](docs/home.md)
+
 ### Download
 * [Production Version](https://raw.github.com/Caged/d3-tip/master/d3.tip.min.js) : **3kb** / **~1kb gzipped**
 * [Development Version](https://raw.github.com/Caged/d3-tip/master/src/d3.tip.js) : **6kb** / **~2kb gzipped**
@@ -12,7 +15,7 @@ bower install Caged/d3-tip
 ```
 *Note the capital "C"*
 
-### Usage
+### Quick Usage
 ``` javascript
 
 /* Initialize tooltip */
