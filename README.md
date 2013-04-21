@@ -4,7 +4,7 @@
 
 ### Download
 * [Production Version](https://raw.github.com/Caged/d3-tip/master/d3.tip.min.js) : **3kb** / **~1kb gzipped**
-* [Production Version](https://raw.github.com/Caged/d3-tip/master/src/d3.tip.js) : **6kb** / **~2kb gzipped**
+* [Development Version](https://raw.github.com/Caged/d3-tip/master/src/d3.tip.js) : **6kb** / **~2kb gzipped**
 
 ### Install with Bower
 ```
