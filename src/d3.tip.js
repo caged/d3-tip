@@ -63,6 +63,22 @@ d3.tip = function() {
     return tip;
   }
 
+  // Public: Proxy style calls to the d3 tip container.  Sets or gets a style value.
+  //
+  // n - name of the property
+  // v - value of the property
+  //
+  // Returns tip or style property value
+  tip.style = function(n, v) {
+    if (arguments.length < 2) {
+      return d3.select(node).style(n)
+    } else {
+      d3.select(node).style(n, v)
+    }
+
+    return tip;
+  }
+
   // Public: Set or get the direction of the tooltip
   //
   // v - One of n(orth), s(outh), e(ast), or w(est)
