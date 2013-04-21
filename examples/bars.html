@@ -79,7 +79,7 @@
   <script type="text/javascript">
     var tip = d3.tip()
       .attr('class', 'd3-tip')
-      .text(function(d) { return '<span>' + d.total + '</span>' + ' entries' })
+      .html(function(d) { return '<span>' + d.total + '</span>' + ' entries' })
       .offset([-12, 0])
 
     var w = 800,
