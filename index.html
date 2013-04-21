@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>D3-tip by Caged</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>D3-tip</h1>
+        <p>Tooltips for d3 visualizations</p>
+
+        <p class="view"><a href="https://github.com/Caged/d3-tip">View the Project on GitHub <small>Caged/d3-tip</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/Caged/d3-tip/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/Caged/d3-tip/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/Caged/d3-tip">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>d3.tip: Tooltips for d3.js visualizations</h1>
+
+<p><img src="https://github-images.s3.amazonaws.com/skitch/Screen_Shot_2013-04-08_at_11.40.10_AM-20130408-114054.png" alt=""></p>
+
+<h3>API Docs</h3>
+
+<p><a href="docs/index.md">API Documentation</a></p>
+
+<h3>Download</h3>
+
+<ul>
+<li>
+<a href="https://raw.github.com/Caged/d3-tip/master/d3.tip.min.js">Production Version</a> : <strong>3kb</strong> / <strong>~1kb gzipped</strong>
+</li>
+<li>
+<a href="https://raw.github.com/Caged/d3-tip/master/src/d3.tip.js">Development Version</a> : <strong>6kb</strong> / <strong>~2kb gzipped</strong>
+</li>
+</ul><h3>Install with Bower</h3>
+
+<pre><code>bower install Caged/d3-tip
+</code></pre>
+
+<p><em>Note the capital "C"</em></p>
+
+<h3>Quick Usage</h3>
+
+<div class="highlight"><pre>
+<span class="cm">/* Initialize tooltip */</span>
+<span class="nx">tip</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">tip</span><span class="p">().</span><span class="nx">text</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">d</span><span class="p">;</span> <span class="p">});</span>
+
+<span class="cm">/* Invoke the tip in the context of your visualization */</span>
+<span class="nx">vis</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">tip</span><span class="p">)</span>
+
+<span class="nx">vis</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">'rect'</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
+<span class="p">.</span><span class="nx">enter</span><span class="p">().</span><span class="nx">append</span><span class="p">(</span><span class="s1">'rect'</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'width'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">x</span><span class="p">.</span><span class="nx">rangeBand</span><span class="p">()</span> <span class="p">})</span>
+  <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'height'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">h</span> <span class="o">-</span> <span class="nx">y</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">})</span>
+  <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'y'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">y</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">})</span>
+  <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'x'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">x</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">})</span>
+  <span class="cm">/* Show and hide tip on mouse events */</span>
+  <span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'mouseover'</span><span class="p">,</span> <span class="nx">tip</span><span class="p">.</span><span class="nx">show</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'mouseout'</span><span class="p">,</span> <span class="nx">tip</span><span class="p">.</span><span class="nx">hide</span><span class="p">)</span>
+</pre></div>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/Caged">Caged</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
