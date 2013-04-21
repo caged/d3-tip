@@ -1,5 +1,8 @@
 # d3.tip API documetation
 
+### [Initializing tooltips](initializing-tooltips.md)
+* [d3.tip](initializing-tooltips#tip)
+
 #### [Showing and hiding tooltips](showing-and-hiding-tooltips.md)
 * [tip.show](showing-and-hiding-tooltips.md#show)
 * [tip.hide](showing-and-hiding-tooltips.md#hide)
