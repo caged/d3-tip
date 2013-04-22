@@ -187,7 +187,7 @@ d3.tip = function() {
   // Private - gets the screen coordinates of a shape
   //
   // Given a shape on the screen, will return an SVGPoint for the directions
-  // n(orth), s(outh), e(ast), w(est), ne(northeast), se(southeast), nw(northwest),
+  // n(north), s(south), e(east), w(west), ne(northeast), se(southeast), nw(northwest),
   // sw(southwest).
   //
   //    +-+-+
