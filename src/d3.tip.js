@@ -123,32 +123,36 @@ d3.tip = function() {
   function d3_tip_html() { return ' ' }
 
   var direction_callbacks = d3.map({
-    n: direction_n,
-    s: direction_s,
-    e: direction_e,
-    w: direction_w
+    n:  direction_n,
+    s:  direction_s,
+    e:  direction_e,
+    w:  direction_w,
+    nw: direction_nw,
+    ne: direction_ne,
+    sw: direction_sw,
+    se: direction_se
   })
 
   function direction_n() {
     var bbox = get_screen_bbox()
     return {
-      top: (bbox.n.y - node.offsetHeight),
-      left: (bbox.n.x - node.offsetWidth / 2)
+      top:  bbox.n.y - node.offsetHeight,
+      left: bbox.n.x - node.offsetWidth / 2
     }
   }
 
   function direction_s() {
     var bbox = get_screen_bbox()
     return {
-      top:  (bbox.s.y),
-      left: (bbox.s.x - node.offsetWidth / 2)
+      top:  bbox.s.y,
+      left: bbox.s.x - node.offsetWidth / 2
     }
   }
 
   function direction_e() {
     var bbox = get_screen_bbox()
     return {
-      top: (bbox.e.y - node.offsetHeight / 2),
+      top:  bbox.e.y - node.offsetHeight / 2,
       left: bbox.e.x
     }
   }
@@ -156,8 +160,40 @@ d3.tip = function() {
   function direction_w() {
     var bbox = get_screen_bbox()
     return {
-      top: (bbox.w.y - node.offsetHeight / 2),
+      top:  bbox.w.y - node.offsetHeight / 2,
       left: bbox.w.x - node.offsetWidth
+    }
+  }
+
+  function direction_nw() {
+    var bbox = get_screen_bbox()
+    return {
+      top:  bbox.nw.y - node.offsetHeight,
+      left: bbox.nw.x - node.offsetWidth
+    }
+  }
+
+  function direction_ne() {
+    var bbox = get_screen_bbox()
+    return {
+      top:  bbox.ne.y - node.offsetHeight,
+      left: bbox.ne.x
+    }
+  }
+
+  function direction_sw() {
+    var bbox = get_screen_bbox()
+    return {
+      top:  bbox.sw.y,
+      left: bbox.sw.x - node.offsetWidth
+    }
+  }
+
+  function direction_se() {
+    var bbox = get_screen_bbox()
+    return {
+      top:  bbox.se.y,
+      left: bbox.e.x
     }
   }
 

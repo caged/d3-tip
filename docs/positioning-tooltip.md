@@ -4,7 +4,7 @@
 
 ### tip.direction(direction)
 Sets the position of a tooltip relative to a target element.  `direction` can be
-`n`, `s`, `e` or `w`.  The direction will also automatically be included as a classname
+`n`, `s`, `e`, `w`, `nw`, `ne`, `sw` or `se`.  The direction will also automatically be included as a classname
 on the tooltip element which allows for different style hooks based on the direction.
 
 ``` javascript
