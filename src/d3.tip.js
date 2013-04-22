@@ -127,7 +127,8 @@ d3.tip = function() {
     s:  direction_s,
     e:  direction_e,
     w:  direction_w,
-    nw: direction_nw
+    nw: direction_nw,
+    ne: direction_ne
   })
 
   function direction_n() {
@@ -167,6 +168,14 @@ d3.tip = function() {
     return {
       top:  bbox.nw.y - node.offsetHeight,
       left: bbox.nw.x - node.offsetWidth
+    }
+  }
+
+  function direction_ne() {
+    var bbox = get_screen_bbox()
+    return {
+      top:  bbox.ne.y - node.offsetHeight,
+      left: bbox.ne.x
     }
   }
 
