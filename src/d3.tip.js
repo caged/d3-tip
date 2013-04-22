@@ -132,23 +132,23 @@ d3.tip = function() {
   function direction_n() {
     var bbox = get_screen_bbox()
     return {
-      top: (bbox.n.y - node.offsetHeight),
-      left: (bbox.n.x - node.offsetWidth / 2)
+      top:  bbox.n.y - node.offsetHeight,
+      left: bbox.n.x - node.offsetWidth / 2
     }
   }
 
   function direction_s() {
     var bbox = get_screen_bbox()
     return {
-      top:  (bbox.s.y),
-      left: (bbox.s.x - node.offsetWidth / 2)
+      top:  bbox.s.y,
+      left: bbox.s.x - node.offsetWidth / 2
     }
   }
 
   function direction_e() {
     var bbox = get_screen_bbox()
     return {
-      top: (bbox.e.y - node.offsetHeight / 2),
+      top:  bbox.e.y - node.offsetHeight / 2,
       left: bbox.e.x
     }
   }
@@ -156,7 +156,7 @@ d3.tip = function() {
   function direction_w() {
     var bbox = get_screen_bbox()
     return {
-      top: (bbox.w.y - node.offsetHeight / 2),
+      top:  bbox.w.y - node.offsetHeight / 2,
       left: bbox.w.x - node.offsetWidth
     }
   }
