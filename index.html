@@ -56,7 +56,7 @@
 
 <div class="highlight"><pre>
 <span class="cm">/* Initialize tooltip */</span>
-<span class="nx">tip</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">tip</span><span class="p">().</span><span class="nx">text</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">d</span><span class="p">;</span> <span class="p">});</span>
+<span class="nx">tip</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">tip</span><span class="p">().</span><span class="nx">html</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">d</span><span class="p">;</span> <span class="p">});</span>
 
 <span class="cm">/* Invoke the tip in the context of your visualization */</span>
 <span class="nx">vis</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">tip</span><span class="p">)</span>
