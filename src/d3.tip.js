@@ -123,10 +123,11 @@ d3.tip = function() {
   function d3_tip_html() { return ' ' }
 
   var direction_callbacks = d3.map({
-    n: direction_n,
-    s: direction_s,
-    e: direction_e,
-    w: direction_w
+    n:  direction_n,
+    s:  direction_s,
+    e:  direction_e,
+    w:  direction_w,
+    nw: direction_nw
   })
 
   function direction_n() {
@@ -158,6 +159,14 @@ d3.tip = function() {
     return {
       top:  bbox.w.y - node.offsetHeight / 2,
       left: bbox.w.x - node.offsetWidth
+    }
+  }
+
+  function direction_nw() {
+    var bbox = get_screen_bbox()
+    return {
+      top:  bbox.nw.y - node.offsetHeight,
+      left: bbox.nw.x - node.offsetWidth
     }
   }
 
