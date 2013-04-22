@@ -7,9 +7,9 @@
 //
 // Returns a tip
 d3.tip = function() {
-  var direction = d3_svg_direction,
-      offset    = d3_svg_offset,
-      html      = d3_svg_html,
+  var direction = d3_tip_direction,
+      offset    = d3_tip_offset,
+      html      = d3_tip_html,
       node      = init_node(),
       svg       = null,
       point     = null;
@@ -118,9 +118,9 @@ d3.tip = function() {
     return tip
   };
 
-  function d3_svg_direction() { return 'n' }
-  function d3_svg_offset() { return [0, 0] }
-  function d3_svg_html() { return ' ' }
+  function d3_tip_direction() { return 'n' }
+  function d3_tip_offset() { return [0, 0] }
+  function d3_tip_html() { return ' ' }
 
   var direction_callbacks = d3.map({
     n: direction_n,
