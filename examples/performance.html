@@ -96,12 +96,14 @@
       .on('mouseover', tip.show)
       .on('mouseout', tip.hide)
 
+    var elements = circles[0],
+      length = elements.length
     e = new MouseEvent('mouseover')
     for(var i = 0; i <= RUNS; i++) {
+      var j = 0
       console.time(i)
-      circles.each(function() {
-        this.dispatchEvent(e)
-      })
+      for(j; j < length; j++)
+        elements[i].dispatchEvent(e)
       console.timeEnd(i)
     }
 
