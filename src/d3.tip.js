@@ -27,8 +27,8 @@ d3.tip = function() {
     var content = html.apply(this, arguments),
         poffset = offset.apply(this, arguments),
         dir     = direction.apply(this, arguments),
-        dirs    = direction_callbacks.keys(),
         nodel   = d3.select(node), i = 0,
+        length  = directions.length,
         coords
 
     nodel.html(content).style('display', 'block')
@@ -131,7 +131,9 @@ d3.tip = function() {
     ne: direction_ne,
     sw: direction_sw,
     se: direction_se
-  })
+  }),
+
+  directions = direction_callbacks.keys()
 
   function direction_n() {
     var bbox = get_screen_bbox()
