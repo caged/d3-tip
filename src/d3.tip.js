@@ -207,17 +207,10 @@ d3.tip = function() {
 
   function get_svg_node(el) {
     el = el.node()
-    if(el.tagName.toLowerCase() == 'svg') {
+    if(el.tagName.toLowerCase() == 'svg')
       return el
-    } else {
-      while(el.parentNode) {
-        el = el.parentNode
-        if(el.tagName.toLowerCase() == 'svg')
-          return el
-      }
-    }
 
-    return null
+    return el.ownerSVGElement
   }
 
   // Private - gets the screen coordinates of a shape
