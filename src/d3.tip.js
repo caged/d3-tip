@@ -85,7 +85,8 @@ d3.tip = function() {
 
   // Public: Set or get the direction of the tooltip
   //
-  // v - One of n(orth), s(outh), e(ast), or w(est)
+  // v - One of n(north), s(south), e(east), or w(west), nw(northwest),
+  //     sw(southwest), ne(northeast) or se(southeast)
   //
   // Returns tip or direction
   tip.direction = function(v) {
