@@ -32,7 +32,7 @@ d3.tip = function() {
         coords
 
     nodel.html(content).style('display', 'block')
-    for(i; i < dirs.length; i++) nodel.classed(dirs[i], false)
+    while(i--) nodel.classed(directions[i], false)
     coords = direction_callbacks.get(dir).apply(this)
     nodel.classed(dir, true).style({
       top: (coords.top +  poffset[0]) + 'px',
