@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>d3.tip.js - Tooltips for D3</title>
+  <meta charset="utf-8" />
+  <title>Bar Chart</title>
+  <script type="text/javascript" src="../components/d3/d3.js"></script>
+  <script type="text/javascript" src="../src/d3.tip.js"></script>
+  <style type="text/css">
+  body {
+    padding: 40px;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 12px;
+  }
+
+  .d3-tip {
+    line-height: 1;
+    font-weight: bold;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 2px;
+  }
+
+  .d3-tip text {
+    fill: #fff;
+    font-size: 12px;
+    stroke: none;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  circle {
+    fill: #ccc;
+    fill-opacity: 0.6;
+    stroke: #bbb;
+    stroke-width: 1px;
+  }
+
+  circle:hover {
+    fill: #bbb;
+    stroke: #999;
+  }
+
+  circle.clickable:hover {
+    cursor: pointer;
+  }
+
+  .rule {
+    stroke-width: 1px;
+    stroke: #c00;
+    shape-rendering: crispedges;
+  }
+  </style>
+</head>
+<body>
+  <script type="text/javascript">
+    var NODES = 5000
+    var RUNS  = 3
+
+    var data = [],
+      random = d3.random.normal(5),
+      random2 = d3.random.irwinHall(1)
+    for(var i = 0; i < NODES; i++) data.push(random(i))
+
+    var tip = d3.tip()
+      .attr('class', 'd3-tip')
+      .html(function(d) { return d.toFixed(2) })
+      .direction('nw')
+      .offset([0, 3])
+
+    var w = 1000,
+        h = 500,
+        r = 10,
+        linex, liney,
+        x = d3.scale.linear().domain([0, data.length - 1]).range([r, w - r]),
+        y = d3.scale.linear().domain([0, d3.max(data)]).range([h,  0])
+
+    var vis = d3.select(document.body)
+      .append('svg')
+      .attr('width', w)
+      .attr('height', h)
+    .append('g')
+      .attr('transform', 'translate(20, 20)')
+    .call(tip)
+
+    // Create some artificial nesting
+    gs = vis.append('g').append('g')
+
+    circles = gs.selectAll('circle')
+      .data(data)
+    .enter().append('circle')
+
+    circles.attr('r', function(d, i) { return random2(i) * 10 })
+      .attr('cx', function(d, i) { return x(i) })
+      .attr('cy', y)
+      .on('mouseover', tip.show)
+      .on('mouseout', tip.hide)
+
+    e = new MouseEvent('mouseover')
+    for(var i = 0; i <= RUNS; i++) {
+      console.time(i)
+      circles.each(function() {
+        this.dispatchEvent(e)
+      })
+      console.timeEnd(i)
+    }
+
+
+
+  </script>
+</body>
+</html>
