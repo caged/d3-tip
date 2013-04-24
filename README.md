@@ -5,9 +5,9 @@
 ### API Docs
 [API Documentation](docs/index.md)
 
-### Download v0.5.1
-* [Production Version](https://raw.github.com/Caged/d3-tip/v0.5.1/d3.tip.min.js) : **3kb** / **~1kb gzipped**
-* [Development Version](https://raw.github.com/Caged/d3-tip/v0.5.1/src/d3.tip.js) : **6kb** / **~2kb gzipped**
+### Download Latest Version
+* [Production Version](https://raw.github.com/Caged/d3-tip/v0.5.2/d3.tip.min.js) : **3kb** / **~1kb gzipped**
+* [Development Version](https://raw.github.com/Caged/d3-tip/v0.5.2/src/d3.tip.js) : **6kb** / **~2kb gzipped**
 
 ### Install with Bower
 ```
