@@ -10,12 +10,12 @@ d3.tip = function() {
   var direction = d3_tip_direction,
       offset    = d3_tip_offset,
       html      = d3_tip_html,
-      node      = init_node(),
+      node      = initNode(),
       svg       = null,
       point     = null;
 
   function tip(vis) {
-    svg = get_svg_node(vis)
+    svg = getSVGNode(vis)
     point = svg.createSVGPoint()
     document.body.appendChild(node)
   }
@@ -136,7 +136,7 @@ d3.tip = function() {
   directions = direction_callbacks.keys()
 
   function direction_n() {
-    var bbox = get_screen_bbox()
+    var bbox = getScreenBBox()
     return {
       top:  bbox.n.y - node.offsetHeight,
       left: bbox.n.x - node.offsetWidth / 2
@@ -144,7 +144,7 @@ d3.tip = function() {
   }
 
   function direction_s() {
-    var bbox = get_screen_bbox()
+    var bbox = getScreenBBox()
     return {
       top:  bbox.s.y,
       left: bbox.s.x - node.offsetWidth / 2
@@ -152,7 +152,7 @@ d3.tip = function() {
   }
 
   function direction_e() {
-    var bbox = get_screen_bbox()
+    var bbox = getScreenBBox()
     return {
       top:  bbox.e.y - node.offsetHeight / 2,
       left: bbox.e.x
@@ -160,7 +160,7 @@ d3.tip = function() {
   }
 
   function direction_w() {
-    var bbox = get_screen_bbox()
+    var bbox = getScreenBBox()
     return {
       top:  bbox.w.y - node.offsetHeight / 2,
       left: bbox.w.x - node.offsetWidth
@@ -168,7 +168,7 @@ d3.tip = function() {
   }
 
   function direction_nw() {
-    var bbox = get_screen_bbox()
+    var bbox = getScreenBBox()
     return {
       top:  bbox.nw.y - node.offsetHeight,
       left: bbox.nw.x - node.offsetWidth
@@ -176,7 +176,7 @@ d3.tip = function() {
   }
 
   function direction_ne() {
-    var bbox = get_screen_bbox()
+    var bbox = getScreenBBox()
     return {
       top:  bbox.ne.y - node.offsetHeight,
       left: bbox.ne.x
@@ -184,7 +184,7 @@ d3.tip = function() {
   }
 
   function direction_sw() {
-    var bbox = get_screen_bbox()
+    var bbox = getScreenBBox()
     return {
       top:  bbox.sw.y,
       left: bbox.sw.x - node.offsetWidth
@@ -192,14 +192,14 @@ d3.tip = function() {
   }
 
   function direction_se() {
-    var bbox = get_screen_bbox()
+    var bbox = getScreenBBox()
     return {
       top:  bbox.se.y,
       left: bbox.e.x
     }
   }
 
-  function init_node() {
+  function initNode() {
     var node = document.createElement('div')
     node.style.position = 'absolute'
     node.style.display = 'none'
@@ -207,7 +207,7 @@ d3.tip = function() {
     return node
   }
 
-  function get_svg_node(el) {
+  function getSVGNode(el) {
     el = el.node()
     if(el.tagName.toLowerCase() == 'svg')
       return el
@@ -228,7 +228,7 @@ d3.tip = function() {
   //    +-+-+
   //
   // Returns an Object {n, s, e, w, nw, sw, ne, se}
-  function get_screen_bbox() {
+  function getScreenBBox() {
     var target     = d3.event.target,
         bbox       = {},
         matrix     = target.getScreenCTM(),
