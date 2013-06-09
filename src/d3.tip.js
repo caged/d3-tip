@@ -268,4 +268,4 @@ d3.tip = function() {
   }
 
   return tip;
-}
+};
