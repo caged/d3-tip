@@ -8,6 +8,6 @@
     "components"
   ],
   "dependencies": {
-    "d3": "3.1.5"
+    "d3": "~3.2.0"
   }
 }
