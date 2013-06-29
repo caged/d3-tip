@@ -58,10 +58,11 @@ d3.tip = function() {
   //
   // Returns tip or attribute value
   tip.attr = function(n, v) {
-    if (arguments.length < 2) {
+    if (arguments.length < 2 && typeof n === 'string') {
       return d3.select(node).attr(n)
     } else {
-      d3.select(node).attr(n, v)
+      var args =  Array.prototype.slice.call(arguments)
+      d3.selection.prototype.attr.apply(d3.select(node), args)
     }
 
     return tip;
@@ -74,10 +75,11 @@ d3.tip = function() {
   //
   // Returns tip or style property value
   tip.style = function(n, v) {
-    if (arguments.length < 2) {
+    if (arguments.length < 2 && typeof n === 'string') {
       return d3.select(node).style(n)
     } else {
-      d3.select(node).style(n, v)
+      var args =  Array.prototype.slice.call(arguments)
+      d3.selection.prototype.style.apply(d3.select(node), args)
     }
 
     return tip;
