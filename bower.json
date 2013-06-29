@@ -5,7 +5,9 @@
   "ignore": [
     "**/.*",
     "node_modules",
-    "components"
+    "components",
+    "examples",
+    "Makefile"
   ],
   "dependencies": {
     "d3": "~3.2.0"
