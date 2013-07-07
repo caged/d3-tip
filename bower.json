@@ -7,7 +7,8 @@
     "node_modules",
     "components",
     "examples",
-    "Makefile"
+    "Makefile",
+    "docs"
   ],
   "dependencies": {
     "d3": "~3.2.0"
