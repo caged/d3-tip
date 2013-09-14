@@ -29,15 +29,40 @@ A proxy to d3's [selection.attr](https://github.com/mbostock/d3/wiki/Selections#
   width: 100%;
   line-height: 1;
   color: rgba(0, 0, 0, 0.8);
-  content: "\25BC";
   position: absolute;
-  text-align: center;
 }
 
-/* Style northward tooltips differently */
+/* Nrthward tooltips */
 .d3-tip.n:after {
+  content: "\25BC";
   margin: -1px 0 0 0;
   top: 100%;
   left: 0;
+  text-align: center;
+}
+
+/* Eastward tooltips */
+.d3-tip.e:after {
+  content: "\25B6";
+  margin: -4px 0 0 -1px;
+  top: 50%;
+  left: 100%;
+}
+
+/* Southward tooltips */
+.d3-tip.s:after {
+  content: "\25B2";
+  margin: 0 0 1px 0;
+  top: -8px;
+  left: 0;
+  text-align: center;
+}
+
+/* Westward tooltips */
+.d3-tip.w:after {
+  content: "\25C0";
+  margin: -4px 0 0 0;
+  top: 50%;
+  left: -8px;
 }
 ```
