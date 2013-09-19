@@ -1,6 +1,6 @@
 # d3.tip: Tooltips for d3.js visualizations
 
-![](https://github-images.s3.amazonaws.com/skitch/Screen_Shot_2013-04-08_at_11.40.10_AM-20130408-114054.png)
+[![](https://github-images.s3.amazonaws.com/skitch/Screen_Shot_2013-04-08_at_11.40.10_AM-20130408-114054.png)](http://bl.ocks.org/Caged/6476579)
 
 * [See a live demo](http://bl.ocks.org/Caged/6476579)
 * [Example code](/examples)
