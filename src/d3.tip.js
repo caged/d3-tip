@@ -30,7 +30,9 @@ d3.tip = function() {
         nodel   = d3.select(node), i = 0,
         coords
 
-    nodel.html(content).style('display', 'block')
+    nodel.html(content)
+      .style({ opacity: 1, pointerEvents: 'all' })
+
     while(i--) nodel.classed(directions[i], false)
     coords = direction_callbacks.get(dir).apply(this)
     nodel.classed(dir, true).style({
@@ -45,8 +47,8 @@ d3.tip = function() {
   //
   // Returns a tip
   tip.hide = function() {
-    node.style.display = 'none'
-    node.innerHTML = ''
+    nodel = d3.select(node)
+    nodel.style({ opacity: 0, pointerEvents: 'none' })
 
     return tip
   }
@@ -202,11 +204,15 @@ d3.tip = function() {
   }
 
   function initNode() {
-    var node = document.createElement('div')
-    node.style.position = 'absolute'
-    node.style.display = 'none'
-    node.style.boxSizing = 'border-box'
-    return node
+    var node = d3.select(document.createElement('div'))
+    node.style({
+      position: 'absolute',
+      opacity: 0,
+      pointerEvents: 'none',
+      boxSizing: 'border-box'
+    })
+
+    return node.node()
   }
 
   function getSVGNode(el) {
