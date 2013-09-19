@@ -6,6 +6,7 @@
     "**/.*",
     "node_modules",
     "components",
+    "bower_components",
     "examples",
     "Makefile",
     "docs"
