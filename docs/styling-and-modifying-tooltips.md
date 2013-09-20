@@ -43,10 +43,10 @@ A proxy to d3's [selection.attr](https://github.com/mbostock/d3/wiki/Selections#
 
 /* Eastward tooltips */
 .d3-tip.e:after {
-  content: "\25B6";
-  margin: -4px 0 0 -1px;
+  content: "\25C0";
+  margin: -4px 0 0 0;
   top: 50%;
-  left: 100%;
+  left: -8px;
 }
 
 /* Southward tooltips */
@@ -60,9 +60,13 @@ A proxy to d3's [selection.attr](https://github.com/mbostock/d3/wiki/Selections#
 
 /* Westward tooltips */
 .d3-tip.w:after {
-  content: "\25C0";
-  margin: -4px 0 0 0;
+  content: "\25B6";
+  margin: -4px 0 0 -1px;
   top: 50%;
-  left: -8px;
+  left: 100%;
 }
 ```
+
+See these stylings in action in either
+[a live example](http://bl.ocks.org/deanmalmgren/6638585) or the
+[examples directory](../examples/arrow-styles.html).
