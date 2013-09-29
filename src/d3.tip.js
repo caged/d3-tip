@@ -49,10 +49,8 @@ d3.tip = function() {
   tip.hide = function() {
     nodel = d3.select(node)
     nodel.style({ 
-      top: '-1000px',
-      left: '-1000px',
       opacity: 0, 
-      pointerEvents: 'none' })
+      'pointer-events': 'none' })
     return tip
   }
 
