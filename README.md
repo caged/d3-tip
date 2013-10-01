@@ -9,7 +9,7 @@
 See the [API Documentation](docs/index.md)
 
 ### Download Latest Version
-* [Development Version](https://raw.github.com/Caged/d3-tip/v0.5.2/src/d3.tip.js) : **6kb** / **~2kb gzipped**
+* [Development Version](https://raw.github.com/Caged/d3-tip/master/index.js) : **6kb** / **~2kb gzipped**
 
 ### Install with Bower
 ```
