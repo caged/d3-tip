@@ -13,9 +13,8 @@ See the [API Documentation](docs/index.md)
 
 ### Install with Bower
 ```
-bower install Caged/d3-tip
+bower install d3-tip
 ```
-*Note the capital "C"*
 
 ### Quick Usage
 ``` javascript
