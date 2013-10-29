@@ -246,8 +246,9 @@ d3.tip = function() {
         height     = tbbox.height,
         x          = tbbox.x,
         y          = tbbox.y,
-        scrollTop  = document.documentElement.scrollTop,
-        scrollLeft = document.documentElement.scrollLeft
+        scrollTop  = document.documentElement.scrollTop || document.body.scrollTop,
+        scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft
+
 
     point.x = x + scrollLeft
     point.y = y + scrollTop
