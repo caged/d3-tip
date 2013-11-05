@@ -12,7 +12,8 @@ d3.tip = function() {
       html      = d3_tip_html,
       node      = initNode(),
       svg       = null,
-      point     = null
+      point     = null,
+      target    = null
 
   function tip(vis) {
     svg = getSVGNode(vis)
@@ -24,9 +25,12 @@ d3.tip = function() {
   //
   // Returns a tip
   tip.show = function() {
-    var content = html.apply(this, arguments),
-        poffset = offset.apply(this, arguments),
-        dir     = direction.apply(this, arguments),
+    var args = Array.prototype.slice.call(arguments)
+    if(args.length > 1) target = args.pop()
+
+    var content = html.apply(this, args),
+        poffset = offset.apply(this, args),
+        dir     = direction.apply(this, args),
         nodel   = d3.select(node), i = 0,
         coords
 
@@ -238,10 +242,10 @@ d3.tip = function() {
   //
   // Returns an Object {n, s, e, w, nw, sw, ne, se}
   function getScreenBBox() {
-    var target     = d3.event.target,
+    var targetel   = target || d3.event.target,
         bbox       = {},
-        matrix     = target.getScreenCTM(),
-        tbbox      = target.getBBox(),
+        matrix     = targetel.getScreenCTM(),
+        tbbox      = targetel.getBBox(),
         width      = tbbox.width,
         height     = tbbox.height,
         x          = tbbox.x,
