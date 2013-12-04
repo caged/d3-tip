@@ -1,5 +1,6 @@
 // d3.tip
 // Copyright (c) 2013 Justin Palmer
+//               2013 Eduardo Naufel Schettino
 //
 // Tooltips for d3.js SVG visualizations
 
