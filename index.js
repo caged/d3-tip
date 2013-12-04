@@ -36,7 +36,7 @@ d3.tip = function() {
       .style({ opacity: 1, 'pointer-events': 'all' })
 
     while(i--) nodel.classed(directions[i], false)
-    coords = direction_callbacks.get(dir).apply(this)
+    coords = calc_coords(dir)
     nodel.classed(dir, true).style({
       top: (coords.top +  poffset[0] + scrollTop) + 'px',
       left: (coords.left + poffset[1] + scrollLeft) + 'px'
@@ -129,82 +129,29 @@ d3.tip = function() {
   function d3_tip_offset() { return [0, 0] }
   function d3_tip_html() { return ' ' }
 
-  var direction_callbacks = d3.map({
-    n:  direction_n,
-    s:  direction_s,
-    e:  direction_e,
-    w:  direction_w,
-    nw: direction_nw,
-    ne: direction_ne,
-    sw: direction_sw,
-    se: direction_se
-  }),
+  // top, left are index of values as returned from getScreenBBox
+  var direction_xy = d3.map({
+      n: {top:0, left:1},
+      s: {top:2, left:1},
+      e: {top:1, left:2},
+      w: {top:1, left:0},
+      nw: {top:0, left:0},
+      ne: {top:0, left:2},
+      sw: {top:2, left:0},
+      se: {top:2, left:2}
+  })
 
-  directions = direction_callbacks.keys()
+  var directions = direction_xy.keys()
 
-  function direction_n() {
+  function calc_coords(dir_pos) {
     var bbox = getScreenBBox()
+    var dir = direction_xy.get(dir_pos)
     return {
-      top:  bbox.n.y - node.offsetHeight,
-      left: bbox.n.x - node.offsetWidth / 2
+      top: bbox.y[dir.top] + ((dir.top - 2) * node.offsetHeight / 2),
+      left: bbox.x[dir.left] + ((dir.left - 2) * node.offsetWidth / 2)
     }
   }
 
-  function direction_s() {
-    var bbox = getScreenBBox()
-    return {
-      top:  bbox.s.y,
-      left: bbox.s.x - node.offsetWidth / 2
-    }
-  }
-
-  function direction_e() {
-    var bbox = getScreenBBox()
-    return {
-      top:  bbox.e.y - node.offsetHeight / 2,
-      left: bbox.e.x
-    }
-  }
-
-  function direction_w() {
-    var bbox = getScreenBBox()
-    return {
-      top:  bbox.w.y - node.offsetHeight / 2,
-      left: bbox.w.x - node.offsetWidth
-    }
-  }
-
-  function direction_nw() {
-    var bbox = getScreenBBox()
-    return {
-      top:  bbox.nw.y - node.offsetHeight,
-      left: bbox.nw.x - node.offsetWidth
-    }
-  }
-
-  function direction_ne() {
-    var bbox = getScreenBBox()
-    return {
-      top:  bbox.ne.y - node.offsetHeight,
-      left: bbox.ne.x
-    }
-  }
-
-  function direction_sw() {
-    var bbox = getScreenBBox()
-    return {
-      top:  bbox.sw.y,
-      left: bbox.sw.x - node.offsetWidth
-    }
-  }
-
-  function direction_se() {
-    var bbox = getScreenBBox()
-    return {
-      top:  bbox.se.y,
-      left: bbox.e.x
-    }
-  }
 
   function initNode() {
     var node = d3.select(document.createElement('div'))
@@ -228,17 +175,16 @@ d3.tip = function() {
 
   // Private - gets the screen coordinates of a shape
   //
-  // Given a shape on the screen, will return an SVGPoint for the directions
-  // n(north), s(south), e(east), w(west), ne(northeast), se(southeast), nw(northwest),
-  // sw(southwest).
+  // Given a shape on the screen, will return 'x' & 'y' arrays
   //
-  //    +-+-+
+  //  x 0 1 2  y
+  //    +-+-+  0
   //    |   |
-  //    +   +
+  //    +   +  1
   //    |   |
-  //    +-+-+
+  //    +-+-+  2
   //
-  // Returns an Object {n, s, e, w, nw, sw, ne, se}
+  // Returns an Object {x[], y[]}
   function getScreenBBox() {
     var target     = d3.event.target,
         bbox       = {},
@@ -247,28 +193,19 @@ d3.tip = function() {
         width      = tbbox.width,
         height     = tbbox.height,
         x          = tbbox.x,
-        y          = tbbox.y
+        y          = tbbox.y,
+        p1, p2
 
 
     point.x = x
     point.y = y
-    bbox.nw = point.matrixTransform(matrix)
-    point.x += width
-    bbox.ne = point.matrixTransform(matrix)
-    point.y += height
-    bbox.se = point.matrixTransform(matrix)
-    point.x -= width
-    bbox.sw = point.matrixTransform(matrix)
-    point.y -= height / 2
-    bbox.w  = point.matrixTransform(matrix)
-    point.x += width
-    bbox.e = point.matrixTransform(matrix)
-    point.x -= width / 2
-    point.y -= height / 2
-    bbox.n = point.matrixTransform(matrix)
-    point.y += height
-    bbox.s = point.matrixTransform(matrix)
 
+    p1 = point.matrixTransform(matrix)
+    point.x += width
+    point.y += height
+    p2 = point.matrixTransform(matrix)
+    bbox.x = [p1.x, p2.x, (p1.x + p2.x)/2].sort(d3.ascending);
+    bbox.y = [p1.y, p2.y, (p1.y + p2.y)/2].sort(d3.ascending);
     return bbox
   }
 
