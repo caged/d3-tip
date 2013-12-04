@@ -101,6 +101,7 @@
     var max = d3.max(data, function(d) { return d.total })
     x.domain(d3.range(data.length))
     y.domain([0, max])
+    yAx.domain([0, max])
 
     vis.call(tip)
     vis.append("g")
