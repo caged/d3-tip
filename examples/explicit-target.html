@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>d3.tip.js - Tooltips for D3</title>
+  <meta charset="utf-8" />
+  <title>Explicit Target</title>
+  <script type="text/javascript" src="../bower_components/d3/d3.js"></script>
+  <script type="text/javascript" src="../index.js"></script>
+  <script type="text/javascript">
+    data = [{"total":225,"days":[12,51,60,26,38,31,7]},{"total":279,"days":[42,33,34,72,61,12,25]},{"total":212,"days":[12,59,24,70,36,5,6]},{"total":335,"days":[17,43,38,58,67,72,40]},{"total":329,"days":[40,53,62,48,38,36,52]},{"total":234,"days":[15,25,41,66,35,37,15]},{"total":175,"days":[2,40,23,40,23,34,13]},{"total":308,"days":[20,22,63,55,51,66,31]},{"total":401,"days":[20,64,42,62,88,79,46]},{"total":214,"days":[24,27,25,48,38,28,24]},{"total":332,"days":[26,43,20,109,74,29,31]},{"total":333,"days":[65,66,62,60,14,43,23]},{"total":437,"days":[33,74,82,70,85,64,29]},{"total":687,"days":[29,82,87,167,156,126,40]},{"total":243,"days":[11,52,44,50,46,30,10]},{"total":360,"days":[16,41,86,62,83,60,12]},{"total":349,"days":[22,55,48,36,88,57,43]},{"total":368,"days":[29,100,68,54,55,46,16]},{"total":377,"days":[3,71,66,57,93,82,5]},{"total":265,"days":[12,61,61,19,44,46,22]},{"total":396,"days":[20,58,70,52,84,93,19]},{"total":467,"days":[25,47,128,93,70,35,69]},{"total":524,"days":[55,79,94,95,122,70,9]},{"total":535,"days":[21,96,95,115,78,89,41]},{"total":333,"days":[20,50,49,52,58,51,53]},{"total":258,"days":[7,23,50,59,46,50,23]},{"total":242,"days":[12,4,54,53,46,33,40]},{"total":335,"days":[1,34,40,75,97,51,37]},{"total":325,"days":[32,57,65,46,60,58,7]},{"total":224,"days":[23,42,43,28,31,27,30]},{"total":317,"days":[20,46,43,46,83,36,43]},{"total":119,"days":[1,10,9,45,30,17,7]},{"total":368,"days":[13,74,77,85,72,40,7]},{"total":271,"days":[10,50,46,61,68,31,5]},{"total":290,"days":[26,48,39,37,68,43,29]},{"total":393,"days":[27,50,133,47,73,37,26]},{"total":316,"days":[2,63,66,47,63,33,42]},{"total":146,"days":[0,32,38,23,45,7,1]},{"total":255,"days":[23,34,72,46,48,24,8]},{"total":196,"days":[9,32,82,18,16,29,10]},{"total":410,"days":[41,52,67,42,49,103,56]},{"total":280,"days":[13,35,40,60,68,53,11]},{"total":432,"days":[45,65,59,55,71,68,69]},{"total":371,"days":[19,104,95,51,66,20,16]},{"total":285,"days":[2,38,50,72,74,47,2]},{"total":350,"days":[47,16,96,93,32,52,14]},{"total":234,"days":[34,68,66,32,5,10,19]},{"total":279,"days":[27,43,64,48,60,25,12]},{"total":391,"days":[40,54,59,68,80,51,39]},{"total":168,"days":[0,44,42,36,30,16,0]},{"total":0,"days":[0,0,0,0,0,0,0]},{"total":14,"days":[6,0,0,0,0,2,6]},{"total":0,"days":[0,0,0,0,0,0,0]}]
+  </script>
+  <style type="text/css">
+  body {
+    padding: 40px;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 12px;
+    height: 1000px;
+  }
+
+  .d3-tip {
+    line-height: 1;
+    font-weight: bold;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 2px;
+  }
+
+  .d3-tip:after {
+    box-sizing: border-box;
+    display: inline;
+    font-size: 10px;
+    width: 100%;
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.8);
+    content: "\25BC";
+    position: absolute;
+    text-align: center;
+  }
+
+  .d3-tip.n:after {
+    margin: -5px 0 0 0;
+    top: 100%;
+    left: 0;
+  }
+
+  .d3-tip span {
+    color: #ff00c7;
+  }
+
+  .domain {
+    display: none;
+  }
+
+  .axis line {
+    stroke-width: 1px;
+    stroke: #eee;
+    shape-rendering: crispedges;
+  }
+
+  .axis text {
+    fill: #888;
+  }
+
+  rect {
+    fill: #339cff;
+    fill-opacity: 0.7;
+  }
+
+  rect:hover {
+    fill-opacity: 1;
+  }
+
+  .legend {
+    fill: none;
+    stroke: #ccc;
+  }
+  </style>
+</head>
+<body>
+  <div id="graph">
+
+  </div>
+  <script type="text/javascript">
+    var tip = d3.tip()
+      .attr('class', 'd3-tip')
+      .html(function(d) { return '<span>' + d.total + '</span>' + ' entries' })
+      .offset([-12, 0])
+
+    var w = 800,
+        h = 300,
+        padt = 40, padr = 20, padb = 60, padl = 30,
+        x  = d3.scale.ordinal().rangeRoundBands([0, w - padl - padr], 0.1),
+        y  = d3.scale.linear().range([h, 0]),
+        yAxis = d3.svg.axis().scale(y).orient('left').tickSize(-w + padl + padr),
+        xAxis = d3.svg.axis().scale(x).orient('bottom')
+
+    vis = d3.select('#graph')
+      .append('svg')
+      .attr('width', w)
+      .attr('height', h + padt + padb)
+    .append('g')
+      .attr('transform', 'translate(' + padl + ',' + padt + ')')
+
+    var max = d3.max(data, function(d) { return d.total })
+    x.domain(d3.range(data.length))
+    y.domain([0, max])
+
+    vis.call(tip)
+    vis.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+
+    legend = vis.append('rect')
+      .attr('width', 50)
+      .attr('height', 25)
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('class', 'legend')
+
+    vis.append("g")
+      .attr("class", "x axis")
+      .attr('transform', 'translate(0,' + h + ')')
+      .call(xAxis)
+      .selectAll('.x.axis g')
+        .style('display', function (d, i) { return i % 3 != 0  ? 'none' : 'block' })
+
+    var bars = vis.selectAll('g.bar')
+      .data(data)
+    .enter().append('g')
+      .attr('class', 'bar')
+      .attr('transform', function (d, i) { return "translate(" + x(i) + ", 0)" })
+
+    bars.append('rect')
+      .attr('width', function() { return x.rangeBand() })
+      .attr('height', function(d) { return h - y(d.total) })
+      .attr('y', function(d) { return y(d.total) })
+      .on('mouseout', tip.hide)
+      .on('mouseover', function(d) {
+        tip.show(d, legend.node())
+      })
+
+  </script>
+</body>
+</html>

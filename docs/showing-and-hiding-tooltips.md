@@ -15,6 +15,17 @@ rect.on('mouseover', function(d) {
 })
 ```
 
+#### Explicit targets
+Sometimes you need to manually specify a target to act on.  For instance, maybe
+you want the tooltip to appear over a different element than the one that triggered
+a `mouseover` event.  You can specify an explicit target by passing an `SVGElement`
+as the last argument.
+
+``` javascript
+tip.show(data, target)
+```
+
+
 ### tip.hide
 Hide a tooltip
 
