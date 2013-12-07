@@ -1,7 +1,7 @@
 {
   "name": "d3-tip",
   "version": "0.6.2",
-  "main": "index.js",
+  "main": "d3-tip.js",
   "ignore": [
     "**/.*",
     "node_modules",
