@@ -17,8 +17,7 @@ bower install d3-tip
 ```
 
 ### Quick Usage
-``` javascript
-
+```javascript
 /* Initialize tooltip */
 tip = d3.tip().attr('class', 'd3-tip').html(function(d) { return d; });
 
@@ -35,4 +34,11 @@ vis.selectAll('rect')
   /* Show and hide tip on mouse events */
   .on('mouseover', tip.show)
   .on('mouseout', tip.hide)
+```
+
+For basic styling, you can also include the `index.css` into your site
+via the [rawgithub CDN](https://rawgithub.com/), for example:
+
+```html
+<link rel="stylesheet" href="//rawgithub.com/Caged/d3-tip/master/index.css">
 ```
