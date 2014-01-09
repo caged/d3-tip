@@ -213,8 +213,8 @@ d3.tip = function() {
     node.style({
       position: 'absolute',
       opacity: 0,
-      pointerEvents: 'none',
-      boxSizing: 'border-box'
+      'pointer-events': 'none',
+      'box-sizing': 'border-box'
     })
 
     return node.node()
