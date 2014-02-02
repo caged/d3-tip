@@ -2,9 +2,8 @@
 
 # Styling and modifying tooltips
 
-d3-tip makes no assumption about how they will be styled, but we do
-provide some useful defaults in
-[d3-tip.css](../d3-tip.css). Incorporate it into your webpage like any
+d3-tip makes no assumption about how tooltips will be styled, but we do
+provide some [useful example styles](../examples/example-styles.css). Incorporate it into your webpage like any
 other CSS file. For example, see
 [this jsfiddle](http://jsfiddle.net/deanmalmgren/eMPdu/) or any of the
 examples in the [examples directory](../examples/)
