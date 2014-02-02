@@ -31,14 +31,13 @@ vis.selectAll('rect')
   .attr('height', function(d) { return h - y(d) })
   .attr('y', function(d) { return y(d) })
   .attr('x', function(d, i) { return x(i) })
-  /* Show and hide tip on mouse events */
   .on('mouseover', tip.show)
   .on('mouseout', tip.hide)
 ```
 
-For basic styling, you can also include the `index.css` into your site
-via the [rawgithub CDN](https://rawgithub.com/), for example:
+If you want basic styling, you can include `example-styles.css` using a service like
+rawgithub.com.
 
 ```html
-<link rel="stylesheet" href="//rawgithub.com/Caged/d3-tip/master/index.css">
+<link rel="stylesheet" href="//rawgithub.com/Caged/d3-tip/master/examples/example-styles.css">
 ```
