@@ -1,16 +1,16 @@
 UGLIFYJS = node_modules/uglify-js/bin/uglifyjs
 UGLIFYCSS = node_modules/uglifycss/uglifycss
 
-all: d3.tip.min.js d3.tip.min.css
+all: d3-tip.min.js d3-tip.min.css
 
-d3.tip.min.js: index.js uglifyjs
+d3-tip.min.js: index.js uglifyjs
 	$(UGLIFYJS) $< -c -m -o $@
 
-d3.tip.min.css: examples/example-styles.css uglifycss
+d3-tip.min.css: examples/example-styles.css uglifycss
 	$(UGLIFYCSS) $< > $@
 
 clean:
-	@rm -f d3.tip.min.*
+	@rm -f d3-tip.min.*
 
 uglifyjs: $(UGLIFYJS)
 $(UGLIFYJS):
