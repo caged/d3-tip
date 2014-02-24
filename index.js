@@ -12,7 +12,7 @@
     root.d3.tip = factory(root.d3)
   }
 }(this, function (d3) {
-   
+
   // Public - contructs a new tooltip
   //
   // Returns a tip
@@ -41,7 +41,8 @@
       var content = html.apply(this, args),
           poffset = offset.apply(this, args),
           dir     = direction.apply(this, args),
-          nodel   = d3.select(node), i = 0,
+          nodel   = d3.select(node),
+          i       = directions.length,
           coords
   
       nodel.html(content)
@@ -222,6 +223,7 @@
       var node = d3.select(document.createElement('div'))
       node.style({
         position: 'absolute',
+        top: 0,
         opacity: 0,
         'pointer-events': 'none',
         'box-sizing': 'border-box'
@@ -260,8 +262,9 @@
           height     = tbbox.height,
           x          = tbbox.x,
           y          = tbbox.y,
-          scrollTop  = document.documentElement.scrollTop || document.body.scrollTop,
-          scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft
+          scrollEl   = document.documentElement? document.documentElement : document.body,
+          scrollTop  = scrollEl.scrollTop,
+          scrollLeft = scrollEl.scrollLeft
   
   
       point.x = x + scrollLeft
