@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>d3.tip.js - Tooltips for D3</title>
+  <meta charset="utf-8" />
+  <title>Bar Chart</title>
+  <script type="text/javascript" src="../bower_components/d3/d3.js"></script>
+  <script type="text/javascript" src="../index.js"></script>
+  <style type="text/css">
+  body {
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 12px;
+  }
+
+  .d3-tip {
+    line-height: 1;
+    padding: 12px;
+    background: #111;
+    color: #fff;
+  }
+
+  .line {
+    stroke: #333;
+    stroke-width: 6;
+  }
+
+  svg {
+    border: 1px solid #ccc;
+  }
+
+  circle {
+    fill: red;
+  }
+  </style>
+</head>
+<body>
+  <div id="graph"></div>
+  <script type="text/javascript">
+    var tip = d3.tip()
+      .attr('class', 'd3-tip')
+      .direction('e')
+      .offset([40, -15])
+      .html(function(d) { return d })
+
+    var width  = 500,
+        height = 500,
+        linelength = 200
+
+    var vis = d3.select('#graph').append('svg')
+      .attr('width', width)
+      .attr('height', height)
+      .call(tip)
+
+    vis.append('marker')
+      .attr('id', 'triangle')
+      .attr('viewBox', '0 0 10 10')
+      .attr('refX', 0)
+      .attr('refY', 5)
+      .attr('markerHeight', 3)
+      .attr('markerWidth', 4)
+      .attr('orient', 'auto')
+    .append('path')
+      .attr('d', 'M 0 0 L 10 5 L 0 10 z')
+
+    var x = -1 * Math.floor(linelength / 2),
+        y = -1 * Math.floor(6 / 2)
+
+    var group = vis.append('g')
+
+    var line = group.append('line')
+      .attr('class', 'line')
+      .attr('x1', 0)
+      .attr('x2', linelength)
+      .attr('y1', 0)
+      .attr('y2', 0)
+      .attr('marker-end', 'url(#triangle)')
+
+    var bbox = group.node().getBBox()
+
+    group.attr('transform', 'translate(' + (width - bbox.width ) / 2 + ', ' + height / 2 + ')')
+
+    group.append('circle')
+      .attr('r', 6)
+      .attr('cx', bbox.width / 2)
+      .attr('cy', bbox.height / 2)
+
+    setInterval(rotate, 1000)
+
+    var rotate = [90, 180, 270, 0],
+        directions = ['s', 'w', 'n', 'e'],
+        i = 0
+
+    function rotate() {
+      i = i >= rotate.length ? 0 : i
+      var rotation = rotate[i],
+          direction = directions[i]
+
+      line.transition()
+        .duration(500)
+        .attr('transform', 'rotate(' + rotation + ' 100 0)')
+        .each('start', function() { tip.hide() })
+        .each('end', function() { tip.direction(direction).show(rotation, this) })
+
+      i += 1
+    }
+
+
+  </script>
+</body>
+</html>
