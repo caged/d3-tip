@@ -31,7 +31,8 @@ d3.tip = function() {
     var content = html.apply(this, args),
         poffset = offset.apply(this, args),
         dir     = direction.apply(this, args),
-        nodel   = d3.select(node), i = 0,
+        nodel   = d3.select(node),
+        i       = directions.length,
         coords
 
     nodel.html(content)
