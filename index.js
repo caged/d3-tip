@@ -126,6 +126,12 @@
       return tip
     }
   
+    // expose the bbox to the client code
+    // so we can get the exact size of the selected svg element
+    tip.getbBox = function(){
+      var bbox = getScreenBBox();
+      return bbox;
+    }
     // Public: sets or gets the html value of the tooltip
     //
     // v - String value of the tip
