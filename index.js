@@ -263,8 +263,8 @@
           x          = tbbox.x,
           y          = tbbox.y,
           scrollEl   = document.documentElement? document.documentElement : document.body,
-          scrollTop  = scrollEl.scrollTop,
-          scrollLeft = scrollEl.scrollLeft
+          scrollTop  = (window.pageYOffset || scrollEl.scrollTop)  - (scrollEl.clientTop || 0),
+          scrollLeft = (window.pageXOffset || scrollEl.scrollLeft) - (scrollEl.clientLeft || 0)
   
   
       point.x = x + scrollLeft
