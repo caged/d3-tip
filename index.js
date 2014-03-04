@@ -43,7 +43,9 @@
           dir     = direction.apply(this, args),
           nodel   = d3.select(node),
           i       = directions.length,
-          coords
+          coords,
+          scrollTop  = document.documentElement.scrollTop || document.body.scrollTop,
+          scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft
   
       nodel.html(content)
         .style({ opacity: 1, 'pointer-events': 'all' })
@@ -51,8 +53,8 @@
       while(i--) nodel.classed(directions[i], false)
       coords = direction_callbacks.get(dir).apply(this)
       nodel.classed(dir, true).style({
-        top: (coords.top +  poffset[0]) + 'px',
-        left: (coords.left + poffset[1]) + 'px'
+        top: (coords.top +  poffset[0]) + scrollTop + 'px',
+        left: (coords.left + poffset[1]) + scrollLeft + 'px'
       })
   
       return tip
@@ -261,14 +263,10 @@
           width      = tbbox.width,
           height     = tbbox.height,
           x          = tbbox.x,
-          y          = tbbox.y,
-          scrollEl   = document.documentElement? document.documentElement : document.body,
-          scrollTop  = scrollEl.scrollTop,
-          scrollLeft = scrollEl.scrollLeft
+          y          = tbbox.y
   
-  
-      point.x = x + scrollLeft
-      point.y = y + scrollTop
+      point.x = x
+      point.y = y
       bbox.nw = point.matrixTransform(matrix)
       point.x += width
       bbox.ne = point.matrixTransform(matrix)
