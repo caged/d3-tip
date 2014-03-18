@@ -1,6 +1,6 @@
 {
   "name": "d3-tip",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "main": "index.js",
   "ignore": [
     "**/.*",
