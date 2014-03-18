@@ -158,7 +158,8 @@
       nw: direction_nw,
       ne: direction_ne,
       sw: direction_sw,
-      se: direction_se
+      se: direction_se,
+      center: direction_center
     }),
   
     directions = direction_callbacks.keys()
@@ -227,6 +228,15 @@
       }
     }
   
+    function direction_center(){
+        var bbox = getScreenBBox()
+        return {
+            top:  bbox.center.y,
+            left: bbox.center.x
+        }
+    }
+
+    
     function initNode() {
       var node = d3.select(document.createElement('div'))
       node.style({
@@ -289,7 +299,12 @@
       bbox.n = point.matrixTransform(matrix)
       point.y += height
       bbox.s = point.matrixTransform(matrix)
-  
+      // add a center point in the bbox
+      // use this option when adding tooltip for arc
+      // especially for sunburst chart
+      point.x = x + width / 2
+      point.y = y + height / 2
+      bbox.center = point.matrixTransform(matrix);
       return bbox
     }
   
