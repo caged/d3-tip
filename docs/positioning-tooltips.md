@@ -31,3 +31,12 @@ enough in the desired direction so the extender doesn't overlap the target eleme
 ``` javascript
 tip.offset([10, -10])
 ```
+
+Callbacks are also supported for dynamic positioning.  The following example
+will center tip placement within the bounding box of the target element.
+
+``` javascript
+tip.offset(function() {
+  return [this.getBBox().height / 2, 0]
+})
+```
