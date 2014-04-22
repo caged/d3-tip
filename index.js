@@ -16,19 +16,24 @@
   // Public - contructs a new tooltip
   //
   // Returns a tip
-  return function() {
+  return function(options) {
     var direction = d3_tip_direction,
         offset    = d3_tip_offset,
         html      = d3_tip_html,
         node      = initNode(),
         svg       = null,
         point     = null,
-        target    = null
+        target    = null,
+        options   = options || {};
   
     function tip(vis) {
       svg = getSVGNode(vis)
       point = svg.createSVGPoint()
-      document.body.appendChild(node)
+      if (options.parent) {
+        options.parent.appendChild(node);
+      } else {
+        document.body.appendChild(node)
+      }
     }
   
     // Public - show the tooltip on the screen
