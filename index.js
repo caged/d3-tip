@@ -9,7 +9,10 @@
     define(['d3'], factory)
   } else if (module && module.exports !== undefined) {
     // CommonJS
-    module.exports = factory
+    module.exports = function(d3) {
+      d3.tip = factory(d3)
+      return d3.tip
+    }
   } else {
     // Browser global.
     root.d3.tip = factory(root.d3)
