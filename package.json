@@ -1,0 +1,16 @@
+{
+  "name": "d3-tip",
+  "version": "0.6.5",
+  "directories": {
+    "doc": "docs",
+    "example": "examples"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Caged/d3-tip.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Caged/d3-tip/issues"
+  },
+  "homepage": "https://github.com/Caged/d3-tip"
+}
