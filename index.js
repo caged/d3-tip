@@ -284,7 +284,7 @@
   }
 
   if(typeof define === 'function' && define.amd) {
-    define(['d3'], init)
+    define(['d3'], initialize)
   } else {
     initialize(typeof module === 'object' && module.exports ? module.exports = require('d3') : d3)
   }
