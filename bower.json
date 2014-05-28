@@ -11,6 +11,9 @@
     "Makefile",
     "docs"
   ],
+  "devDependencies": {
+    "requirejs": "2.1.13"
+  },
   "dependencies": {
     "d3": "3"
   }
