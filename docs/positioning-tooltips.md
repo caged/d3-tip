@@ -40,3 +40,25 @@ tip.offset(function() {
   return [this.getBBox().height / 2, 0]
 })
 ```
+
+
+### tip.absolute(absolute)
+Absolutely position the tooltip by setting `[top, left]`.
+
+``` javascript
+tip.absolute([0,0]); // Position the tooltip in the top left corner of the screen
+```
+
+#### Changing the position programatically
+Absolutely position the tooltip under an element elsewhere on the page.
+
+``` javascript
+tip.absolute(function() {
+    var el = d3.select('#some-element'),
+        bbox = el.node().getBoundingClientRect(),
+        top = bbox.bottom,
+        left = bbox.left;
+
+    return [top, left];
+});
+```
