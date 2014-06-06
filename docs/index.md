@@ -14,7 +14,7 @@
 #### [Positioning tooltips](positioning-tooltips.md)
 * [tip.direction](positioning-tooltips.md#tipdirection)
 * [tip.offset](positioning-tooltips.md#tipoffset)
-* [tip.absolute](positioning-tooltips.md#tipabsolute)
+* [tip.absolute](positioning-tooltips.md#tipabsoluteabsolute)
 
 #### [Updating tooltip content](updating-tooltip-content.md)
 * [tip.html](updating-tooltip-content.md#tiphtml)
