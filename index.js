@@ -19,6 +19,7 @@
   return function() {
     var direction = d3_tip_direction,
         offset    = d3_tip_offset,
+        absolute  = d3_tip_absolute,
         html      = d3_tip_html,
         node      = initNode(),
         svg       = null,
@@ -38,11 +39,12 @@
       var args = Array.prototype.slice.call(arguments)
       if(args[args.length - 1] instanceof SVGElement) target = args.pop()
   
-      var content = html.apply(this, args),
-          poffset = offset.apply(this, args),
-          dir     = direction.apply(this, args),
-          nodel   = d3.select(node),
-          i       = directions.length,
+      var content  = html.apply(this, args),
+          poffset  = offset.apply(this, args),
+          dir      = direction.apply(this, args),
+          abspos = absolute.apply(this, args),
+          nodel    = d3.select(node),
+          i        = directions.length,
           coords,
           scrollTop  = document.documentElement.scrollTop || document.body.scrollTop,
           scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft
@@ -52,14 +54,14 @@
   
       while(i--) nodel.classed(directions[i], false)
       coords = direction_callbacks.get(dir).apply(this)
-      nodel.classed(dir, true).style({
-        top: (coords.top +  poffset[0]) + scrollTop + 'px',
-        left: (coords.left + poffset[1]) + scrollLeft + 'px'
+      nodel.classed(absolute ? 'absolute' : dir, true).style({
+        top: (abspos ? abspos[0] : (coords.top +  poffset[0]) + scrollTop) + 'px',
+        left: (abspos ? abspos[1] : (coords.left + poffset[1]) + scrollLeft) + 'px'
       })
   
       return tip
     }
-  
+
     // Public - hide the tooltip
     //
     // Returns a tip
@@ -127,7 +129,17 @@
   
       return tip
     }
-  
+
+    // Public: Absolutely position the tooltip. Overrides direction and offset.
+    //
+    // Returns tip or absolute position
+    tip.absolute = function(v) {
+      if (!arguments.length) return absolute
+      absolute = v == null ? v : d3.functor(v)
+
+      return tip
+    }
+
     // Public: sets or gets the html value of the tooltip
     //
     // v - String value of the tip
@@ -142,6 +154,7 @@
   
     function d3_tip_direction() { return 'n' }
     function d3_tip_offset() { return [0, 0] }
+    function d3_tip_absolute() { return null }
     function d3_tip_html() { return ' ' }
   
     var direction_callbacks = d3.map({
