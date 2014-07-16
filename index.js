@@ -64,6 +64,10 @@
     //
     // Returns a tip
     tip.hide = function() {
+      if (!node) {
+        return;
+      }
+      
       nodel = d3.select(node)
       nodel.style({ opacity: 0, 'pointer-events': 'none' })
       return tip
@@ -76,6 +80,10 @@
     //
     // Returns tip or attribute value
     tip.attr = function(n, v) {
+      if (!node) {
+        return;
+      }
+      
       if (arguments.length < 2 && typeof n === 'string') {
         return d3.select(node).attr(n)
       } else {
@@ -93,6 +101,10 @@
     //
     // Returns tip or style property value
     tip.style = function(n, v) {
+      if (!node) {
+        return;
+      }
+      
       if (arguments.length < 2 && typeof n === 'string') {
         return d3.select(node).style(n)
       } else {
@@ -110,6 +122,10 @@
     //
     // Returns tip or direction
     tip.direction = function(v) {
+      if (!node) {
+        return;
+      }
+      
       if (!arguments.length) return direction
       direction = v == null ? v : d3.functor(v)
   
@@ -122,6 +138,10 @@
     //
     // Returns offset or
     tip.offset = function(v) {
+      if (!node) {
+        return;
+      }
+      
       if (!arguments.length) return offset
       offset = v == null ? v : d3.functor(v)
   
@@ -134,10 +154,24 @@
     //
     // Returns html value or tip
     tip.html = function(v) {
+      if (!node) {
+        return;
+      }
+      
       if (!arguments.length) return html
       html = v == null ? v : d3.functor(v)
   
       return tip
+    }
+    
+    // Public: destroys the tooltip and removes it from the DOM
+    tip.remove = function() {
+      if (!node) {
+        return;
+      }
+      
+      d3.select(node).remove();
+      node = null;
     }
   
     function d3_tip_direction() { return 'n' }
