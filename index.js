@@ -44,8 +44,9 @@
           nodel   = d3.select(node),
           i       = directions.length,
           coords,
-          scrollTop  = document.documentElement.scrollTop || document.body.scrollTop,
-          scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft
+          scrollEl   = document.documentElement? document.documentElement : document.body,
+          scrollTop  = scrollEl.scrollTop,
+          scrollLeft = scrollEl.scrollLeft
   
       nodel.html(content)
         .style({ opacity: 1, 'pointer-events': 'all' })
