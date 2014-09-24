@@ -6,17 +6,15 @@
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
-        define(['b'], function (b) {
-            return (root.returnExportsGlobal = factory(b));
-        });
+        define(['d3'], factory)
     } else if (typeof exports === 'object') {
         // Node. Does not work with strict CommonJS, but
         // only CommonJS-like enviroments that support module.exports,
         // like Node.
-        module.exports = factory(require('b'));
+        module.exports = factory(require('d3'));
     } else {
         // Browser globals
-        root.returnExportsGlobal = factory(root.b);
+        root.returnExportsGlobal = factory(root.d3);
     }
 }(this, function (d3) {
 
