@@ -4,13 +4,18 @@
 // Tooltips for d3.js SVG visualizations
 
 (function (root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module with d3 as a dependency.
-    define(['d3'], factory)
-  } else {
-    // Browser global.
-    root.d3.tip = factory(root.d3)
-  }
+    if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define(['d3'], factory)
+    } else if (typeof exports === 'object') {
+        // Node. Does not work with strict CommonJS, but
+        // only CommonJS-like enviroments that support module.exports,
+        // like Node.
+        module.exports = factory(require('d3'));
+    } else {
+        // Browser globals
+        root.returnExportsGlobal = factory(root.d3);
+    }
 }(this, function (d3) {
 
   // Public - contructs a new tooltip
