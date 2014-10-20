@@ -9,14 +9,14 @@
     define(['d3'], factory)
   } else {
     // Browser global.
-    root.d3.tip = factory(root.d3)
+    factory(root.d3)
   }
 }(this, function (d3) {
 
   // Public - contructs a new tooltip
   //
   // Returns a tip
-  return function() {
+  d3.tip = function() {
     var direction = d3_tip_direction,
         offset    = d3_tip_offset,
         html      = d3_tip_html,
@@ -289,5 +289,5 @@
 
     return tip
   };
-
+  return d3.tip;
 }));
