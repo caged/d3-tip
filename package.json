@@ -1,7 +1,8 @@
 {
   "name": "d3-tip",
-  "version": "0.6.4",
-  "description": "d3 tooltips (by Justin Palmer) http://labratrevenge.com/d3-tip",
+  "version": "0.6.5",
+  "description": "Tooltips for d3 svg visualizations",
+  "author": "Justin Palmer <justin@labratrevenge.com> (http://labratrevenge.com/d3-tip)",
   "main": "index.js",
   "directories": {
     "doc": "docs",
