@@ -70,7 +70,7 @@
     //
     // Returns a tip
     tip.hide = function() {
-      nodel = d3.select(node)
+      var nodel = d3.select(node)
       nodel.style({ opacity: 0, 'pointer-events': 'none' })
       return tip
     }
@@ -242,7 +242,7 @@
 
     function getSVGNode(el) {
       el = el.node()
-      if(el.tagName.toLowerCase() == 'svg')
+      if(el.tagName.toLowerCase() === 'svg')
         return el
 
       return el.ownerSVGElement
