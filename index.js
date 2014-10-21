@@ -7,6 +7,9 @@
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module with d3 as a dependency.
     define(['d3'], factory)
+  } else if (typeof require === 'function' && module.exports) {
+    var d3 = require('d3')
+    module.exports = d3.tip = factory(d3)
   } else {
     // Browser global.
     root.d3.tip = factory(root.d3)
