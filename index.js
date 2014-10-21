@@ -136,9 +136,8 @@
 
     // expose the bbox to the client code
     // so we can get the exact size of the selected svg element
-    tip.bBox = function(){
-      var bbox = getScreenBBox();
-      return bbox;
+    tip.bbox = function(){
+      return getScreenBBox();
     }
 
     // Public: sets or gets the html value of the tooltip
@@ -286,7 +285,7 @@
 
       var bbox       = {},
           matrix     = targetel.getScreenCTM(),
-          tbbox      = targetel.bBox(),
+          tbbox      = targetel.bbox(),
           width      = tbbox.width,
           height     = tbbox.height,
           x          = tbbox.x,
