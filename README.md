@@ -42,4 +42,4 @@ rawgithub.com.
 <link rel="stylesheet" href="//rawgithub.com/Caged/d3-tip/master/examples/example-styles.css">
 ```
 
-For how to use d3.tip with AMD have a look at: [d3-tip-amd-example](https://github.com/deciob/d3-tip-amd-example)
+For how to use d3.tip with **AMD** have a look at: [d3-tip-amd-example](https://github.com/deciob/d3-tip-amd-example)
