@@ -53,6 +53,8 @@
           scrollTop  = document.documentElement.scrollTop || document.body.scrollTop,
           scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft
 
+      // null content indicates no tooltip
+      if(content == null) return;
       nodel.html(content)
         .style({ opacity: 1, 'pointer-events': 'all' })
 
