@@ -55,6 +55,7 @@
       .attr('class', 'd3-tip')
       .html(function(d) { return '<span>' + d.total + '</span>' + ' entries' })
       .offset([-12, 0])
+    .transitionDuration(200)
 
     var w = 800,
         h = 300,

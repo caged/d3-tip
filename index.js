@@ -29,7 +29,8 @@
         node      = initNode(),
         svg       = null,
         point     = null,
-        target    = null
+        target    = null,
+        transitionDuration = 0
 
     function tip(vis) {
       svg = getSVGNode(vis)
@@ -54,6 +55,8 @@
           scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft
 
       nodel.html(content)
+        .transition()
+        .duration(transitionDuration)
         .style({ opacity: 1, 'pointer-events': 'all' })
 
       while(i--) nodel.classed(directions[i], false)
@@ -71,7 +74,10 @@
     // Returns a tip
     tip.hide = function() {
       var nodel = d3.select(node)
-      nodel.style({ opacity: 0, 'pointer-events': 'none' })
+      nodel.transition()
+        .duration(transitionDuration)
+        .style({ opacity: 0, 'pointer-events': 'none' });
+        
       return tip
     }
 
@@ -146,6 +152,18 @@
       return tip
     }
 
+    // Public: sets or gets the tip's transition duration
+    //
+    // v - Int value of the transition duration, in milliseconds
+    //
+    // Returns transitionDuration value or tip
+    tip.transitionDuration = function(v){
+      if (!arguments.length) return transitionDuration
+      transitionDuration = v 
+
+      return tip
+    }
+    
     function d3_tip_direction() { return 'n' }
     function d3_tip_offset() { return [0, 0] }
     function d3_tip_html() { return ' ' }
