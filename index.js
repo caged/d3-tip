@@ -152,6 +152,11 @@
       return tip
     }
 
+    // Public: sets or gets the tip's transition duration
+    //
+    // v - Int value of the transition duration, in milliseconds
+    //
+    // Returns transitionDuration value or tip
     tip.transitionDuration = function(v){
       if (!arguments.length) return transitionDuration
       transitionDuration = v 
