@@ -29,12 +29,13 @@
         node      = initNode(),
         svg       = null,
         point     = null,
-        target    = null
+        target    = null,
+        parent    = document.body
 
     function tip(vis) {
       svg = getSVGNode(vis)
       point = svg.createSVGPoint()
-      document.body.appendChild(node)
+      parent.appendChild(node)
     }
 
     // Public - show the tooltip on the screen
@@ -50,8 +51,7 @@
           nodel   = d3.select(node),
           i       = directions.length,
           coords,
-          scrollTop  = document.documentElement.scrollTop || document.body.scrollTop,
-          scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft
+          parentCoords = node.offsetParent.getBoundingClientRect()
 
       nodel.html(content)
         .style({ opacity: 1, 'pointer-events': 'all' })
@@ -59,8 +59,8 @@
       while(i--) nodel.classed(directions[i], false)
       coords = direction_callbacks.get(dir).apply(this)
       nodel.classed(dir, true).style({
-        top: (coords.top +  poffset[0]) + scrollTop + 'px',
-        left: (coords.left + poffset[1]) + scrollLeft + 'px'
+        top: (coords.top + poffset[0]) - parentCoords.top + 'px',
+        left: (coords.left + poffset[1]) - parentCoords.left + 'px'
       })
 
       return tip
@@ -142,6 +142,14 @@
     tip.html = function(v) {
       if (!arguments.length) return html
       html = v == null ? v : d3.functor(v)
+
+      return tip
+    }
+
+    tip.parent = function(v) {
+      if (!arguments.length) return parent
+      parent = v || document.body
+      parent.appendChild(node)
 
       return tip
     }
