@@ -29,18 +29,19 @@
         node      = initNode(),
         svg       = null,
         point     = null,
-        target    = null
+        target    = null,
+        parent    = null
 
     function tip(vis) {
       svg = getSVGNode(vis)
       point = svg.createSVGPoint()
-      document.body.appendChild(node)
     }
 
     // Public - show the tooltip on the screen
     //
     // Returns a tip
     tip.show = function() {
+      if(!parent) tip.parent(document.body);
       var args = Array.prototype.slice.call(arguments)
       if(args[args.length - 1] instanceof SVGElement) target = args.pop()
 
@@ -50,8 +51,7 @@
           nodel   = d3.select(node),
           i       = directions.length,
           coords,
-          scrollTop  = document.documentElement.scrollTop || document.body.scrollTop,
-          scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft
+          parentCoords = node.offsetParent.getBoundingClientRect()
 
       nodel.html(content)
         .style({ opacity: 1, 'pointer-events': 'all' })
@@ -59,8 +59,8 @@
       while(i--) nodel.classed(directions[i], false)
       coords = direction_callbacks.get(dir).apply(this)
       nodel.classed(dir, true).style({
-        top: (coords.top +  poffset[0]) + scrollTop + 'px',
-        left: (coords.left + poffset[1]) + scrollLeft + 'px'
+        top: (coords.top + poffset[0]) - parentCoords.top + 'px',
+        left: (coords.left + poffset[1]) - parentCoords.left + 'px'
       })
 
       return tip
@@ -142,6 +142,26 @@
     tip.html = function(v) {
       if (!arguments.length) return html
       html = v == null ? v : d3.functor(v)
+
+      return tip
+    }
+
+    // Public: Sets or gets the parent of the tooltip element
+    //
+    // v - New parent for the tip
+    //
+    // Returns parent element or tip
+    tip.parent = function(v) {
+      if (!arguments.length) return parent
+      parent = v || document.body
+      parent.appendChild(node)
+
+      // Make sure offsetParent has a position so the tip can be
+      // based from it. Mainly a concern with <body>.
+      var offsetParent = d3.select(node.offsetParent)
+      if (offsetParent.style('position') === 'static') {
+        offsetParent.style('position', 'relative')
+      }
 
       return tip
     }
