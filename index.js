@@ -30,18 +30,18 @@
         svg       = null,
         point     = null,
         target    = null,
-        parent    = document.body
+        parent    = null
 
     function tip(vis) {
       svg = getSVGNode(vis)
       point = svg.createSVGPoint()
-      parent.appendChild(node)
     }
 
     // Public - show the tooltip on the screen
     //
     // Returns a tip
     tip.show = function() {
+      if(!parent) tip.parent(document.body);
       var args = Array.prototype.slice.call(arguments)
       if(args[args.length - 1] instanceof SVGElement) target = args.pop()
 
@@ -146,10 +146,22 @@
       return tip
     }
 
+    // Public: Sets or gets the parent of the tooltip element
+    //
+    // v - New parent for the tip
+    //
+    // Returns parent element or tip
     tip.parent = function(v) {
       if (!arguments.length) return parent
       parent = v || document.body
       parent.appendChild(node)
+
+      // Make sure offsetParent has a position so the tip can be
+      // based from it. Mainly a concern with <body>.
+      var offsetParent = d3.select(node.offsetParent)
+      if (offsetParent.style('position') === 'static') {
+        offsetParent.style('position', 'relative')
+      }
 
       return tip
     }
