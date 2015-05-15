@@ -40,7 +40,7 @@
     // Public - show the tooltip on the screen
     //
     // Returns a tip
-    tip.show = function() {
+    tip.show = function(d, idx, absolute) {
       var args = Array.prototype.slice.call(arguments)
       if(args[args.length - 1] instanceof SVGElement) target = args.pop()
 
@@ -57,11 +57,20 @@
         .style({ opacity: 1, 'pointer-events': 'all' })
 
       while(i--) nodel.classed(directions[i], false)
-      coords = direction_callbacks.get(dir).apply(this)
-      nodel.classed(dir, true).style({
-        top: (coords.top +  poffset[0]) + scrollTop + 'px',
-        left: (coords.left + poffset[1]) + scrollLeft + 'px'
-      })
+      if (!absolute || absolute === false) {
+        coords = direction_callbacks.get(dir).apply(this);
+        nodel.classed(dir, true).style({
+          top: (coords.top +  poffset[0]) + scrollTop + 'px',
+          left: (coords.left + poffset[1]) + scrollLeft + 'px'
+        });
+      }
+      else {
+        coords = direction_callbacks.get(dir).apply(this);
+        nodel.classed(dir, true).style({
+          top:  (absolute[0] + poffset[0]) + 'px',
+          left: (absolute[1] + poffset[1]) + 'px'
+        });
+      }
 
       return tip
     }
@@ -160,6 +169,7 @@
     function d3_tip_direction() { return 'n' }
     function d3_tip_offset() { return [0, 0] }
     function d3_tip_html() { return ' ' }
+    function d3_tip_absolute() { return [0, 0] }
 
     var direction_callbacks = d3.map({
       n:  direction_n,
