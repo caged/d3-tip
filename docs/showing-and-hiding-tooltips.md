@@ -38,3 +38,5 @@ rect.on('mouseout', function(d) {
   tip.hide(d)
 })
 ```
+
+If the cursor is moved over the tooltip itself it will not be hidden.
