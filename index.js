@@ -82,13 +82,13 @@
       }
 
       if (el !== nodel[0][0]) {
-	      nodel.style({ opacity: 0, 'pointer-events': 'none' })
-	    }
+        nodel.style({ opacity: 0, 'pointer-events': 'none' })
+      }
 
-	    // todo: The tooltip will remain showing until the user hovers over the
-	    // target svg element again and mouses out. This could be solved by adding
-	    // a mouseout handler to the tip itself when it is first created.
-	    
+      // todo: The tooltip will remain showing until the user hovers over the
+      // target svg element again and mouses out. This could be solved by adding
+      // a mouseout handler to the tip itself when it is first created.
+      
       return tip
     }
 
