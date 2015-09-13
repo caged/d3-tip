@@ -68,10 +68,27 @@
 
     // Public - hide the tooltip
     //
+    // Will not hide the tooltip if both of the following:
+    //   a) we can get a ref to the element under mouse pointer
+    //   b) that element is the tooltip
+    // 
     // Returns a tip
     tip.hide = function() {
       var nodel = getNodeEl()
-      nodel.style({ opacity: 0, 'pointer-events': 'none' })
+      var el = null
+
+      if (document.elementFromPoint) {
+      	el = document.elementFromPoint(d3.event.clientX, d3.event.clientY);
+      }
+
+      if (el !== nodel[0][0]) {
+        nodel.style({ opacity: 0, 'pointer-events': 'none' })
+      }
+
+      // todo: The tooltip will remain showing until the user hovers over the
+      // target svg element again and mouses out. This could be solved by adding
+      // a mouseout handler to the tip itself when it is first created.
+      
       return tip
     }
 
