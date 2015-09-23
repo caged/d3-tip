@@ -53,6 +53,9 @@
           scrollTop  = document.documentElement.scrollTop || document.body.scrollTop,
           scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft
 
+      // ensure previous positioning does not affect offsetWidth
+      nodel.style({left: 0});
+
       nodel.html(content)
         .style({ opacity: 1, 'pointer-events': 'all' })
 
@@ -176,17 +179,25 @@
 
     function direction_n() {
       var bbox = getScreenBBox()
+      var left = Math.max(bbox.s.x - node.offsetWidth / 2, 0)
+      if (left + node.offsetWidth > window.innerWidth) {
+        left -= left + node.offsetWidth - window.innerWidth
+      }
       return {
         top:  bbox.n.y - node.offsetHeight,
-        left: bbox.n.x - node.offsetWidth / 2
+        left: left
       }
     }
 
     function direction_s() {
       var bbox = getScreenBBox()
+      var left = Math.max(bbox.s.x - node.offsetWidth / 2, 0)
+      if (left + node.offsetWidth > window.innerWidth) {
+        left -= left + node.offsetWidth - window.innerWidth
+      }
       return {
         top:  bbox.s.y,
-        left: bbox.s.x - node.offsetWidth / 2
+        left: left
       }
     }
 
