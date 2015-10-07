@@ -35,6 +35,7 @@
       svg = getSVGNode(vis)
       if (!svg) { return; }
       point = svg.createSVGPoint()
+      if(!node) { return; }
       document.body.appendChild(node)
     }
 
