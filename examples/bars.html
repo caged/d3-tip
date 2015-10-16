@@ -53,6 +53,9 @@
   <script type="text/javascript">
     var tip = d3.tip()
       .attr('class', 'd3-tip')
+      .rootElement(function(){
+        return document.getElementById('graph');
+      })
       .html(function(d) { return '<span>' + d.total + '</span>' + ' entries' })
       .offset([-12, 0])
 

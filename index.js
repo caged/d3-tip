@@ -23,18 +23,19 @@
   //
   // Returns a tip
   return function() {
-    var direction = d3_tip_direction,
-        offset    = d3_tip_offset,
-        html      = d3_tip_html,
-        node      = initNode(),
-        svg       = null,
-        point     = null,
-        target    = null
+    var direction   = d3_tip_direction,
+        offset      = d3_tip_offset,
+        html        = d3_tip_html,
+        rootElement = document.body,
+        node        = initNode(),
+        svg         = null,
+        point       = null,
+        target      = null
 
     function tip(vis) {
       svg = getSVGNode(vis)
       point = svg.createSVGPoint()
-      document.body.appendChild(node)
+      rootElement.appendChild(node)
     }
 
     // Public - show the tooltip on the screen
@@ -50,8 +51,8 @@
           nodel   = getNodeEl(),
           i       = directions.length,
           coords,
-          scrollTop  = document.documentElement.scrollTop || document.body.scrollTop,
-          scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft
+          scrollTop  = document.documentElement.scrollTop || rootElement.scrollTop,
+          scrollLeft = document.documentElement.scrollLeft || rootElement.scrollLeft
 
       nodel.html(content)
         .style({ opacity: 1, 'pointer-events': 'all' })
@@ -142,6 +143,18 @@
     tip.html = function(v) {
       if (!arguments.length) return html
       html = v == null ? v : d3.functor(v)
+
+      return tip
+    }
+
+    // Public: sets or gets the root element anchor of the tooltip
+    //
+    // v - root element of the tooltip
+    //
+    // Returns root node of tip
+    tip.rootElement = function(v) {
+      if (!arguments.length) return rootElement
+      rootElement = v == null ? v : d3.functor(v)()
 
       return tip
     }
@@ -263,7 +276,7 @@
       if(node === null) {
         node = initNode();
         // re-add node to DOM
-        document.body.appendChild(node);
+        rootElement.appendChild(node);
       };
       return d3.select(node);
     }
