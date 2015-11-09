@@ -1,3 +1,5 @@
+// THIS IS A LOOKER MODIFIED FILE
+
 // d3.tip
 // Copyright (c) 2013 Justin Palmer
 //
@@ -54,7 +56,7 @@
           scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft
 
       nodel.html(content)
-        .style({ opacity: 1, 'pointer-events': 'all' })
+        .style({ opacity: 1, 'pointer-events': 'none' })
 
       while(i--) nodel.classed(directions[i], false)
       coords = direction_callbacks.get(dir).apply(this)
