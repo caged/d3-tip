@@ -19,7 +19,6 @@
     "d3",
     "tooltip"
   ],
-  "author": "Justin Palmer",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Caged/d3-tip/issues"
