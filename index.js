@@ -33,6 +33,9 @@
 
     function tip(vis) {
       svg = getSVGNode(vis)
+      if(!svg) {
+        return;
+      }
       point = svg.createSVGPoint()
       document.body.appendChild(node)
     }
@@ -43,6 +46,10 @@
     tip.show = function() {
       var args = Array.prototype.slice.call(arguments)
       if(args[args.length - 1] instanceof SVGElement) target = args.pop()
+      
+      if(! args[0].tip) {
+        return;
+      }
 
       var content = html.apply(this, args),
           poffset = offset.apply(this, args),
