@@ -24,7 +24,7 @@
 .d3-tip.n:after {
   content: "\25BC";
   margin: -1px 0 0 0;
-  top: 100%;
+  top: 98%;
   left: 0;
   text-align: center;
 }
@@ -41,7 +41,7 @@
 .d3-tip.s:after {
   content: "\25B2";
   margin: 0 0 1px 0;
-  top: -8px;
+  top: -10px;
   left: 0;
   text-align: center;
 }
