@@ -32,6 +32,7 @@
         target    = null
 
     function tip(vis) {
+      if(!vis.node()) return;
       svg = getSVGNode(vis)
       point = svg.createSVGPoint()
       document.body.appendChild(node)
