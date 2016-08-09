@@ -50,8 +50,8 @@
     var RUNS  = 3
 
     var data = [],
-      random = d3.random.normal(5),
-      random2 = d3.random.irwinHall(1)
+      random = d3.randomNormal(5),
+      random2 = d3.randomIrwinHall(1)
     for(var i = 0; i < NODES; i++) data.push(random(i))
 
     var tip = d3.tip()
@@ -64,8 +64,8 @@
         h = 500,
         r = 10,
         linex, liney,
-        x = d3.scale.linear().domain([0, data.length - 1]).range([r, w - r]),
-        y = d3.scale.linear().domain([0, d3.max(data)]).range([h,  0])
+        x = d3.scaleLinear().domain([0, data.length - 1]).range([r, w - r]),
+        y = d3.scaleLinear().domain([0, d3.max(data)]).range([h,  0])
 
     var vis = d3.select(document.body)
       .append('svg')
@@ -82,13 +82,13 @@
       .data(data)
     .enter().append('circle')
 
-    circles.attr('r', function(d, i) { return random2(i) * 10 })
+    .attr('r', function(d, i) { return random2(i) * 10 })
       .attr('cx', function(d, i) { return x(i) })
       .attr('cy', y)
       .on('mouseover', tip.show)
       .on('mouseout', tip.hide)
 
-    var elements = circles[0],
+    var elements = circles.nodes()[0],
       length = elements.length
     e = new MouseEvent('mouseover')
     for(var i = 0; i <= RUNS; i++) {

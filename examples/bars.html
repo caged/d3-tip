@@ -59,10 +59,10 @@
     var w = 800,
         h = 300,
         padt = 20, padr = 20, padb = 60, padl = 30,
-        x  = d3.scale.ordinal().rangeRoundBands([0, w - padl - padr], 0.1),
-        y  = d3.scale.linear().range([h, 0]),
-        yAxis = d3.svg.axis().scale(y).orient('left').tickSize(-w + padl + padr),
-        xAxis = d3.svg.axis().scale(x).orient('bottom')
+        x  = d3.scaleBand().rangeRound([0, w - padl - padr]).padding(0.1),
+        y  = d3.scaleLinear().range([h, 0]),
+        yAxis = d3.axisLeft().scale(y).tickSize(-w + padl + padr),
+        xAxis = d3.axisBottom().scale(x)
 
     vis = d3.select('#graph')
       .append('svg')
@@ -94,7 +94,7 @@
       .attr('transform', function (d, i) { return "translate(" + x(i) + ", 0)" })
 
     bars.append('rect')
-      .attr('width', function() { return x.rangeBand() })
+      .attr('width', function() { return x.bandwidth() })
       .attr('height', function(d) { return h - y(d.total) })
       .attr('y', function(d) { return y(d.total) })
       .on('mouseover', tip.show)
