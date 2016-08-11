@@ -24,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/Caged/d3-tip/issues"
   },
-  "homepage": "https://github.com/Caged/d3-tip"
+  "homepage": "https://github.com/Caged/d3-tip",
+  "dependencies": {
+    "d3": "^4.2"
+  }
 }
