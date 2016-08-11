@@ -12,6 +12,7 @@
     "docs"
   ],
   "dependencies": {
-    "d3": "^4.0"
+    "d3-collection": "^1.0.1",
+    "d3-selection": "^1.0.2"
   }
 }

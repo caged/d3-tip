@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/Caged/d3-tip",
   "peerDependencies": {
-    "d3": "^4"
+    "d3-collection": "^1.0.1",
+    "d3-selection": "^1.0.2"
   }
 }
