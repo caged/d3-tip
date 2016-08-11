@@ -43,16 +43,16 @@
 <body>
   <script type="text/javascript">
     var data = [],
-      random = d3.random.normal(5),
-      random2 = d3.random.irwinHall(1)
+      random = d3.randomNormal(5),
+      random2 = d3.randomIrwinHall(1)
     for(var i = 0; i < 25; i++) data.push(random(i))
 
     var w = 200,
         h = 200,
         b = 20,
         r = 10,
-        x = d3.scale.linear().domain([0, data.length - 1]).range([r, w - r]),
-        y = d3.scale.linear().domain([0, d3.max(data)]).range([h,  0])
+        x = d3.scaleLinear().domain([0, data.length - 1]).range([r, w - r]),
+        y = d3.scaleLinear().domain([0, d3.max(data)]).range([h,  0])
 
     var directions = ['n', 'w', 'e', 's'];
     directions.forEach(function (direction) {

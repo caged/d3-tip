@@ -1,6 +1,6 @@
 {
   "name": "d3-tip",
-  "version": "0.6.7",
+  "version": "0.7.0",
   "main": "index.js",
   "ignore": [
     "**/.*",
@@ -12,6 +12,7 @@
     "docs"
   ],
   "dependencies": {
-    "d3": "3.5.5"
+    "d3-collection": "^1.0.1",
+    "d3-selection": "^1.0.2"
   }
 }
