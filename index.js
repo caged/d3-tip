@@ -9,10 +9,8 @@
     define(['d3'], factory)
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS
-    module.exports = function(d3) {
-      d3.tip = factory(d3)
-      return d3.tip
-    }
+    var d3 = require('d3')
+    module.exports = factory(d3)
   } else {
     // Browser global.
     root.d3.tip = factory(root.d3)
