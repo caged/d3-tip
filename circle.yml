@@ -1,0 +1,10 @@
+## Customize dependencies
+dependencies:
+  override:
+    - npm prune
+    - npm install
+
+## Customize test command
+test:
+  override:
+    - npm run -s circle:lint

@@ -9,7 +9,9 @@
     "example": "examples"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "circle:lint": "npm run -s lint -- --max-warnings 0 -f junit -o $CIRCLE_TEST_REPORTS/eslint/junit.xml"
   },
   "repository": {
     "type": "git",
@@ -26,5 +28,10 @@
   "homepage": "https://github.com/Caged/d3-tip",
   "dependencies": {
     "d3": "^4.2"
+  },
+  "devDependencies": {
+    "eslint": "^3.3.1",
+    "eslint-config-airbnb-base": "^5.0.3",
+    "eslint-plugin-import": "^1.14.0"
   }
 }
