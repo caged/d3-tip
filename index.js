@@ -31,6 +31,7 @@
 
     function tip(vis) {
       svg = getSVGNode(vis)
+      if (!svg) return
       point = svg.createSVGPoint()
       document.body.appendChild(node)
     }
@@ -243,12 +244,11 @@
       return node.node()
     }
 
-    function getSVGNode(el) {
-      el = el.node()
-      if(el.tagName.toLowerCase() === 'svg')
-        return el
-
-      return el.ownerSVGElement
+    function getSVGNode(element) {
+      var svgNode = element.node()
+      if (!svgNode) return null
+      if (svgNode.tagName.toLowerCase() === 'svg') return svgNode
+      return svgNode.ownerSVGElement
     }
 
     function getNodeEl() {
