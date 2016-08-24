@@ -63,5 +63,4 @@
     # with the existing code style
     vars-on-top: 0
     one-var: 0
-    camelcase: 0
     no-use-before-define: 0

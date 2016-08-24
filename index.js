@@ -23,9 +23,9 @@
   //
   // Returns a tip
   return function() {
-    var direction = d3_tip_direction,
-        offset    = d3_tip_offset,
-        html      = d3_tip_html,
+    var direction = d3TipDirection,
+        offset    = d3TipOffset,
+        html      = d3TipHTML,
         node      = initNode(),
         svg       = null,
         point     = null,
@@ -60,7 +60,7 @@
         .style('opacity', 1).style('pointer-events', 'all')
 
       while (i--) nodel.classed(directions[i], false)
-      coords = direction_callbacks.get(dir).apply(this)
+      coords = directionCallbacks.get(dir).apply(this)
       nodel.classed(dir, true)
         .style('top', (coords.top + poffset[0]) + scrollTop + 'px')
         .style('left', (coords.left + poffset[1]) + scrollLeft + 'px')
@@ -159,23 +159,23 @@
       return tip
     }
 
-    function d3_tip_direction() { return 'n' }
-    function d3_tip_offset() { return [0, 0] }
-    function d3_tip_html() { return ' ' }
+    function d3TipDirection() { return 'n' }
+    function d3TipOffset() { return [0, 0] }
+    function d3TipHTML() { return ' ' }
 
-    var direction_callbacks = d3.map({
-          n:  direction_n,
-          s:  direction_s,
-          e:  direction_e,
-          w:  direction_w,
-          nw: direction_nw,
-          ne: direction_ne,
-          sw: direction_sw,
-          se: direction_se
+    var directionCallbacks = d3.map({
+          n:  directionNorth,
+          s:  directionSouth,
+          e:  directionEast,
+          w:  directionWest,
+          nw: directionNorthWest,
+          ne: directionNorthEast,
+          sw: directionSouthWest,
+          se: directionSouthEast
         }),
-        directions = direction_callbacks.keys()
+        directions = directionCallbacks.keys()
 
-    function direction_n() {
+    function directionNorth() {
       var bbox = getScreenBBox()
       return {
         top:  bbox.n.y - node.offsetHeight,
@@ -183,7 +183,7 @@
       }
     }
 
-    function direction_s() {
+    function directionSouth() {
       var bbox = getScreenBBox()
       return {
         top:  bbox.s.y,
@@ -191,7 +191,7 @@
       }
     }
 
-    function direction_e() {
+    function directionEast() {
       var bbox = getScreenBBox()
       return {
         top:  bbox.e.y - node.offsetHeight / 2,
@@ -199,7 +199,7 @@
       }
     }
 
-    function direction_w() {
+    function directionWest() {
       var bbox = getScreenBBox()
       return {
         top:  bbox.w.y - node.offsetHeight / 2,
@@ -207,7 +207,7 @@
       }
     }
 
-    function direction_nw() {
+    function directionNorthWest() {
       var bbox = getScreenBBox()
       return {
         top:  bbox.nw.y - node.offsetHeight,
@@ -215,7 +215,7 @@
       }
     }
 
-    function direction_ne() {
+    function directionNorthEast() {
       var bbox = getScreenBBox()
       return {
         top:  bbox.ne.y - node.offsetHeight,
@@ -223,7 +223,7 @@
       }
     }
 
-    function direction_sw() {
+    function directionSouthWest() {
       var bbox = getScreenBBox()
       return {
         top:  bbox.sw.y,
@@ -231,7 +231,7 @@
       }
     }
 
-    function direction_se() {
+    function directionSouthEast() {
       var bbox = getScreenBBox()
       return {
         top:  bbox.se.y,
