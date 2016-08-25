@@ -26,5 +26,8 @@
   "homepage": "https://github.com/Caged/d3-tip",
   "dependencies": {
     "d3": "^3.5.5"
+  },
+  "publishConfig": {
+    "tag": "d3v3"
   }
 }
