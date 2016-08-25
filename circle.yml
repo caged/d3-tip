@@ -1,3 +1,9 @@
+## Customize the test machine
+machine:
+  # Version of Node to use
+  node:
+    version: 6.1.0
+
 ## Customize dependencies
 dependencies:
   override:
