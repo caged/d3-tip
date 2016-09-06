@@ -1,9 +1,11 @@
-// d3.tip
-// Copyright (c) 2013 Justin Palmer
-//
-// Tooltips for d3.js SVG visualizations
-
-(function(root, factory) {
+/**
+ * d3.tip
+ * Copyright (c) 2013 Justin Palmer
+ *
+ * Tooltips for d3.js SVG visualizations
+ */
+// eslint-disable-next-line no-extra-semi
+;(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module with d3 as a dependency.
     define(['d3'], factory)
@@ -84,7 +86,8 @@
     // v - value of the attribute
     //
     // Returns tip or attribute value
-    tip.attr = function(n, _v) {
+    // eslint-disable-next-line no-unused-vars
+    tip.attr = function(n, v) {
       if (arguments.length < 2 && typeof n === 'string') {
         return getNodeEl().attr(n)
       }
@@ -101,7 +104,8 @@
     // v - value of the property
     //
     // Returns tip or style property value
-    tip.style = function(n, _v) {
+    // eslint-disable-next-line no-unused-vars
+    tip.style = function(n, v) {
       if (arguments.length < 2 && typeof n === 'string') {
         return getNodeEl().style(n)
       }

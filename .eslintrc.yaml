@@ -48,13 +48,6 @@
 
     # Additional rules
     func-names: 0
-    no-unused-vars:
-      - 1
-      -
-        vars: all
-        args: all
-        varsIgnorePattern: ^_
-        argsIgnorePattern: ^_
 
     # Disabled for IE8 support
     comma-dangle: 0
