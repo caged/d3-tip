@@ -13,6 +13,7 @@
   "license": "MIT",
   "author": "Justin Palmer <justin@labratrevenge.com> (http://labratrevenge.com/d3-tip)",
   "main": "index.js",
+  "jsnext:main": "index.es2015.js",
   "directories": {
     "doc": "docs",
     "example": "examples"
