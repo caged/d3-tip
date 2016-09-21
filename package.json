@@ -27,7 +27,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "d3": "^4.2"
+    "d3-collection": "^1.0.1",
+    "d3-selection": "^1.0.2"
   },
   "devDependencies": {
     "eslint": "^3.3.1",
