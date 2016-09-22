@@ -40,3 +40,14 @@ tip.offset(function() {
   return [this.getBBox().height / 2, 0]
 })
 ```
+
+### tip.rootElement([function|Node])
+You can also specify the rootElement which is `document.body` by default.
+
+```javascript
+var tip = d3.tip()
+  .attr('class', 'd3-tip')
+  .rootElement(document.getElementById('graph'))
+  .html(function(d) { return d; })
+
+```
