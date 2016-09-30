@@ -16,7 +16,7 @@
     /* eslint-disable global-require */
     // CommonJS
     var d3Collection = require('d3-collection'),
-        d3Selection = require('d3-selection')
+      d3Selection = require('d3-selection')
     module.exports = factory(d3Collection, d3Selection)
     /* eslint-enable global-require */
   } else {
@@ -31,13 +31,13 @@
   // Returns a tip
   return function() {
     var direction   = d3TipDirection,
-        offset      = d3TipOffset,
-        html        = d3TipHTML,
-        rootElement = document.body,
-        node        = initNode(),
-        svg         = null,
-        point       = null,
-        target      = null
+      offset      = d3TipOffset,
+      html        = d3TipHTML,
+      rootElement = document.body,
+      node        = initNode(),
+      svg         = null,
+      point       = null,
+      target      = null
 
     function tip(vis) {
       svg = getSVGNode(vis)
@@ -49,29 +49,36 @@
     // Public - show the tooltip on the screen
     //
     // Returns a tip
-    tip.show = function() {
+    tip.show = function(d, idx, absolute) {
       var args = Array.prototype.slice.call(arguments)
       if (args[args.length - 1] instanceof SVGElement) target = args.pop()
 
       var content = html.apply(this, args),
-          poffset = offset.apply(this, args),
-          dir     = direction.apply(this, args),
-          nodel   = getNodeEl(),
-          i       = directions.length,
-          coords,
-          scrollTop  = document.documentElement.scrollTop ||
-            rootElement.scrollTop,
-          scrollLeft = document.documentElement.scrollLeft ||
-            rootElement.scrollLeft
+        poffset = offset.apply(this, args),
+        dir     = direction.apply(this, args),
+        nodel   = getNodeEl(),
+        i       = directions.length,
+        coords,
+        scrollTop  = document.documentElement.scrollTop ||
+          rootElement.scrollTop,
+        scrollLeft = document.documentElement.scrollLeft ||
+          rootElement.scrollLeft
 
       nodel.html(content)
         .style('opacity', 1).style('pointer-events', 'all')
 
       while (i--) nodel.classed(directions[i], false)
       coords = directionCallbacks.get(dir).apply(this)
-      nodel.classed(dir, true)
-        .style('top', (coords.top + poffset[0]) + scrollTop + 'px')
-        .style('left', (coords.left + poffset[1]) + scrollLeft + 'px')
+      if (!absolute) {
+        nodel.classed(dir, true)
+          .style('top', (coords.top + poffset[0]) + scrollTop + 'px')
+          .style('left', (coords.left + poffset[1]) + scrollLeft + 'px')
+      }
+      else {
+        nodel.classed(dir, true)
+          .style('top', (absolute[0] + poffset[0]) + scrollTop + 'px')
+          .style('left', (absolute[1] + poffset[1]) + scrollLeft + 'px')
+      }
 
       return tip
     }
@@ -186,16 +193,16 @@
     function d3TipHTML() { return ' ' }
 
     var directionCallbacks = d3Collection.map({
-          n:  directionNorth,
-          s:  directionSouth,
-          e:  directionEast,
-          w:  directionWest,
-          nw: directionNorthWest,
-          ne: directionNorthEast,
-          sw: directionSouthWest,
-          se: directionSouthEast
-        }),
-        directions = directionCallbacks.keys()
+        n:  directionNorth,
+        s:  directionSouth,
+        e:  directionEast,
+        w:  directionWest,
+        nw: directionNorthWest,
+        ne: directionNorthEast,
+        sw: directionSouthWest,
+        se: directionSouthEast
+      }),
+      directions = directionCallbacks.keys()
 
     function directionNorth() {
       var bbox = getScreenBBox()
@@ -310,12 +317,12 @@
       }
 
       var bbox       = {},
-          matrix     = targetel.getScreenCTM(),
-          tbbox      = targetel.getBBox(),
-          width      = tbbox.width,
-          height     = tbbox.height,
-          x          = tbbox.x,
-          y          = tbbox.y
+        matrix     = targetel.getScreenCTM(),
+        tbbox      = targetel.getBBox(),
+        width      = tbbox.width,
+        height     = tbbox.height,
+        x          = tbbox.x,
+        y          = tbbox.y
 
       point.x = x
       point.y = y
