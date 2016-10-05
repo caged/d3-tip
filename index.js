@@ -41,10 +41,11 @@ export default function() {
           i       = directions.length,
           coords,
           scrollTop  = rootElement ?
-            rootElement.scrollTop:
-           document.documentElement.scrollTop,scrollLeft = rootElement ?
-            rootElement.scrollLeft:
-            document.documentElement.scrollLeft
+            rootElement.scrollTop :
+            (document.documentElement.scrollTop|| document.body.scrollTop),
+          scrollLeft = rootElement ?
+            rootElement.scrollLeft :
+            (document.documentElement.scrollLeft|| document.body.scrollLeft)
 
     nodel.html(content)
       .style('opacity', 1).style('pointer-events', 'all')
