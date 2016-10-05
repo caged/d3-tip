@@ -33,7 +33,7 @@
     var direction   = d3TipDirection,
         offset      = d3TipOffset,
         html        = d3TipHTML,
-        rootElement = document.body,
+        rootElement = null,
         node        = initNode(),
         svg         = null,
         point       = null,
@@ -43,7 +43,7 @@
       svg = getSVGNode(vis)
       if (!svg) return
       point = svg.createSVGPoint()
-      rootElement.appendChild(node)
+      getRootElement().appendChild(node)
     }
 
     // Public - show the tooltip on the screen
@@ -59,10 +59,12 @@
           nodel   = getNodeEl(),
           i       = directions.length,
           coords,
-          scrollTop  = document.documentElement.scrollTop ||
-            rootElement.scrollTop,
-          scrollLeft = document.documentElement.scrollLeft ||
-            rootElement.scrollLeft
+          scrollTop  = rootElement ?
+            rootElement.scrollTop :
+            document.documentElement.scrollTop,
+          scrollLeft = rootElement ?
+            rootElement.scrollLeft :
+            document.documentElement.scrollLeft
 
       nodel.html(content)
         .style('opacity', 1).style('pointer-events', 'all')
@@ -164,8 +166,17 @@
     //
     // Returns root node of tip
     tip.rootElement = function(v) {
-      if (!arguments.length) return rootElement
-      rootElement = v == null ? v : functor(v)
+      if (!arguments.length) return getRootElement()
+
+      var newRootElement = typeof v === 'function' ? v() : v
+
+      if (newRootElement !== rootElement) {
+        rootElement = newRootElement
+        if (node) {
+          // If the node already exists, move it to the new root element
+          getRootElement().appendChild(node)
+        }
+      }
 
       return tip
     }
@@ -280,11 +291,15 @@
       return svgNode.ownerSVGElement
     }
 
+    function getRootElement() {
+      return rootElement || document.body
+    }
+
     function getNodeEl() {
       if (node == null) {
         node = initNode()
         // re-add node to DOM
-        rootElement.appendChild(node)
+        getRootElement().appendChild(node)
       }
       return d3Selection.select(node)
     }
