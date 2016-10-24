@@ -11,7 +11,7 @@
     define([
       'd3'
     ], function(d3) {
-        return factory(d3, d3)
+      return factory(d3, d3)
     })
   } else if (typeof module === 'object' && module.exports) {
     /* eslint-disable global-require */
