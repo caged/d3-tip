@@ -9,9 +9,10 @@
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module with d3 as a dependency.
     define([
-      'd3-collection',
-      'd3-selection'
-    ], factory)
+      'd3'
+    ], function(d3) {
+        return factory(d3, d3)
+    })
   } else if (typeof module === 'object' && module.exports) {
     /* eslint-disable global-require */
     // CommonJS
