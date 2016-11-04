@@ -9,6 +9,7 @@
   var d3Collection
   var d3Selection
   if (typeof define === 'function' && define.amd) {
+    /* eslint-disable global-require */
     // AMD. Register as an anonymous module with d3 as a dependency.
     try {
       d3Collection = require('d3-collection')
@@ -24,7 +25,6 @@
       return factory(d3Collection, d3Selection)
     })
   } else if (typeof module === 'object' && module.exports) {
-    /* eslint-disable global-require */
     // CommonJS
     d3Collection = require('d3-collection')
     d3Selection = require('d3-selection')
