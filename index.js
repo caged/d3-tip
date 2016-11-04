@@ -6,18 +6,28 @@
  */
 // eslint-disable-next-line no-extra-semi
 ;(function(root, factory) {
+  var d3Collection
+  var d3Selection
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module with d3 as a dependency.
-    define([
-      'd3'
-    ], function(d3) {
-      return factory(d3, d3)
+    try {
+      d3Collection = require('d3-collection')
+    } catch (e) {
+      d3Collection = require('d3')
+    }
+    try {
+      d3Selection = require('d3-selection')
+    } catch (e) {
+      d3Selection = require('d3')
+    }
+    define([], function() {
+      return factory(d3Collection, d3Selection)
     })
   } else if (typeof module === 'object' && module.exports) {
     /* eslint-disable global-require */
     // CommonJS
-    var d3Collection = require('d3-collection'),
-        d3Selection = require('d3-selection')
+    d3Collection = require('d3-collection')
+    d3Selection = require('d3-selection')
     module.exports = factory(d3Collection, d3Selection)
     /* eslint-enable global-require */
   } else {
