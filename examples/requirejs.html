@@ -45,6 +45,8 @@
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.2/require.min.js" charset="utf-8"></script>
   <script charset="utf-8">
+    console.info("Note that you need 'd3-axis' and 'd3-scale'. If you don't, you should install them by 'npm run d3-axis d3-scale'.");
+
     // Mostly used for development.  Point to proper location of d3 and d3tip.
     require.config({
       baseUrl: '../',
@@ -119,6 +121,7 @@
         .on('mouseout', tip.hide)
     });
   </script>
+  <h3>Note that you need 'd3-axis' and 'd3-scale'. If you don't, you should install them by <span style="font-family: 'consolas'; background-color: #eee;">npm run d3-axis d3-scale</span></h3>
   <div id="graph"></div>
 </body>
 </html>
