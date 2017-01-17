@@ -6,17 +6,28 @@
  */
 // eslint-disable-next-line no-extra-semi
 ;(function(root, factory) {
+  var d3Collection
+  var d3Selection
   if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module with d3 as a dependency.
-    define([
-      'd3-collection',
-      'd3-selection'
-    ], factory)
-  } else if (typeof module === 'object' && module.exports) {
     /* eslint-disable global-require */
+    // AMD. Register as an anonymous module with d3 as a dependency.
+    try {
+      d3Collection = require('d3-collection')
+    } catch (e) {
+      d3Collection = require('d3')
+    }
+    try {
+      d3Selection = require('d3-selection')
+    } catch (e) {
+      d3Selection = require('d3')
+    }
+    define([], function() {
+      return factory(d3Collection, d3Selection)
+    })
+  } else if (typeof module === 'object' && module.exports) {
     // CommonJS
-    var d3Collection = require('d3-collection'),
-        d3Selection = require('d3-selection')
+    d3Collection = require('d3-collection')
+    d3Selection = require('d3-selection')
     module.exports = factory(d3Collection, d3Selection)
     /* eslint-enable global-require */
   } else {
@@ -305,7 +316,7 @@
     function getScreenBBox() {
       var targetel   = target || d3Selection.event.target
 
-      while (targetel.getScreenCTM == null && targetel.parentNode == null) {
+      while (targetel.getScreenCTM == null && targetel.parentNode != null) {
         targetel = targetel.parentNode
       }
 
