@@ -11,9 +11,21 @@ See the [API Documentation](docs/index.md)
 ### Download Latest Version
 * [Development Version](https://raw.github.com/Caged/d3-tip/master/index.js) : **6kb** / **~2kb gzipped**
 
-### Install with Bower
+### Install with Bower or npm
 ```
 bower install d3-tip
+```
+or
+```
+npm install d3-tip
+```
+
+### Load via CommonJS approach, e.g. Browserify
+
+```javascript
+var d3 = require('d3');
+var d3tip = require('d3-tip');
+d3tip(d3);
 ```
 
 ### Quick Usage
