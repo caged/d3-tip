@@ -40,6 +40,7 @@
         target      = null
 
     function tip(vis) {
+      if(!vis.node()) return;
       svg = getSVGNode(vis)
       if (!svg) return
       point = svg.createSVGPoint()
