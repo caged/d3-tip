@@ -64,6 +64,8 @@
           scrollLeft = document.documentElement.scrollLeft ||
             rootElement.scrollLeft
 
+      // null content indicates no tooltip
+      if(content == null) return;
       nodel.html(content)
         .style('opacity', 1).style('pointer-events', 'all')
 
