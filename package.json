@@ -12,7 +12,10 @@
   },
   "license": "MIT",
   "author": "Justin Palmer <justin@labratrevenge.com> (http://labratrevenge.com/d3-tip)",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "module": "src/index",
+  "jsnext": "src/index.js",
+  "browser": "lib-browser/index.js",
   "directories": {
     "doc": "docs",
     "example": "examples"
@@ -25,6 +28,13 @@
     "circle:lint": "npm run -s lint -- --max-warnings 0 -f junit -o $CIRCLE_TEST_REPORTS/eslint/junit.xml",
     "lint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build-commonjs": "tsc -p .",
+    "build-browser-src": "webpack",
+    "build-browser-min": "cross-env NODE_ENV=min webpack --display-modules",
+    "build-browser-min-debug": "cross-env NODE_ENV=min-debug webpack --display-modules",
+    "build-browser": "npm run build-browser-src && npm run build-browser-min",
+    "build": "npm run build-commonjs && npm run build-browser",
+    "watch": "cross-env NODE_ENV=watch webpack",
     "server": "python3 -m http.server"
   },
   "dependencies": {
@@ -34,7 +44,10 @@
   "devDependencies": {
     "eslint": "^3.3.1",
     "eslint-config-airbnb-base": "^5.0.3",
-    "eslint-plugin-import": "^1.14.0"
+    "eslint-plugin-import": "^1.14.0",
+    "cross-env": "^3.1.4",
+    "typescript": "^2.2.1",
+    "webpack": "^2.2.1"
   },
   "engines": {
     "node": ">=4.2.6"

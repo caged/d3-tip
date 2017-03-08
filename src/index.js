@@ -5,35 +5,17 @@
  * Tooltips for d3.js SVG visualizations
  */
 // eslint-disable-next-line no-extra-semi
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module with d3 as a dependency.
-    define([
-      'd3-collection',
-      'd3-selection'
-    ], factory)
-  } else if (typeof module === 'object' && module.exports) {
-    /* eslint-disable global-require */
-    // CommonJS
-    var d3Collection = require('d3-collection'),
-        d3Selection = require('d3-selection')
-    module.exports = factory(d3Collection, d3Selection)
-    /* eslint-enable global-require */
-  } else {
-    // Browser global.
-    var d3 = root.d3
-    // eslint-disable-next-line no-param-reassign
-    root.d3.tip = factory(d3, d3)
-  }
-}(this, function(d3Collection, d3Selection) {
   // Public - contructs a new tooltip
   //
   // Returns a tip
-  return function() {
+import { select, selection } from "d3-selection";
+import { map } from "d3-collection";
+
+  export function tip() {
     var direction   = d3TipDirection,
         offset      = d3TipOffset,
         html        = d3TipHTML,
-        rootElement = document.body,
+        rootElement = functor(document.body),
         node        = initNode(),
         svg         = null,
         point       = null,
@@ -43,7 +25,7 @@
       svg = getSVGNode(vis)
       if (!svg) return
       point = svg.createSVGPoint()
-      rootElement.appendChild(node)
+      rootElement().appendChild(node)
     }
 
     // Public - show the tooltip on the screen
@@ -60,9 +42,9 @@
           i       = directions.length,
           coords,
           scrollTop  = document.documentElement.scrollTop ||
-            rootElement.scrollTop,
+          rootElement().scrollTop,
           scrollLeft = document.documentElement.scrollLeft ||
-            rootElement.scrollLeft
+          rootElement().scrollLeft
 
       nodel.html(content)
         .style('opacity', 1).style('pointer-events', 'all')
@@ -99,7 +81,7 @@
       }
 
       var args =  Array.prototype.slice.call(arguments)
-      d3Selection.selection.prototype.attr.apply(getNodeEl(), args)
+      selection.prototype.attr.apply(getNodeEl(), args)
       return tip
     }
 
@@ -117,7 +99,7 @@
       }
 
       var args = Array.prototype.slice.call(arguments)
-      d3Selection.selection.prototype.style.apply(getNodeEl(), args)
+      selection.prototype.style.apply(getNodeEl(), args)
       return tip
     }
 
@@ -185,7 +167,7 @@
     function d3TipOffset() { return [0, 0] }
     function d3TipHTML() { return ' ' }
 
-    var directionCallbacks = d3Collection.map({
+    var directionCallbacks = map({
           n:  directionNorth,
           s:  directionSouth,
           e:  directionEast,
@@ -262,7 +244,7 @@
     }
 
     function initNode() {
-      var div = d3Selection.select(document.createElement('div'))
+      var div = select(document.createElement('div'))
       div
         .style('position', 'absolute')
         .style('top', 0)
@@ -284,9 +266,9 @@
       if (node == null) {
         node = initNode()
         // re-add node to DOM
-        rootElement.appendChild(node)
+        rootElement().appendChild(node)
       }
-      return d3Selection.select(node)
+      return select(node)
     }
 
     // Private - gets the screen coordinates of a shape
@@ -303,7 +285,7 @@
     //
     // Returns an Object {n, s, e, w, nw, sw, ne, se}
     function getScreenBBox() {
-      var targetel   = target || d3Selection.event.target
+      var targetel = target || event.target
 
       while (targetel.getScreenCTM == null && targetel.parentNode == null) {
         targetel = targetel.parentNode
@@ -348,5 +330,3 @@
 
     return tip
   }
-// eslint-disable-next-line semi
-}));
