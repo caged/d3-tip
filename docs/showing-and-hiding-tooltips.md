@@ -10,8 +10,8 @@ rect.on('mouseover', tip.show)
 ```
 
 ``` javascript
-rect.on('mouseover', function(d) {
-  tip.show(d)
+rect.on('mouseover', function(d, i) {
+  tip.show(d, i)
 })
 ```
 

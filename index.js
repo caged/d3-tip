@@ -1,6 +1,6 @@
 /**
  * d3.tip
- * Copyright (c) 2013 Justin Palmer
+ * Copyright (c) 2013-2017 Justin Palmer
  *
  * Tooltips for d3.js SVG visualizations
  */
@@ -310,31 +310,31 @@
       }
 
       var bbox       = {},
+          left       = targetel.getBoundingClientRect().left,
           matrix     = targetel.getScreenCTM(),
           tbbox      = targetel.getBBox(),
           width      = tbbox.width,
           height     = tbbox.height,
           x          = tbbox.x,
-          y          = tbbox.y
+          y          = tbbox.y;
 
-      point.x = x
-      point.y = y
-      bbox.nw = point.matrixTransform(matrix)
-      point.x += width
-      bbox.ne = point.matrixTransform(matrix)
-      point.y += height
-      bbox.se = point.matrixTransform(matrix)
-      point.x -= width
-      bbox.sw = point.matrixTransform(matrix)
-      point.y -= height / 2
-      bbox.w = point.matrixTransform(matrix)
-      point.x += width
-      bbox.e = point.matrixTransform(matrix)
-      point.x -= width / 2
-      point.y -= height / 2
-      bbox.n = point.matrixTransform(matrix)
-      point.y += height
-      bbox.s = point.matrixTransform(matrix)
+      point.x = 0;
+      point.y = y + height;
+      bbox.nw = point.matrixTransform(matrix);
+      point.x += width;
+      bbox.ne = point.matrixTransform(matrix);
+      bbox.se = point.matrixTransform(matrix);
+      point.x -= width;
+      bbox.sw = point.matrixTransform(matrix);
+      point.y -= height / 2;
+      bbox.w  = point.matrixTransform(matrix);
+      point.x += width;
+      bbox.e = point.matrixTransform(matrix);
+      point.x -= width / 2;
+      point.y -= height / 2;
+      bbox.n = point.matrixTransform(matrix);
+      point.y += height;
+      bbox.s = point.matrixTransform(matrix);
 
       return bbox
     }
