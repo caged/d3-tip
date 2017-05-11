@@ -39,6 +39,22 @@
         point       = null,
         target      = null
 
+    /**
+     * http://stackoverflow.com/a/7611054
+     * @param el
+     * @returns {{left: number, top: number}}
+     */
+    var getPageTopLeft = function(el) {
+      var rect = el.getBoundingClientRect();
+      var docEl = document.documentElement;
+      return {
+        top: rect.top + (window.pageYOffset || docEl.scrollTop || 0),
+        right: rect.right + (window.pageXOffset || 0),
+        bottom: rect.bottom + (window.pageYOffset || 0),
+        left: rect.left + (window.pageXOffset || docEl.scrollLeft || 0)
+      };
+    };
+
     function tip(vis) {
       svg = getSVGNode(vis)
       if (!svg) return
@@ -66,6 +82,39 @@
 
       nodel.html(content)
         .style('opacity', 1).style('pointer-events', 'all')
+
+      // Figure out the correct direction.
+      var node = nodel.node(),
+        nodeWidth = node.clientWidth,
+        nodeHeight = node.clientHeight,
+        windowWidth = window.innerWidth,
+        // windowWidth = rootElement.innerWidth,
+        windowHeight = window.innerHeight,
+        // windowHeight = rootElement.innerHeight,
+        elementCoords = getPageTopLeft(target),
+        breaksTop = (elementCoords.top - nodeHeight < 0),
+        breaksLeft = (elementCoords.right - nodeWidth/2 < 0),
+        breaksRight = (elementCoords.right - (elementCoords.right - elementCoords.left)/2 + nodeWidth/2 > windowWidth),
+        breaksBottom = (elementCoords.bottom + nodeHeight > windowHeight);
+
+      dir = '';
+      if (!breaksTop && !breaksBottom) {
+        dir = 's';
+      } else if (breaksTop) {
+        dir = 's';
+      } else if (breaksBottom) {
+        dir = 'n';
+      } else {
+        dir = 'n';
+      }
+      if ((breaksLeft && breaksRight) || (!breaksLeft && !breaksRight)) {
+      } else if (breaksLeft) {
+        dir = dir + 'e'
+      } else if (breaksRight) {
+        dir = dir + 'w'
+      }
+
+      direction(dir);
 
       while (i--) nodel.classed(directions[i], false)
       coords = directionCallbacks.get(dir).apply(this)
