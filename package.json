@@ -1,7 +1,7 @@
 {
   "name": "d3-tip",
-  "version": "0.7.1",
-  "description": "Tooltips for d3 svg visualizations",
+  "version": "1.3.0",
+  "description": "Tooltips for d3 svg visualizations. The Displayr fork makes no changes other than moving D3 to a peer dependency so that browserified code will share a SINGLE instance of D3, which is important when interacting with D3 Events.",
   "author": "Justin Palmer <justin@labratrevenge.com> (http://labratrevenge.com/d3-tip)",
   "main": "index.js",
   "directories": {
@@ -24,7 +24,7 @@
     "url": "https://github.com/Caged/d3-tip/issues"
   },
   "homepage": "https://github.com/Caged/d3-tip",
-  "dependencies": {
-    "d3": "^4.2"
+  "peerDependencies": {
+    "d3": "^3.5.3"
   }
 }
