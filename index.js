@@ -305,6 +305,19 @@
     function getScreenBBox() {
       var targetel   = target || d3Selection.event.target
 
+      function tryBBox(){ // workaround for bug in FF where `typeof targetel.getBBox` returns 'function'
+                          // but calling `targetel.getBBox()` results in an exception "NS_ERROR_NOT_IMPLEMENTED"
+                          // use case was where the `getBBox` failed on a <tspan> but succeeded on its parentNode <text>
+                          
+        try {
+          targetel.getBBox();
+        }
+        catch (err) {
+          targetel = targetel.parentNode;
+          tryBBox();
+        }
+      }
+
       while (targetel.getScreenCTM == null && targetel.parentNode == null) {
         targetel = targetel.parentNode
       }
