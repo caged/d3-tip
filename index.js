@@ -276,8 +276,13 @@
     function getScreenBBox() {
       var targetel   = target || d3.event.target;
 
-      while ('undefined' === typeof targetel.getScreenCTM && 'undefined' === targetel.parentNode) {
+      while ('function' !== typeof targetel.getScreenCTM  && 'undefined' !== typeof targetel.parentNode) {
+        var isIE11 = 'undefined' !== typeof targetel.correspondingElement && 'function' === typeof targetel.correspondingElement.getScreenCTM;
+        if (!isIE11) {
           targetel = targetel.parentNode;
+        } else {
+          targetel = targetel.correspondingElement;
+        }
       }
 
       var bbox       = {},
