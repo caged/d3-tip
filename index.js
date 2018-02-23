@@ -277,11 +277,13 @@
       var targetel   = target || d3.event.target;
 
       while ('function' !== typeof targetel.getScreenCTM  && 'undefined' !== typeof targetel.parentNode) {
-        var isIE11 = 'undefined' !== typeof targetel.correspondingElement && 'function' === typeof targetel.correspondingElement.getScreenCTM;
+        var isIE11UseElement = 'undefined' !== typeof targetel.correspondingUseElement;
+        var isIE11OtherElement = 'undefined' !== typeof targetel.correspondingElement && 'function' === typeof targetel.correspondingElement.getScreenCTM;
+        var isIE11 = isIE11UseElement || isIE11OtherElement;
         if (!isIE11) {
           targetel = targetel.parentNode;
         } else {
-          targetel = targetel.correspondingElement;
+          targetel = isIE11UseElement ? targetel.correspondingUseElement : correspondingElement;
         }
       }
 
