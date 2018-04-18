@@ -305,7 +305,7 @@
     function getScreenBBox() {
       var targetel   = target || d3Selection.event.target
 
-      while (targetel.getScreenCTM == null && targetel.parentNode == null) {
+      while (targetel.getScreenCTM == null && targetel.parentNode != null) {
         targetel = targetel.parentNode
       }
 
