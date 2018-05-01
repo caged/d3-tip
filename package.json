@@ -1,6 +1,6 @@
 {
   "name": "d3-tip",
-  "version": "0.8.0-alpha.1",
+  "version": "0.9.0",
   "description": "Tooltips for d3 svg visualizations",
   "keywords": [
     "d3",
