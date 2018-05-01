@@ -24,7 +24,7 @@
   },
   "scripts": {
     "circle:lint":
-      "npm run -s lint --ignore-path .gitignore -- --max-warnings 0 -f junit -o $CIRCLE_TEST_REPORTS/eslint/junit.xml",
+      "npm run -s lint -- --max-warnings 0 -f junit -o $CIRCLE_TEST_REPORTS/eslint/junit.xml",
     "lint": "eslint . --ignore-path .gitignore",
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "python3 -m http.server",
