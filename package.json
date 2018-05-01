@@ -2,15 +2,20 @@
   "name": "d3-tip",
   "version": "0.9.0",
   "description": "Tooltips for d3 svg visualizations",
-  "keywords": ["d3", "tooltip"],
+  "keywords": [
+    "d3",
+    "tooltip"
+  ],
   "homepage": "https://github.com/Caged/d3-tip",
   "bugs": {
     "url": "https://github.com/Caged/d3-tip/issues"
   },
-  "files": ["dist/", "index.js"],
+  "files": [
+    "dist/",
+    "index.js"
+  ],
   "license": "MIT",
-  "author":
-    "Justin Palmer <justin@labratrevenge.com> (http://labratrevenge.com/d3-tip)",
+  "author": "Justin Palmer <justin@labratrevenge.com> (http://labratrevenge.com/d3-tip)",
   "main": "dist/index.js",
   "module": "index.js",
   "jsnext:main": "index.js",
@@ -23,8 +28,7 @@
     "url": "https://github.com/Caged/d3-tip"
   },
   "scripts": {
-    "circle:lint":
-      "npm run -s lint --ignore-path .gitignore -- --max-warnings 0 -f junit -o $CIRCLE_TEST_REPORTS/eslint/junit.xml",
+    "circle:lint": "npm run -s lint --ignore-path .gitignore -- --max-warnings 0 -f junit -o $CIRCLE_TEST_REPORTS/eslint/junit.xml",
     "lint": "eslint . --ignore-path .gitignore",
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "python3 -m http.server",
