@@ -6,7 +6,7 @@
  */
 // eslint-disable-next-line no-extra-semi
 import { map } from 'd3-collection'
-import { selection, select, event } from 'd3-selection'
+import { selection, select } from 'd3-selection'
 // Public - constructs a new tooltip
 //
 // Returns a tip
@@ -179,7 +179,7 @@ export default function() {
       directions = directionCallbacks.keys()
 
   function directionNorth() {
-    var bbox = getScreenBBox()
+    var bbox = getScreenBBox(this)
     return {
       top:  bbox.n.y - node.offsetHeight,
       left: bbox.n.x - node.offsetWidth / 2
@@ -187,7 +187,7 @@ export default function() {
   }
 
   function directionSouth() {
-    var bbox = getScreenBBox()
+    var bbox = getScreenBBox(this)
     return {
       top:  bbox.s.y,
       left: bbox.s.x - node.offsetWidth / 2
@@ -195,7 +195,7 @@ export default function() {
   }
 
   function directionEast() {
-    var bbox = getScreenBBox()
+    var bbox = getScreenBBox(this)
     return {
       top:  bbox.e.y - node.offsetHeight / 2,
       left: bbox.e.x
@@ -203,7 +203,7 @@ export default function() {
   }
 
   function directionWest() {
-    var bbox = getScreenBBox()
+    var bbox = getScreenBBox(this)
     return {
       top:  bbox.w.y - node.offsetHeight / 2,
       left: bbox.w.x - node.offsetWidth
@@ -211,7 +211,7 @@ export default function() {
   }
 
   function directionNorthWest() {
-    var bbox = getScreenBBox()
+    var bbox = getScreenBBox(this)
     return {
       top:  bbox.nw.y - node.offsetHeight,
       left: bbox.nw.x - node.offsetWidth
@@ -219,7 +219,7 @@ export default function() {
   }
 
   function directionNorthEast() {
-    var bbox = getScreenBBox()
+    var bbox = getScreenBBox(this)
     return {
       top:  bbox.ne.y - node.offsetHeight,
       left: bbox.ne.x
@@ -227,7 +227,7 @@ export default function() {
   }
 
   function directionSouthWest() {
-    var bbox = getScreenBBox()
+    var bbox = getScreenBBox(this)
     return {
       top:  bbox.sw.y,
       left: bbox.sw.x - node.offsetWidth
@@ -235,7 +235,7 @@ export default function() {
   }
 
   function directionSouthEast() {
-    var bbox = getScreenBBox()
+    var bbox = getScreenBBox(this)
     return {
       top:  bbox.se.y,
       left: bbox.se.x
@@ -283,8 +283,8 @@ export default function() {
   //    +-+-+
   //
   // Returns an Object {n, s, e, w, nw, sw, ne, se}
-  function getScreenBBox() {
-    var targetel   = target || event.target
+  function getScreenBBox(targetShape) {
+    var targetel   = target || targetShape
 
     while (targetel.getScreenCTM == null && targetel.parentNode == null) {
       targetel = targetel.parentNode
