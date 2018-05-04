@@ -13,11 +13,14 @@ tip.direction('s') // Position the tooltip to the bottom of a target element
 tip.direction('e') // Position the tooltip to the right of a target element
 tip.direction('w') // Position the tooltip to the left of a target element
 ```
-##### Changing the direction programatically
+
+Callbacks are supported for changing the direction programatically,
+with the tooltip passed as `this`.
+
 ``` javascript
 tip.direction(function(d) {
-  if(d == 'california') return 'w'
-  if(d == 'new york') return 'e'
+  if (d === 'california') return 'w'
+  if (d === 'new york') return 'e'
 })
 ```
 
@@ -32,11 +35,23 @@ enough in the desired direction so the extender doesn't overlap the target eleme
 tip.offset([10, -10])
 ```
 
-Callbacks are also supported for dynamic positioning.  The following example
-will center tip placement within the bounding box of the target element.
+Callbacks are also supported for dynamic positioning, with the tooltip passed
+as `this`.  The following example will center tip placement within the bounding
+box of the target element.
 
 ``` javascript
 tip.offset(function() {
   return [this.getBBox().height / 2, 0]
 })
+```
+
+### tip.rootElement([function|Node])
+You can also specify the rootElement which is `document.body` by default.
+
+```javascript
+var tip = d3.tip()
+  .attr('class', 'd3-tip')
+  .rootElement(document.getElementById('graph'))
+  .html(function(d) { return d; })
+
 ```
