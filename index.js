@@ -286,7 +286,7 @@ export default function() {
   function getScreenBBox(targetShape) {
     var targetel   = target || targetShape
 
-    while (targetel.getScreenCTM == null && targetel.parentNode == null) {
+    while (targetel.getScreenCTM == null && targetel.parentNode != null) {
       targetel = targetel.parentNode
     }
 
