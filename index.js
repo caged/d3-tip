@@ -286,8 +286,15 @@ export default function() {
   function getScreenBBox(targetShape) {
     var targetel   = target || targetShape
 
-    while (targetel.getScreenCTM == null && targetel.parentNode != null) {
-      targetel = targetel.parentNode
+    while ('function' !== typeof targetel.getScreenCTM  && 'undefined' !== typeof targetel.parentNode && targetel.parentNode != null) {
+      var isIE11UseElement = 'undefined' !== typeof targetel.correspondingUseElement;
+      var isIE11OtherElement = 'undefined' !== typeof targetel.correspondingElement && 'function' === typeof targetel.correspondingElement.getScreenCTM;
+      var isIE11 = isIE11UseElement || isIE11OtherElement;
+      if (!isIE11) {
+        targetel = targetel.parentNode;
+      } else {
+        targetel = isIE11UseElement ? targetel.correspondingUseElement : correspondingElement;
+      }
     }
 
     var bbox       = {},
