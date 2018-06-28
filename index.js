@@ -41,7 +41,7 @@ export default function() {
         i       = directions.length,
         coords,
         scrollTop  = getRootElement().scrollTop,
-        scrollLeft = getRootElement().scrollLeft,
+        scrollLeft = getRootElement().scrollLeft
 
     nodel.html(content)
       .style('opacity', 1).style('pointer-events', 'all')
