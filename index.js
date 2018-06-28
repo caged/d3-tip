@@ -40,12 +40,8 @@ export default function() {
         nodel   = getNodeEl(),
         i       = directions.length,
         coords,
-        scrollTop  = rootElement ?
-          rootElement.scrollTop :
-          (document.documentElement.scrollTop|| document.body.scrollTop),
-        scrollLeft = rootElement ?
-          rootElement.scrollLeft :
-          (document.documentElement.scrollLeft|| document.body.scrollLeft)
+        scrollTop  = getRootElement().scrollTop,
+        scrollLeft = getRootElement().scrollLeft,
 
     nodel.html(content)
       .style('opacity', 1).style('pointer-events', 'all')
@@ -281,7 +277,7 @@ export default function() {
   }
 
   function getRootElement() {
-    return rootElement || document.body
+    return rootElement || document.documentElement.scrollTop|| document.body.scrollTop
   }
 
   // Private - gets the screen coordinates of a shape
