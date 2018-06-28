@@ -148,7 +148,9 @@ export default function() {
     // Returns root node of tip
     tip.rootElement = function(v) {
       if (!arguments.length) return getRootElement()
-      var newRootElement = typeof v == = 'function' ? v() : vif (newRootElement !== rootElement) {
+      var newRootElement = typeof v === 'function' ? v() : v
+
+      if (newRootElement !== rootElement) {
         rootElement = newRootElement
         if (node) {
           // If the node already exists, move it to the new root element
@@ -156,7 +158,7 @@ export default function() {
         }
       }
 
-    return tip
+      return tip
   }
 
   // Public: destroys the tooltip and removes it from the DOM
