@@ -277,7 +277,7 @@ export default function() {
   }
 
   function getRootElement() {
-    return rootElement || document.documentElement.scrollTop|| document.body.scrollTop
+    return rootElement || document.documentElement || document.body
   }
 
   // Private - gets the screen coordinates of a shape
