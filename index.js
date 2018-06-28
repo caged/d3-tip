@@ -20,12 +20,12 @@ export default function() {
       point       = null,
       target      = null
 
-    function tip(vis) {
-      svg = getSVGNode(vis)
-      if (!svg) return
-      point = svg.createSVGPoint()
-      getRootElement().appendChild(node)
-    }
+  function tip(vis) {
+    svg = getSVGNode(vis)
+    if (!svg) return
+    point = svg.createSVGPoint()
+    getRootElement().appendChild(node)
+  }
 
   // Public - show the tooltip on the screen
   //
@@ -34,18 +34,18 @@ export default function() {
     var args = Array.prototype.slice.call(arguments)
     if (args[args.length - 1] instanceof SVGElement) target = args.pop()
 
-      var content = html.apply(this, args),
-          poffset = offset.apply(this, args),
-          dir     = direction.apply(this, args),
-          nodel   = getNodeEl(),
-          i       = directions.length,
-          coords,
-          scrollTop  = rootElement ?
-            rootElement.scrollTop :
-            (document.documentElement.scrollTop|| document.body.scrollTop),
-          scrollLeft = rootElement ?
-            rootElement.scrollLeft :
-            (document.documentElement.scrollLeft|| document.body.scrollLeft)
+    var content = html.apply(this, args),
+        poffset = offset.apply(this, args),
+        dir     = direction.apply(this, args),
+        nodel   = getNodeEl(),
+        i       = directions.length,
+        coords,
+        scrollTop  = rootElement ?
+          rootElement.scrollTop :
+          (document.documentElement.scrollTop|| document.body.scrollTop),
+        scrollLeft = rootElement ?
+          rootElement.scrollLeft :
+          (document.documentElement.scrollLeft|| document.body.scrollLeft)
 
     nodel.html(content)
       .style('opacity', 1).style('pointer-events', 'all')
@@ -141,24 +141,24 @@ export default function() {
     return tip
   }
 
-    // Public: sets or gets the root element anchor of the tooltip
-    //
-    // v - root element of the tooltip
-    //
-    // Returns root node of tip
-    tip.rootElement = function(v) {
-      if (!arguments.length) return getRootElement()
-      var newRootElement = typeof v === 'function' ? v() : v
+  // Public: sets or gets the root element anchor of the tooltip
+  //
+  // v - root element of the tooltip
+  //
+  // Returns root node of tip
+  tip.rootElement = function(v) {
+    if (!arguments.length) return getRootElement()
+    var newRootElement = typeof v === 'function' ? v() : v
 
-      if (newRootElement !== rootElement) {
-        rootElement = newRootElement
-        if (node) {
-          // If the node already exists, move it to the new root element
-          getRootElement().appendChild(node)
-        }
+    if (newRootElement !== rootElement) {
+      rootElement = newRootElement
+      if (node) {
+        // If the node already exists, move it to the new root element
+        getRootElement().appendChild(node)
       }
+    }
 
-      return tip
+    return tip
   }
 
   // Public: destroys the tooltip and removes it from the DOM
@@ -271,10 +271,6 @@ export default function() {
     return svgNode.ownerSVGElement
   }
 
-  function getRootElement() {
-    return rootElement || document.body
-  }
-
   function getNodeEl() {
     if (node == null) {
       node = initNode()
@@ -282,6 +278,10 @@ export default function() {
       getRootElement().appendChild(node)
     }
     return select(node)
+  }
+
+  function getRootElement() {
+    return rootElement || document.body
   }
 
   // Private - gets the screen coordinates of a shape
