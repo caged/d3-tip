@@ -271,16 +271,18 @@ export default function() {
     return svgNode.ownerSVGElement
   }
 
-    function getRootElement() {
-      return rootElement || document.body
-    }function getNodeEl() {
-      if (node == null) {
-        node = initNode()
-        // re-add node to DOM
-        getRootElement().appendChild(node)
-      }
-      return select(node)
+  function getRootElement() {
+    return rootElement || document.body
+  }
+
+  function getNodeEl() {
+    if (node == null) {
+      node = initNode()
+      // re-add node to DOM
+      getRootElement().appendChild(node)
     }
+    return select(node)
+  }
 
   // Private - gets the screen coordinates of a shape
   //
