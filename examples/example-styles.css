@@ -53,3 +53,20 @@
   top: 50%;
   left: 100%;
 }
+
+/* Southward tooltips that extend eastward */
+.d3-tip.sse:after {
+  content: "\25B2";
+  margin: 0 0 1px 0;
+  top: -8px;
+  left: 11px;
+}
+
+/* Southward tooltips that extend westward */
+.d3-tip.ssw:after {
+  content: "\25B2";
+  margin: 0 0 1px 0;
+  top: -8px;
+  right: 11px;
+  text-align: right;
+}

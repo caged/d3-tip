@@ -40,6 +40,8 @@ export default function() {
         nodel   = getNodeEl(),
         i       = directions.length,
         coords,
+        left,
+        bbox,
         scrollTop  = document.documentElement.scrollTop ||
       rootElement.scrollTop,
         scrollLeft = document.documentElement.scrollLeft ||
@@ -48,11 +50,44 @@ export default function() {
     nodel.html(content)
       .style('opacity', 1).style('pointer-events', 'all')
 
+    // un-constrain tooltip and calculate natural left coordinate
+    nodel.style('left', '0')
+      .style('width', '');
+    coords = directionCallbacks.get(dir).apply(this);
+    left = (coords.left + poffset[1]) + scrollLeft;
+
+    // adjust left coordinate as needed
+    if (dir === 's') {
+      if (left < 0) {
+        dir = 'sse';
+        bbox = getScreenBBox(this);
+        if (bbox.e.x - bbox.w.x > 16) {
+          left = bbox.w.x - 8;
+        } else {
+          left = bbox.s.x - 16;
+        }
+      } else if (left + node.clientWidth > window.innerWidth) {
+        dir = 'ssw';
+        bbox = getScreenBBox(this);
+        if (bbox.e.x - bbox.w.x > 16) {
+          left = bbox.e.x + 8 - node.clientWidth;
+        } else {
+          left = bbox.s.x + 16 - node.clientWidth;
+        }
+        if (left < 0) {
+          // constrain width so it will wrap
+          nodel.style('width', node.clientWidth + left + 'px');
+          left = 0;
+        }
+      }
+    }
+
     while (i--) nodel.classed(directions[i], false)
-    coords = directionCallbacks.get(dir).apply(this)
+    nodel.classed('sse', false)
+        .classed('ssw', false);
     nodel.classed(dir, true)
       .style('top', (coords.top + poffset[0]) + scrollTop + 'px')
-      .style('left', (coords.left + poffset[1]) + scrollLeft + 'px')
+      .style('left', left + 'px')
 
     return tip
   }
