@@ -84,6 +84,22 @@ export default function() {
     return tip
   }
 
+  // Public: Proxy classed calls to the d3 tip container.  Sets or gets class value.
+  //
+  // n - name of the class
+  // v - value indicating whether to class or unclass
+  //
+  // Returns tip or class value
+  tip.classed = function(n, v) {
+    if (arguments.length < 2 && typeof n === 'string') {
+      return getNodeEl().classed(n)
+    }
+
+    var args =  Array.prototype.slice.call(arguments)
+    selection.prototype.classed.apply(getNodeEl(), args)
+    return tip
+  }
+
   // Public: Proxy style calls to the d3 tip container.
   // Sets or gets a style value.
   //
