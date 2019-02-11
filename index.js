@@ -178,7 +178,7 @@ export default function() {
     return tip
   }
 
-  function d3TipDirection() { return 'n' }
+  function d3TipDirection() { return 's' }
   function d3TipOffset() { return [0, 0] }
   function d3TipHTML() { return ' ' }
 
