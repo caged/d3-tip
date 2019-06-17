@@ -14,7 +14,7 @@ export default function() {
   var direction   = d3TipDirection,
       offset      = d3TipOffset,
       html        = d3TipHTML,
-      rootElement = document.body,
+      rootElement = () => document.body,
       node        = initNode(),
       svg         = null,
       point       = null,
@@ -24,7 +24,7 @@ export default function() {
     svg = getSVGNode(vis)
     if (!svg) return
     point = svg.createSVGPoint()
-    rootElement.appendChild(node)
+    rootElement().appendChild(node)
   }
 
   // Public - show the tooltip on the screen
@@ -41,9 +41,9 @@ export default function() {
         i       = directions.length,
         coords,
         scrollTop  = document.documentElement.scrollTop ||
-      rootElement.scrollTop,
+      rootElement().scrollTop,
         scrollLeft = document.documentElement.scrollLeft ||
-      rootElement.scrollLeft
+      rootElement().scrollLeft
 
     nodel.html(content)
       .style('opacity', 1).style('pointer-events', 'all')
@@ -265,7 +265,7 @@ export default function() {
     if (node == null) {
       node = initNode()
       // re-add node to DOM
-      rootElement.appendChild(node)
+      rootElement().appendChild(node)
     }
     return select(node)
   }
