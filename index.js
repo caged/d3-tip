@@ -32,7 +32,7 @@
     function tip(vis) {
       svg = getSVGNode(vis)
       point = svg.createSVGPoint()
-      document.body.appendChild(node)
+      svg.appendChild(node)
     }
 
     // Public - show the tooltip on the screen
@@ -255,7 +255,7 @@
       if(node === null) {
         node = initNode();
         // re-add node to DOM
-        document.body.appendChild(node);
+        svg.appendChild(node)
       };
       return d3.select(node);
     }
