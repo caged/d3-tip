@@ -1,5 +1,5 @@
 {
-  "name": "d3-tip",
+  "name": "d3-tip-dauber",
   "version": "0.9.3",
   "description": "Tooltips for d3 svg visualizations",
   "keywords": ["d3", "tooltip"],
