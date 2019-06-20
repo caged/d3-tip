@@ -1,6 +1,6 @@
 {
   "name": "d3-tip",
-  "version": "0.9.1",
+  "version": "0.9.3",
   "description": "Tooltips for d3 svg visualizations",
   "keywords": ["d3", "tooltip"],
   "homepage": "https://github.com/Caged/d3-tip",
