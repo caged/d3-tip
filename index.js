@@ -40,10 +40,16 @@ export default function() {
         nodel   = getNodeEl(),
         i       = directions.length,
         coords,
-        scrollTop  = document.documentElement.scrollTop ||
-      rootElement().scrollTop,
-        scrollLeft = document.documentElement.scrollLeft ||
-      rootElement().scrollLeft
+        rect = nodel.node().offsetParent.getBoundingClientRect(),
+        viewportOffsetTop  = rect.top,
+        viewportOffsetLeft = rect.left,
+        scrollOffsets = getNetScrollOffset(nodel.node())
+
+    if (nodel.node().offsetParent === document.body) {
+      var bodyStyle = window.getComputedStyle(document.body)
+      viewportOffsetTop -= parseInt(bodyStyle.marginTop, 10)
+      viewportOffsetLeft -= parseInt(bodyStyle.marginLeft, 10)
+    }
 
     nodel.html(content)
       .style('opacity', 1).style('pointer-events', 'all')
@@ -51,8 +57,8 @@ export default function() {
     while (i--) nodel.classed(directions[i], false)
     coords = directionCallbacks.get(dir).apply(this)
     nodel.classed(dir, true)
-      .style('top', (coords.top + poffset[0]) + scrollTop + 'px')
-      .style('left', (coords.left + poffset[1]) + scrollLeft + 'px')
+      .style('top', (coords.top + poffset[0]) - viewportOffsetTop + scrollOffsets.scrollTop + 'px')
+      .style('left', (coords.left + poffset[1]) - viewportOffsetLeft + scrollOffsets.scrollLeft + 'px')
 
     return tip
   }
@@ -328,4 +334,18 @@ export default function() {
   }
 
   return tip
+}
+
+function getNetScrollOffset(el) {
+  var targetEl = el
+  var stopper = el.offsetParent.parentNode
+  var offsets = {
+    scrollTop: 0, scrollLeft: 0
+  }
+  while (targetEl.parentNode && targetEl.parentNode !== stopper) {
+    targetEl = targetEl.parentNode
+    offsets.scrollTop += targetEl.scrollTop
+    offsets.scrollLeft += targetEl.scrollLeft
+  }
+  return offsets
 }
