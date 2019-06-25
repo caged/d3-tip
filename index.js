@@ -14,7 +14,7 @@ export default function() {
   var direction   = d3TipDirection,
       offset      = d3TipOffset,
       html        = d3TipHTML,
-      rootElement = () => document.body,
+      rootElement = function() { return document.body },
       node        = initNode(),
       svg         = null,
       point       = null,
