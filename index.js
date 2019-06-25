@@ -41,9 +41,10 @@ export default function() {
         i       = directions.length,
         coords,
         rect = nodel.node().offsetParent.getBoundingClientRect(),
-        viewportOffsetTop  = rect.top,
-        viewportOffsetLeft = rect.left,
-        scrollOffsets = getNetScrollOffset(nodel.node())
+        scrollOffsets = getNetScrollOffset(nodel.node()),
+        viewportOffsetTop  = rect.top - scrollOffsets.scrollTop,
+        viewportOffsetLeft = rect.left - scrollOffsets.scrollLeft
+
 
     if (nodel.node().offsetParent === document.body) {
       var bodyStyle = window.getComputedStyle(document.body)
@@ -57,8 +58,8 @@ export default function() {
     while (i--) nodel.classed(directions[i], false)
     coords = directionCallbacks.get(dir).apply(this)
     nodel.classed(dir, true)
-      .style('top', (coords.top + poffset[0]) - viewportOffsetTop + scrollOffsets.scrollTop + 'px')
-      .style('left', (coords.left + poffset[1]) - viewportOffsetLeft + scrollOffsets.scrollLeft + 'px')
+      .style('top', (coords.top + poffset[0]) - viewportOffsetTop + 'px')
+      .style('left', (coords.left + poffset[1]) - viewportOffsetLeft + 'px')
 
     return tip
   }
