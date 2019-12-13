@@ -38,7 +38,7 @@
     "eslint": "^3.3.1",
     "eslint-config-airbnb-base": "^5.0.3",
     "eslint-plugin-import": "^1.14.0",
-    "rollup": "^0.58.2"
+    "rollup": "^1.27.12"
   },
   "engines": {
     "node": ">=4.2.6"
