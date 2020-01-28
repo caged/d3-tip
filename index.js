@@ -18,7 +18,9 @@ export default function() {
       node        = initNode(),
       svg         = null,
       point       = null,
-      target      = null
+      target      = null,
+      attrFuncs   = [],
+      styleFuncs  = []
 
   function tip(vis) {
     svg = getSVGNode(vis)
@@ -44,6 +46,9 @@ export default function() {
       rootElement.scrollTop,
         scrollLeft = document.documentElement.scrollLeft ||
       rootElement.scrollLeft
+
+    attrFuncs.forEach(attrFunc => attrFunc.apply(this, args))
+    styleFuncs.forEach(styleFunc => styleFunc.apply(this, args))
 
     nodel.html(content)
       .style('opacity', 1).style('pointer-events', 'all')
@@ -79,8 +84,16 @@ export default function() {
       return getNodeEl().attr(n)
     }
 
-    var args =  Array.prototype.slice.call(arguments)
-    selection.prototype.attr.apply(getNodeEl(), args)
+    if (arguments.length === 2 && typeof v === 'function') {
+      attrFuncs.push(function() {
+        var value = v.apply(this, arguments)
+        getNodeEl().attr(n, value)
+      })
+    } else {
+      var args =  Array.prototype.slice.call(arguments)
+      selection.prototype.attr.apply(getNodeEl(), args)
+    }
+
     return tip
   }
 
@@ -97,8 +110,16 @@ export default function() {
       return getNodeEl().style(n)
     }
 
-    var args = Array.prototype.slice.call(arguments)
-    selection.prototype.style.apply(getNodeEl(), args)
+    if (arguments.length === 2 && typeof v === 'function') {
+      styleFuncs.push(function() {
+        var value = v.apply(this, arguments)
+        getNodeEl().style(n, value)
+      })
+    } else {
+      var args = Array.prototype.slice.call(arguments)
+      selection.prototype.style.apply(getNodeEl(), args)
+    }
+
     return tip
   }
 
